@@ -17,6 +17,7 @@ Obchodníky a investory s archivními lihovinami.
 - provedení formou Docker container s možností nasazení v Kubernetu
 
 ## Team
+Výkazy práce se posílají jednou za 14 dní před konzultací/nejpozději během ní na slack v soukromé zprávě projekťákovi [chat](https://rspnetwork.slack.com/messages/DGQFLKP8X/details/). Vyjímkou je, pokud jste v daném období nic neodpracovali.
 ### Projektové vedení
 - [Zdeněk](bousazde@fel.cvut.cz)[ Zodpovědný za pull requesty mimo kód ]
 ### Analytici
