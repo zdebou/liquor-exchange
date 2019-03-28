@@ -18,12 +18,12 @@ Obchodníky a investory s archivními lihovinami.
 
 ## Team
 ### Projektové vedení
-- [Zdeněk](bousazde@fel.cvut.cz)
+- [Zdeněk](bousazde@fel.cvut.cz)[ Zodpovědný za pull requesty mimo kód ]
 ### Analytici
 - [Karolína](pencakar@fel.cvut.cz)
 - [Michaela](zelenm10@fel.cvut.cz)
 ### Šéf vývojářů
-- [Karel](zavadka1@fel.cvut.cz) (+ vývojář frontendu)
+- [Karel](zavadka1@fel.cvut.cz) (+ vývojář frontendu)[ Zodpovědný za pull requesty kódu ]
 ### Vývojáři frontendu
 - [Tomáš](navrato2@fel.cvut.cz)
 ### Vývojáři backendu

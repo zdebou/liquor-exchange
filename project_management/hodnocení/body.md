@@ -1,14 +1,16 @@
 # Přehled přidělených bodů
 
-| Jméno    | Úsek       | Vstupní body | Body plus | Body mínus | Celkem |
-| -------- | ---------- | ------------ | --------- | ---------- | ------ |
-| Karolína | Analytik   | 20           | .         | .          | TBD    |
-| Michaela | Analytik   | 20           | .         | .          | TBD    |
-| Karel    | Šéf vývoje | 20           | +1 (A)    | .          | TBD    |
-| Tomáš    | Vývojář    | 20           | .         | .          | TBD    |
-| David T. | Vývojář    | 20           | .         | .          | TBD    |
-| David Š. | Vývojář    | 20           | .         | .          | TBD    |
-| Petr     | Tester     | 20           | .         | .          | TBD    |
+| Jméno    | Úsek       | Vstupní body | Body plus | Body mínus | Celkem | Odpracováno hodin |
+| -------- | ---------- | ------------ | --------- | ---------- | ------ | ----------------- |
+| Karolína | Analytik   | 20           | .         | .          | TBD    | 0                 |
+| Michaela | Analytik   | 20           | .         | .          | TBD    | 0                 |
+| Karel    | Šéf vývoje | 20           | +1 (A)    | .          | TBD    | 0                 |
+| Tomáš    | Vývojář    | 20           | .         | .          | TBD    | 0                 |
+| David T. | Vývojář    | 20           | .         | .          | TBD    | 0                 |
+| David Š. | Vývojář    | 20           | .         | .          | TBD    | 0                 |
+| Petr     | Tester     | 20           | .         | .          | TBD    | 0                 |
+
+Přehled odpracovaných hodin je průběžný.
 
 ## Důvody
 A. Vytvoření nekolika variant zadání
