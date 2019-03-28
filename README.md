@@ -26,18 +26,18 @@ Výkazy práce se posílají jednou za 14 dní před konzultací/nejpozději bě
 [Průběžné hodnocení](project_management/hodnocení/body.md)
 
 ### Projektové vedení
-- [Zdeněk](bousazde@fel.cvut.cz) [ Zodpovědný za pull requesty mimo kód ]
+- Zdeněk (bousazde@fel.cvut.cz) [ Zodpovědný za pull requesty mimo kód ]
 ### Analytici
-- [Karolína](pencakar@fel.cvut.cz)
-- [Michaela](zelenm10@fel.cvut.cz)
+- Karolína (pencakar@fel.cvut.cz)
+- Michaela (zelenm10@fel.cvut.cz)
 ### Šéf vývojářů
-- [Karel](zavadka1@fel.cvut.cz) (+ vývojář frontendu) [ Zodpovědný za pull requesty kódu ]
+- Karel (zavadka1@fel.cvut.cz) (+ vývojář frontendu) [ Zodpovědný za pull requesty kódu ]
 ### Vývojáři frontendu
-- [Tomáš](navrato2@fel.cvut.cz)
+- Tomáš (navrato2@fel.cvut.cz)
 ### Vývojáři backendu
-- [Honza](seligja2@fel.cvut.cz)
-- [David T.](tetoudav@fel.cvut.cz)
-- [David Š.](storedav@fel.cvut.cz) (+ tester)
+- Honza (seligja2@fel.cvut.cz)
+- David T. (tetoudav@fel.cvut.cz)
+- David Š. (storedav@fel.cvut.cz) (+ tester)
 ### Testeři
-- [Petr](maresp10@fel.cvut.cz)
+- Petr (maresp10@fel.cvut.cz)
 
