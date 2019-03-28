@@ -24,6 +24,7 @@ Výkazy práce se posílají jednou za 14 dní před konzultací/nejpozději bě
 [Trello](https://trello.com/b/w0Lj2Rix/rsp)
 
 [Průběžné hodnocení](project_management/hodnocení/body.md)
+
 ### Projektové vedení
 - [Zdeněk](bousazde@fel.cvut.cz) [ Zodpovědný za pull requesty mimo kód ]
 ### Analytici
