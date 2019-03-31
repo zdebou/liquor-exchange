@@ -1,4 +1,4 @@
-package com.liquorexchange;
+package com.liquorexchange.db.model;
 
 import lombok.Data;
 

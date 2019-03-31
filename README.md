@@ -1,16 +1,6 @@
 # Burza archivních lihovin
 Projekt je v rámci předmětu RSP - FEL CVUT.
 
-## DEV
-<h3>Vývoj a přidávání vlastního kódu je potřeba dělat ve vlastní větvi a následně udělat pull request!</h3>
-
-### Návody a tutoriály
-
-- Spring Boot: https://spring.io/guides/gs/spring-boot/
-- React & Spring Data: https://spring.io/guides/tutorials/react-and-spring-data-rest/
-- Debugging in Spring: https://www.baeldung.com/spring-debugging
-- Auto reload: https://dzone.com/articles/spring-boot-developer-tools-and-live-reload
-
 ## Idea
 
 Aplikace umožní obchodovat s archivními lihovinami - investičními rumy, archivními víny apod. Obchodník s lihovinami bude mít možnost vyhledávat v nabídkách ostatních uživatelů, sledovat vývoj ceny pro jednotlivé investiční tituly, nastavit si automatické notifikace reagující na vývoj ceny. Prodej lihovin může být za fixní cenu nebo formou dražby.

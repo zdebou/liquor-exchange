@@ -1,8 +1,10 @@
-package com.liquorexchange;
+package com.liquorexchange.db;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import com.liquorexchange.db.repository.*;
+import com.liquorexchange.db.model.*;
 
 @Component
 public class DatabaseLoader implements CommandLineRunner {
