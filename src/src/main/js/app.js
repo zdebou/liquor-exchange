@@ -13,32 +13,32 @@ class App extends React.Component {
 		this.reloadTests = this.reloadTests.bind(this);
 	}
 
-    reloadTests() {
-        client({method: 'GET', path: '/api/myTests'}).done(response => {
-            this.setState({tests: response.entity._embedded.myTests});
-        });
-    }
+  reloadTests() {
+    client({method: 'GET', path: '/api/myTests'}).done(response => {
+        this.setState({tests: response.entity._embedded.myTests});
+    });
+  }
 
 	componentDidMount() {
 		this.reloadTests();
 	}
 
-    onCreateTest(newTest) {
-        return client({
-            method: 'POST',
-            path: '/api/myTests',
-            entity: newTest,
-            headers: {'Content-Type': 'application/json'}
-        }).done((result) => {
-            this.reloadTests();
-        });
-    }
+  onCreateTest(newTest) {
+      return client({
+          method: 'POST',
+          path: '/api/myTests',
+          entity: newTest,
+          headers: {'Content-Type': 'application/json'}
+      }).done((result) => {
+          this.reloadTests();
+      });
+  }
 
 	render() {
 		return (
-		    <div>
-			    <MyList tests={this.state.tests} />
-			    <CreateTest onCreate={this.onCreateTest}/>
+	    <div>
+		    <MyList tests={this.state.tests} />
+		    <CreateTest onCreate={this.onCreateTest}/>
 			</div>
 		)
 	}
@@ -56,17 +56,17 @@ class CreateTest extends React.Component {
 		const newTest = {};
 		newTest['tst'] = ReactDOM.findDOMNode(this.refs["tst"]).value.trim();
 		this.props.onCreate(newTest);
-        ReactDOM.findDOMNode(this.refs['tst']).value = '';
+    ReactDOM.findDOMNode(this.refs['tst']).value = '';
 		window.location = "#";
 	}
 
 	render() {
 		return (
 			<div>
-                <form>
-                    <input type="text" placeholder="test" ref="tst" />
-                    <button onClick={this.handleSubmit}>Create</button>
-                </form>
+        <form>
+          <input type="text" placeholder="test" ref="tst" />
+          <button onClick={this.handleSubmit}>Create</button>
+        </form>
 			</div>
 		)
 	}
@@ -77,7 +77,7 @@ class MyList extends React.Component{
 	render() {
 		const data = this.props.tests.map(t =>
 		    <tr key={t._links.self.href} >
-		        <td>{t.id}</td>
+		        <td>{t._id}</td>
 		        <td>{t.tst}</td>
 		    </tr>
 		);

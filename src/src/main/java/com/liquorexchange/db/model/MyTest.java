@@ -10,9 +10,8 @@ import javax.persistence.Id;
 @Entity
 public class MyTest {
 
-	private @Id @GeneratedValue Long id;
+	private @Id @GeneratedValue String id;
 	private String tst;
-
 
 	public MyTest(String tst) {
 		this.tst = tst;

@@ -1,7 +1,8 @@
 # Prerekvizity
 
-- Maven: https://maven.apache.org/download.cgi
+- Maven
 - GIT
+- MongoDB (pro správu např. MongoDB Compass)
 
 # Instalace
 
@@ -37,3 +38,7 @@ Budeme určitě používat *developer branches* a kdo chce, tak může dělat *f
 - React & Spring Data: https://spring.io/guides/tutorials/react-and-spring-data-rest/
 - Debugging in Spring: https://www.baeldung.com/spring-debugging
 - Auto reload: https://dzone.com/articles/spring-boot-developer-tools-and-live-reload
+- MongoDB:
+ - https://www.tutorialspoint.com/mongodb/
+ - https://medium.com/founding-ithaka/setting-up-and-connecting-to-a-remote-mongodb-database-5df754a4da89
+ - https://docs.mongodb.com/manual/tutorial/enable-authentication/

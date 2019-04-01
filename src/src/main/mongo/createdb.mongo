@@ -1,0 +1,9 @@
+use liquor
+
+db.createUser(
+  {
+    user: "usr",
+    pwd: "xyz123",
+    roles: [ { role: "readWrite", db: "liquor" } ]
+  }
+)
