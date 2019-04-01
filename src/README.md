@@ -42,3 +42,4 @@ Budeme určitě používat *developer branches* a kdo chce, tak může dělat *f
  - https://www.tutorialspoint.com/mongodb/
  - https://medium.com/founding-ithaka/setting-up-and-connecting-to-a-remote-mongodb-database-5df754a4da89
  - https://docs.mongodb.com/manual/tutorial/enable-authentication/
+ - https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/

@@ -9,15 +9,23 @@ import com.liquorexchange.db.model.*;
 @Component
 public class DatabaseLoader implements CommandLineRunner {
 
-	private final MyTestRepository test_repository;
+	private final CountryRepository country_repository;
+	private final AuctionRepository auction_repository;
 
 	@Autowired
-	public DatabaseLoader(MyTestRepository test_repository) {
-		this.test_repository = test_repository;
+	public DatabaseLoader(CountryRepository country_repository, AuctionRepository auction_repository) {
+		this.country_repository = country_repository;
+		this.auction_repository = auction_repository;
 	}
 
 	@Override
 	public void run(String... strings) throws Exception {
-		this.test_repository.save(new MyTest("Karel"));
+		Country czech_rep = new Country("CZ", "Czech Republic");
+		this.country_repository.save(czech_rep);
+		this.country_repository.save(new Country("US", "United States"));
+
+		this.auction_repository.save(new Auction("test auction 1", czech_rep));
+		this.auction_repository.save(new Auction("test auction 2", czech_rep));
+
 	}
 }

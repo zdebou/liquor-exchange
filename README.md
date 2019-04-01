@@ -26,6 +26,8 @@ Výkazy práce se posílají jednou za 14 dní před konzultací/nejpozději bě
 
 [Průběžné hodnocení](project_management/hodnocení/body.md)
 
+[Analýza](https://docs.google.com/document/d/18rA39qKGTYdcZNuclX0DbqMWP2Jt0rdyYCgSYZj8HnI/edit#heading=h.snvlu8n2ejro) (přihlásit školním účtem)
+
 ### Projektové vedení
 - Zdeněk (bousazde@fel.cvut.cz) [ Zodpovědný za pull requesty mimo kód ]
 ### Analytici
