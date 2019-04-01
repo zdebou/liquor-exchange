@@ -6,7 +6,7 @@ const client = require('../../classes/client');
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-class AuctionList extends React.Component{
+export default class AuctionList extends React.Component{
   constructor(props) {
 		super(props);
 		this.state = {auctions: []};
@@ -14,7 +14,7 @@ class AuctionList extends React.Component{
 
   loadAuctions() {
     client({method: 'GET', path: '/api/auctions'}).done(response => {
-        this.setState({auctions: response.entity._embedded.auctions});
+      this.setState({auctions: response.entity._embedded.auctions});
     });
   }
 
@@ -26,7 +26,7 @@ class AuctionList extends React.Component{
 		const data = this.state.auctions.map(auction =>
 	    <tr key={auction._links.self.href} >
         <td><Link to="/auction/{auction._id}">{auction.name}</Link></td>
-        <td>{auction.country.name}</td>
+        <td>{auction.name}</td>
 	    </tr>
 		);
 		return (

@@ -5,8 +5,8 @@ const ReactDOM = require('react-dom');
 const client = require('./classes/client');
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import AuctionList from './pages/auction/AuctionList';
-import AuctionDetail from './pages/auction/AuctionDetail';
+import AuctionList from './pages/auction/AuctionList.js';
+import AuctionDetail from './pages/auction/AuctionDetail.js';
 
 class App extends React.Component {
 	constructor(props) {

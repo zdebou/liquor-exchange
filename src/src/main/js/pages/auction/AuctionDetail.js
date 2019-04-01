@@ -1,5 +1,12 @@
-class CreateTest extends React.Component {
+'use strict';
 
+const React = require('react');
+const ReactDOM = require('react-dom');
+const client = require('../../classes/client');
+
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+export default class AuctionDetail extends React.Component {
 	constructor(props) {
 		super(props);
 		this.handleSubmit = this.handleSubmit.bind(this);
