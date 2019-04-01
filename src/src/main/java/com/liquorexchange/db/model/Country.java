@@ -1,20 +1,20 @@
 package com.liquorexchange.db.model;
 
 import lombok.Data;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Entity
+@Document
 public class Country {
 
 	@Id
-	private String id;
+	private String code;
 
 	private String name;
 
 	public Country(String code, String name) {
-		this.id = code;
+		this.code = code;
 		this.name = name;
 	}
 }
