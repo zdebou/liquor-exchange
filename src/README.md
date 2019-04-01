@@ -36,6 +36,12 @@ Aplikace teď běží adrese `http://localhost:8080`.
 
 Budeme určitě používat *developer branches* a kdo chce, tak může dělat *feature brnaches*. Vývoj a přidávání vlastního kódu je potřeba dělat ve vlastní větvi a následně udělat pull request! Nikdo prosím nedělejte commit do **master**, ale pouze do vlastní větve.
 
+# Build WAR
+
+```
+mvnw clean install spring-boot:repackage
+```
+
 # Návody a tutoriály
 
 - Spring Boot: https://spring.io/guides/gs/spring-boot/
@@ -47,3 +53,4 @@ Budeme určitě používat *developer branches* a kdo chce, tak může dělat *f
  - https://medium.com/founding-ithaka/setting-up-and-connecting-to-a-remote-mongodb-database-5df754a4da89
  - https://docs.mongodb.com/manual/tutorial/enable-authentication/
  - https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/
+- Lombok: https://projectlombok.org/
