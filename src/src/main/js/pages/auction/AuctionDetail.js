@@ -4,6 +4,8 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const client = require('../../classes/client');
 
+import Button from '../../components/Button.js';
+
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 export default class AuctionDetail extends React.Component {
@@ -11,7 +13,6 @@ export default class AuctionDetail extends React.Component {
 		super(props);
 		this.handleSubmit = this.handleSubmit.bind(this);
     this.onCreateTest = this.onCreateTest.bind(this);
-		this.reloadTests = this.reloadTests.bind(this);
 	}
 
 	handleSubmit(e) {
