@@ -1,27 +1,28 @@
 package com.liquorexchange.db.model;
 
+import com.liquorexchange.db.repository.CountryRepository;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DBRef;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Data
-@Entity
+@Document
 public class Auction {
 
-	@Id @GeneratedValue
+	@Id
 	private String id;
 
 	private String name;
 
-	@DBRef
-	@ManyToOne
-	private Country country;
+	private String country_code;
+
+	public Auction() {
+	}
 
 	public Auction(String name, Country country) {
 		this.name = name;
-		this.country = country;
+		this.country_code = country.getCode();
 	}
 }

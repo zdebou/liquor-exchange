@@ -28,9 +28,20 @@ Aplikace teď běží adrese `http://localhost:8080`.
 
 # Vývoj
 
+- doporučuji plugin pro Lombok
+- Hot Swap - aplikace se při změně automaticky zbuildí a restartuje. Je to vlastnost modulu spring-boot-devtools, ale aby to fungovalo v IDEA, musel jsem jít podle tohoto návodu: https://dzone.com/articles/spring-boot-application-live-reload-hot-swap-with
+- pro automatický refresh je třeba do prohlížeče přidat plugin LiveReload (Firefox nebo Chrome)
+- pro práci na frontendu je třeba spustit `npm run watch`
+
 # Verzování a práce s GITem
 
 Budeme určitě používat *developer branches* a kdo chce, tak může dělat *feature brnaches*. Vývoj a přidávání vlastního kódu je potřeba dělat ve vlastní větvi a následně udělat pull request! Nikdo prosím nedělejte commit do **master**, ale pouze do vlastní větve.
+
+# Build WAR
+
+```
+mvnw clean install spring-boot:repackage
+```
 
 # Návody a tutoriály
 
@@ -43,3 +54,4 @@ Budeme určitě používat *developer branches* a kdo chce, tak může dělat *f
  - https://medium.com/founding-ithaka/setting-up-and-connecting-to-a-remote-mongodb-database-5df754a4da89
  - https://docs.mongodb.com/manual/tutorial/enable-authentication/
  - https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/
+- Lombok: https://projectlombok.org/
