@@ -11,13 +11,14 @@ import Button from '../../components/Button.js';
 class AuctionList extends React.Component{
 	constructor(props) {
 		super(props);
-		this.state = {auctions: []};
+		this.state = {rows: []};
 		this.onAddAuction = this.onAddAuction.bind(this);
 	}
 
 	loadAuctions() {
-		client({method: 'GET', path: '/api/auctions'}).done(response => {
-			this.setState({auctions: response.entity._embedded.auctions});
+		client({method: 'GET', path: '/api/views/auctions'}).done(response => {
+		    console.log(response);
+			this.setState({rows: response.entity});
 		});
 	}
 
@@ -28,27 +29,28 @@ class AuctionList extends React.Component{
 	onAddAuction() {
         this.props.history.push({
             pathname: '/auction',
-            state: { auction_href: null }
+            state: { auction_id: null }
         });
 	}
 
 	render() {
-		if (this.state.auctions == null) {
+		if (this.state.rows == null) {
 			return (
 				<div>Loading...</div>
 			)
 		} else {
-			const data = this.state.auctions.map(auction =>
-				<tr key={auction._links.self.href} >
+		    console.log(this.state.rows);
+			const data = this.state.rows.map(row =>
+				<tr key={row.auction.id} >
 					<td>
 						<Link to={{
 							pathname: '/auction',
-							state: { auction_href: auction._links.self.href }
+							state: { auction_id: row.auction.id }
 						}}>
-							{auction.name}
+							{row.auction.name}
 						</Link>
 					</td>
-					<td>{auction.name}</td>
+					<td>{row.country.name}</td>
 				</tr>
 			);
 			return (

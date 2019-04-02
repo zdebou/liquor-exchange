@@ -9,7 +9,7 @@ export default class Input extends React.Component {
 		this.onChange = this.onChange.bind(this);
 	}
 
-	getValue() {
+    getValue() {
         return this.props.dataContext[this.props.dataMember];
     }
 

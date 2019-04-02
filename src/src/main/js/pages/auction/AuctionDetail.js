@@ -18,25 +18,26 @@ class AuctionDetail extends React.Component {
 		this.updateAuction = this.updateAuction.bind(this);
 	}
 
-	loadAuction(href) {
-		client({method: 'GET', path: href}).done(response => {
+	loadAuction(id) {
+		client({method: 'GET', path: '/api/auctions/' + id}).done(response => {
 			this.setState({auction: response.entity});
 		});
 	}
 
 	componentDidMount() {
-	    if (this.props.location.state.auction_href == null) {
+	    if (this.props.location.state.auction_id == null) {
+	        // creating new auction
             this.setState({auction: {name: ''}});
         } else {
-            this.loadAuction(this.props.location.state.auction_href);
+            this.loadAuction(this.props.location.state.auction_id);
         }
 	}
 
 	handleSubmit() {
-	    if (this.props.location.state.auction_href == null) {
+	    if (this.props.location.state.auction_id == null) {
             this.insertAuction(this.state.auction);
 	    } else {
-            this.updateAuction(this.state.auction, this.props.location.state.auction_href);
+            this.updateAuction(this.state.auction, this.props.location.state.auction_id);
 	    }
 	}
 
@@ -51,10 +52,10 @@ class AuctionDetail extends React.Component {
 		});
 	}
 
-	updateAuction(auction, href) {
+	updateAuction(auction, id) {
         return client({
             method: 'PUT',
-            path: href,
+            path: '/api/auctions/' + id,
             entity: auction,
             headers: {'Content-Type': 'application/json'}
         }).done((result) => {

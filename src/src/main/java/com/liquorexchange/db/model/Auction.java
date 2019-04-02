@@ -1,6 +1,8 @@
 package com.liquorexchange.db.model;
 
+import com.liquorexchange.db.repository.CountryRepository;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -14,11 +16,13 @@ public class Auction {
 
 	private String name;
 
-	@DBRef
-	private Country country;
+	private String country_code;
+
+	public Auction() {
+	}
 
 	public Auction(String name, Country country) {
 		this.name = name;
-		this.country = country;
+		this.country_code = country.getCode();
 	}
 }

@@ -28,6 +28,7 @@ Aplikace teď běží adrese `http://localhost:8080`.
 
 # Vývoj
 
+- doporučuji plugin pro Lombok
 - Hot Swap - aplikace se při změně automaticky zbuildí a restartuje. Je to vlastnost modulu spring-boot-devtools, ale aby to fungovalo v IDEA, musel jsem jít podle tohoto návodu: https://dzone.com/articles/spring-boot-application-live-reload-hot-swap-with
 - pro automatický refresh je třeba do prohlížeče přidat plugin LiveReload (Firefox nebo Chrome)
 - pro práci na frontendu je třeba spustit `npm run watch`

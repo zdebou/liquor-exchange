@@ -17,7 +17,7 @@ class App extends React.Component {
 	render() {
 		return (
 			<Router>
-				<div>TEST</div>
+				<div>HEADER</div>
 				<Route path="/" exact component={AuctionList} />
 				<Route path="/auction" component={AuctionDetail} />
 			</Router>
