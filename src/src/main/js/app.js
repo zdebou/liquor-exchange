@@ -19,7 +19,7 @@ class App extends React.Component {
 			<Router>
 				<div>TEST</div>
 				<Route path="/" exact component={AuctionList} />
-				<Route path="/auction/:id" component={AuctionDetail} />
+				<Route path="/auction" component={AuctionDetail} />
 			</Router>
 		)
 	}

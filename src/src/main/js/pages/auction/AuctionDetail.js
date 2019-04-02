@@ -4,46 +4,82 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const client = require('../../classes/client');
 
+import { withRouter } from "react-router";
 import Button from '../../components/Button.js';
-
+import Input from '../../components/Input.js';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-export default class AuctionDetail extends React.Component {
+class AuctionDetail extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {auction: null};
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.onCreateTest = this.onCreateTest.bind(this);
+		this.insertAuction = this.insertAuction.bind(this);
+		this.updateAuction = this.updateAuction.bind(this);
 	}
 
-	handleSubmit(e) {
-		e.preventDefault();
-		const newTest = {};
-		newTest['tst'] = ReactDOM.findDOMNode(this.refs["tst"]).value.trim();
-		this.props.onCreate(newTest);
-		ReactDOM.findDOMNode(this.refs['tst']).value = '';
-		window.location = "#";
+	loadAuction(href) {
+		client({method: 'GET', path: href}).done(response => {
+			this.setState({auction: response.entity});
+		});
 	}
 
-	onCreateAuction(auction) {
+	componentDidMount() {
+	    if (this.props.location.state.auction_href == null) {
+            this.setState({auction: {name: ''}});
+        } else {
+            this.loadAuction(this.props.location.state.auction_href);
+        }
+	}
+
+	handleSubmit() {
+	    if (this.props.location.state.auction_href == null) {
+            this.insertAuction(this.state.auction);
+	    } else {
+            this.updateAuction(this.state.auction, this.props.location.state.auction_href);
+	    }
+	}
+
+	insertAuction(auction) {
 		return client({
 			method: 'POST',
 			path: '/api/auctions',
 			entity: auction,
 			headers: {'Content-Type': 'application/json'}
 		}).done((result) => {
-			this.reloadTests();
+			this.props.history.push('/')
 		});
 	}
 
+	updateAuction(auction, href) {
+        return client({
+            method: 'PUT',
+            path: href,
+            entity: auction,
+            headers: {'Content-Type': 'application/json'}
+        }).done((result) => {
+            this.props.history.push('/')
+        });
+    }
+
 	render() {
-		return (
-			<div>
-				<form>
-					<input type="text" placeholder="test" ref="tst" />
-					<button onClick={this.handleSubmit}>Create</button>
-				</form>
-			</div>
-		)
+		if (this.state.auction == null) {
+			return (
+				<div>Loading...</div>
+			)
+		} else {
+			return (
+				<div>
+					<form>
+						<Input type="text" placeholder="Name" dataContext={this.state.auction} dataMember="name" />
+						<Button onClick={this.handleSubmit} label="Save" />
+					</form>
+					<Link to="/">Back</Link>
+				</div>
+			)
+		}
 	}
 
 }
+
+export default withRouter(AuctionDetail)

@@ -8,7 +8,8 @@ export default class Button extends React.Component {
 		this.handleClick = this.handleClick.bind(this);
 	}
 
-	handleClick() {
+	handleClick(e) {
+	    e.preventDefault();
 		if (typeof this.props.onClick == 'function') {
 			this.props.onClick();
 		}

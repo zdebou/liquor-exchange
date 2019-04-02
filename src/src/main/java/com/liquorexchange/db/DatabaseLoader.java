@@ -31,7 +31,7 @@ public class DatabaseLoader implements CommandLineRunner {
 		if (this.reset_db) {
 			this.country_repository.deleteAll();
 			this.auction_repository.deleteAll();
-			
+
 			Country czech_rep = new Country("CZ", "Czech Republic");
 			this.country_repository.save(czech_rep);
 			this.country_repository.save(new Country("US", "United States"));
