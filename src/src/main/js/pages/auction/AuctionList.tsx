@@ -33,12 +33,12 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 							<td colSpan={2}>Loading...</td>
 						</tr>
 					) : (
-						rows.map(({auction}) => (
-							<tr key={auction.id}>
+						rows.map((row) => (
+							<tr key={row.auction.id}>
 								<td>
-									<Link to={`/auction/${auction.id}`}>{auction.name}</Link>
+									<Link to={`/auction/${row.auction.id}`}>{row.auction.name}</Link>
 								</td>
-								<td>{auction.name}</td>
+								<td>{row.country.name}</td>
 							</tr>
 						))
 					)}
