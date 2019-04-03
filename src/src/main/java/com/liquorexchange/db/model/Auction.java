@@ -1,11 +1,9 @@
 package com.liquorexchange.db.model;
 
-import com.liquorexchange.db.repository.CountryRepository;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DBRef;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Document
@@ -16,6 +14,7 @@ public class Auction {
 
 	private String name;
 
+	@NotNull(message = "Auction must be associated with a country.")
 	private String country_code;
 
 	public Auction() {
