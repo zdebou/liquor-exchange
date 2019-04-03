@@ -7,21 +7,25 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 
 async function insertAuction(auction) {
-	return client({
-		method: 'POST',
-		path: '/api/auctions',
-		entity: auction,
-		headers: {'Content-Type': 'application/json'},
-	});
+	return new Promise(resolve =>
+		client({
+			method: 'POST',
+			path: '/api/auctions',
+			entity: auction,
+			headers: {'Content-Type': 'application/json'},
+		}).done(resolve),
+	);
 }
 
 async function updateAuction(auction, id) {
-	return client({
-		method: 'PUT',
-		path: `/api/auctions/${id}`,
-		entity: auction,
-		headers: {'Content-Type': 'application/json'},
-	});
+	return new Promise(resolve =>
+		client({
+			method: 'PUT',
+			path: `/api/auctions/${id}`,
+			entity: auction,
+			headers: {'Content-Type': 'application/json'},
+		}).done(resolve),
+	);
 }
 
 const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) => {
