@@ -1,56 +1,58 @@
 import asyncRestClient from './asyncRestClient';
 
-/**
-* Loads all documents from a collection
-* @param collection Name of a collection.
-*/
-export const loadDocuments = (collection: string) => asyncRestClient({method: 'GET', path: `/api/${collection}`});
+const restBasePath = '/api';
+
+export enum Collection {
+	Auctions = '/auctions',
+	AuctionsView = '/views/auctions',
+	Countries = '/countries',
+}
 
 /**
-* Loads all data from a specified REST URI
-* @param view Name of a view
+* Loads all documents from a collection
+* @param collection Name/identifier of a collection.
 */
-export const loadFromView = (view: string) => asyncRestClient({method: 'GET', path: `/api/views/${view}`});
+export const loadDocuments = (collection: Collection) => asyncRestClient({method: 'GET', path: `${restBasePath}${collection}`});
 
 /**
 * Loads a single document from a collection
-* @param collection Name of a collection.
+* @param collection Name/identifier of a collection.
 * @param id Document unique identifier.
 */
-export const loadDocument = (collection: string, id: string) =>
-	asyncRestClient({method: 'GET', path: `/api/${collection}/${id}`});
+export const loadDocument = (collection: Collection, id: string) =>
+	asyncRestClient({method: 'GET', path: `${restBasePath}${collection}/${id}`});
 
 /**
 * Inserts new document into a collection
-* @param collection Name of a collection.
+* @param collection Name/identifier of a collection.
 * @param data Document data to be inserted.
 */
-export const insertDocument = (collection: string, data: object) =>
+export const insertDocument = (collection: Collection, data: object) =>
 	asyncRestClient({
 		method: 'POST',
-		path: `/api/${collection}`,
+		path: `${restBasePath}${collection}`,
 		entity: data,
 		headers: {'Content-Type': 'application/json'},
 	});
 
 /**
 * Updates a document in a collection
-* @param collection Name of a collection.
+* @param collection Name/identifier of a collection.
 * @param data Document data to be updated.
 * @param id Document unique identifier.
 */
-export const updateDocument = (collection: string, data: object, id: string) =>
+export const updateDocument = (collection: Collection, data: object, id: string) =>
 	asyncRestClient({
 		method: 'PUT',
-		path: `/api/${collection}/${id}`,
+		path: `${restBasePath}${collection}/${id}`,
 		entity: data,
 		headers: {'Content-Type': 'application/json'},
 	});
 
 /**
 * Inserts new document into a collection
-* @param collection Name of a collection.
+* @param collection Name/identifier of a collection.
 * @param id Document unique identifier.
 */
-export const deleteDocument = (collection: string, id: string) =>
-	asyncRestClient({method: 'DELETE', path: `/api/${collection}/${id}`});
+export const deleteDocument = (collection: Collection, id: string) =>
+	asyncRestClient({method: 'DELETE', path: `${restBasePath}${collection}/${id}`});
