@@ -1,9 +1,9 @@
 package com.liquorexchange.db.model;
 
-import com.liquorexchange.db.repository.CountryRepository;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+
+import com.liquorexchange.db.repository.CountryRepository;
 
 @Data
 public class AuctionView {
