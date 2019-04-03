@@ -8,3 +8,5 @@
 | 3.4.  | mongo relations and views        | 4h  |
 | 3.4.  | merge "typesript" branch         | 0.5h|
 | 3.4.  | fix bug #4                       | 1h  |
+| 3.4.  | delete                           | 1h  |
+| 3.4.  | expose IDs + select component    | 2h  |
