@@ -1,28 +1,34 @@
 {
-  "name": "liquor-exchange",
-  "version": "0.1.0",
-  "description": "An online liquor investment auction house.",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:zdebou/liquor-exchange"
-  },
-  "author": "RSP all stars team",
-  "homepage": "https://github.com/zdebou/liquor-exchange",
-  "dependencies": {
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "react-router-dom": "^5.0.0",
-    "rest": "^1.3.1"
-  },
-  "scripts": {
-    "watch": "webpack --watch -d"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.1.0",
-    "@babel/preset-env": "^7.1.0",
-    "@babel/preset-react": "^7.0.0",
-    "babel-loader": "^8.0.2",
-    "webpack": "^4.19.1",
-    "webpack-cli": "^3.1.0"
-  }
+	"name": "liquor-exchange",
+	"version": "0.1.0",
+	"description": "An online liquor investment auction house.",
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:zdebou/liquor-exchange"
+	},
+	"author": "RSP all stars team",
+	"homepage": "https://github.com/zdebou/liquor-exchange",
+	"dependencies": {
+		"react": "^16.8.6",
+		"react-dom": "^16.8.6",
+		"react-router-dom": "^5.0.0",
+		"rest": "^1.3.2"
+	},
+	"scripts": {
+		"watch": "webpack --watch -d"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.1.0",
+		"@babel/polyfill": "^7.4.3",
+		"@babel/preset-env": "^7.1.0",
+		"@babel/preset-react": "^7.0.0",
+		"@babel/preset-typescript": "^7.3.3",
+		"@types/react": "^16.8.10",
+		"@types/react-dom": "^16.8.3",
+		"@types/react-router-dom": "^4.3.1",
+		"@types/rest": "^1.3.28",
+		"babel-loader": "^8.0.2",
+		"webpack": "^4.19.1",
+		"webpack-cli": "^3.1.0"
+	}
 }
