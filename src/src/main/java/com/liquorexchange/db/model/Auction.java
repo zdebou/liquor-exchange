@@ -3,6 +3,8 @@ package com.liquorexchange.db.model;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -12,6 +14,7 @@ public class Auction {
 	@Id
 	private String id;
 
+	@NotBlank(message = "Auction name cannot be empty.")
 	private String name;
 
 	@NotNull(message = "Auction must be associated with a country.")
