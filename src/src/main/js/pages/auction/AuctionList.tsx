@@ -2,14 +2,14 @@ import React, {FC, useState, useEffect, useCallback, useImperativeHandle} from '
 import {RouteChildrenProps} from 'react-router';
 import {Link} from 'react-router-dom';
 
-import {loadAuctions, deleteAuction} from '../../client/actions';
+import {Collection, loadDocuments, deleteDocument} from '../../client/actions';
 import Button from '../../components/Button';
 
 const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 	const [rows, setRows] = useState(null);
 
 	const fetchAuctions = () => {
-		loadAuctions().then(response => setRows(response.entity));
+		loadDocuments(Collection.AuctionsView).then(response => setRows(response.entity));
 	};
 
 	const handleAddAuction = () => {
@@ -17,7 +17,7 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 	};
 
 	const handleDeleteAuction = (id: string) => {
-		deleteAuction(id).then(fetchAuctions);
+		deleteDocument(Collection.Auctions, id).then(fetchAuctions);
 	};
 
 	useEffect(fetchAuctions, []);

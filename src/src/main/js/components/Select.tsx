@@ -1,16 +1,16 @@
 import React, {FC, useState, useEffect, ChangeEvent} from 'react';
 
-import client from '../client/asyncRestClient';
+import {Collection, loadDocuments } from '../client/actions';
 
 interface IProps {
 	dataContext: object;
 	dataMember: string;
-	itemsPath: string;
+	collection: Collection;
 	idFieldName: string;
 	labelFieldName: string;
 }
 
-const Select: FC<IProps> = ({dataContext, dataMember, itemsPath, idFieldName, labelFieldName}) => {
+const Select: FC<IProps> = ({dataContext, dataMember, collection, idFieldName, labelFieldName}) => {
 	const [selectedValue, setSelectedValue] = useState(dataContext[dataMember] || '');
 	const [items, setItems] = useState(null);
 
@@ -25,8 +25,8 @@ const Select: FC<IProps> = ({dataContext, dataMember, itemsPath, idFieldName, la
 	};
 
 	const loadItems = () => {
-		client({method: 'GET', path: itemsPath}).then(response => {
-			setItems(response.entity._embedded[extractCollectionName(itemsPath)]);
+		loadDocuments(collection).then(response => {
+			setItems(response.entity._embedded[extractCollectionName(collection)]);
 		});
 	};
 
