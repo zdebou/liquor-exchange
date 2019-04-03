@@ -18,6 +18,18 @@ mvnw dependency:purge-local-repository -DmanualInclude=com.github.eirslett:node
 mvnw clean package
 ```
 
+## MongoDB
+
+Pokud instalujete MongoDB lokálně, tak by neměla být potřeba žádná speciální konfigurace.
+
+Pokud jej nainstalujete na jiný stroj, než na kterém děláte vývoj, tak budete muset vytvořit kolekci a v ní uživatele s heslem (viz soubor **src/main/mongo/createdb.mongo**). Defaultní konfigurace počítá s kolekcí pojmenovanou **liquor** a uživatelem **usr/xyz123**. To si samozřejmě můžete změnit v konfiguraci (viz níže).
+
+# Konfigurace
+
+Java Spring se konfiguruje v souboru **main/java/resources/application.properties**. Tam si například nastavíte připojení k databázi.
+
+Položka `com.liquorexchange.resetdb` určuje, zda se má databáze při každém nastartování backendu resetovat (soubor **DatabaseLoader.java**). Pro vývoj je většinou dobré mít to zapnuté, pro produkci určitě ne.
+
 # Spuštění
 
 ```
@@ -28,16 +40,26 @@ Aplikace teď běží adrese `http://localhost:8080`.
 
 # Vývoj
 
-- doporučuji plugin pro Lombok
-- Hot Swap - aplikace se při změně automaticky zbuildí a restartuje. Je to vlastnost modulu spring-boot-devtools, ale aby to fungovalo v IDEA, musel jsem jít podle tohoto návodu: https://dzone.com/articles/spring-boot-application-live-reload-hot-swap-with
-- pro automatický refresh je třeba do prohlížeče přidat plugin LiveReload (Firefox nebo Chrome)
-- pro práci na frontendu je třeba spustit `npm run watch`
+## Lombok
+
+- doporučuji plugin pro Lombok, pokud jej vaše IDE podporuje
+
+## Hot Swap
+
+Aplikace se při změně automaticky zbuildí a restartuje. Je to vlastnost modulu **spring-boot-devtools**, ale aby to fungovalo v IDEA, musel jsem jít podle tohoto návodu: https://dzone.com/articles/spring-boot-application-live-reload-hot-swap-with
+
+## LiveReload
+
+Pro automatický refresh stránky je potřeba do prohlížeče přidat plugin **LiveReload** (Firefox nebo Chrome). Pro práci na frontendu je třeba spustit `npm run watch`.
+
 
 # Verzování a práce s GITem
 
 Budeme určitě používat *developer branches* a kdo chce, tak může dělat *feature brnaches*. Vývoj a přidávání vlastního kódu je potřeba dělat ve vlastní větvi a následně udělat pull request! Nikdo prosím nedělejte commit do **master**, ale pouze do vlastní větve.
 
 # Build WAR
+
+Balíček pro Tomcat se vygeneruje spuštěním následujícího příkazu:
 
 ```
 mvnw clean install spring-boot:repackage
