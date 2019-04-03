@@ -1,49 +1,47 @@
-import React, {FC, useState, useEffect} from 'react';
+import React, {FC, useState, useEffect, ChangeEvent} from 'react';
 
-import client from '../client';
+import {Collection, loadDocuments } from '../client/actions';
 
 interface IProps {
 	dataContext: object;
 	dataMember: string;
-	itemsPath: string;
+	collection: Collection;
 	idFieldName: string;
 	labelFieldName: string;
 }
 
-const Select: FC<IProps> = ({dataContext, dataMember, itemsPath, idFieldName, labelFieldName}) => {
+const Select: FC<IProps> = ({dataContext, dataMember, collection, idFieldName, labelFieldName}) => {
 	const [selectedValue, setSelectedValue] = useState(dataContext[dataMember] || '');
 	const [items, setItems] = useState(null);
 
-	const extractCollectionName = (path) => {
-		const pieces = itemsPath.split('/');
+	const extractCollectionName = (path: string) => {
+		const pieces = path.split('/');
 		return pieces[pieces.length - 1];
-	}
+	};
 
-	const changeValue = (value) => {
+	const changeValue = (value: string) => {
 		dataContext[dataMember] = value;
 		setSelectedValue(value);
-	}
+	};
 
 	const loadItems = () => {
-		client({method: 'GET', path: itemsPath}).done(response => {
-			setItems(response.entity._embedded[extractCollectionName(itemsPath)]);
+		loadDocuments(collection).then(response => {
+			setItems(response.entity._embedded[extractCollectionName(collection)]);
 		});
 	};
 
-	useEffect(() => {
-		loadItems();
-	}, []);
-
-	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+	const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
 		changeValue(event.target.value);
 	};
 
+	useEffect(loadItems, []);
+
 	if (items === null) {
-		return <span>Loading...</span>
+		return <span>Loading...</span>;
 	}
 
 	if (items.length == 0) {
-		return <span>No items available.</span>
+		return <span>No items available.</span>;
 	}
 
 	if (selectedValue == null || selectedValue == '') {
@@ -52,11 +50,13 @@ const Select: FC<IProps> = ({dataContext, dataMember, itemsPath, idFieldName, la
 
 	return (
 		<select onChange={handleChange} value={selectedValue}>
-			{items.map((item) => (
-				<option key={item[idFieldName]} value={item[idFieldName]} >{item[labelFieldName]}</option>
+			{items.map((item: object) => (
+				<option key={item[idFieldName]} value={item[idFieldName]}>
+					{item[labelFieldName]}
+				</option>
 			))}
 		</select>
-	)
-}
+	);
+};
 
 export default Select;
