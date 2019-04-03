@@ -8,14 +8,24 @@ import Button from '../../components/Button';
 const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 	const [rows, setRows] = useState(null);
 
-	useEffect(() => {
+	const loadAuctions = () => {
 		client({method: 'GET', path: '/api/views/auctions'}).done(response => {
 			setRows(response.entity);
 		});
+	};
+
+	useEffect(() => {
+		loadAuctions();
 	}, []);
 
 	const handleAddAuction = () => {
 		history.push('/auction/new');
+	};
+
+	const deleteAuction = (id) => {
+		client({method: 'DELETE', path: `/api/auctions/${id}`}).done(response => {
+			loadAuctions();
+		});
 	};
 
 	return (
@@ -25,22 +35,30 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 					<tr>
 						<th>Auction name</th>
 						<th>Country</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 					{rows === null ? (
 						<tr>
-							<td colSpan={2}>Loading...</td>
+							<td colSpan={3}>Loading...</td>
 						</tr>
 					) : (
-						rows.map((row) => (
-							<tr key={row.auction.id}>
-								<td>
-									<Link to={`/auction/${row.auction.id}`}>{row.auction.name}</Link>
-								</td>
-								<td>{row.country.name}</td>
+						rows.length == 0 ? (
+							<tr>
+								<td colSpan={3}>No auctions available.</td>
 							</tr>
-						))
+						) : (
+							rows.map((row) => (
+								<tr key={row.auction.id}>
+									<td>
+										<Link to={`/auction/${row.auction.id}`}>{row.auction.name}</Link>
+									</td>
+									<td>{row.country.name}</td>
+									<td><Button label="Delete" onClick={() => {deleteAuction(row.auction.id)}} /></td>
+								</tr>
+							))
+						)
 					)}
 				</tbody>
 			</table>
