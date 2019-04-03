@@ -19,7 +19,7 @@ public class ViewsController {
     private AuctionRepository auction_repository;
 
     @Autowired
-    CountryRepository country_repository;
+    private CountryRepository country_repository;
 
     @GetMapping("/auctions")
     public List<AuctionView> auctions() {
