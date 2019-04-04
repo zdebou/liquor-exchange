@@ -3,9 +3,13 @@ import {RouteChildrenProps} from 'react-router';
 import {Link} from 'react-router-dom';
 
 import {Collection, loadDocument, insertDocument, updateDocument} from '../../client/actions';
-import Button from '../../components/Button';
+import Container from '../../components/Container';
+import Heading from '../../components/Heading';
+import Form from '../../components/Form';
+import FormGroup from '../../components/FormGroup';
 import Input from '../../components/Input';
 import Select from '../../components/Select';
+import Button from '../../components/Button';
 
 const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) => {
 	const id = match.params.id === 'new' ? null : match.params.id;
@@ -31,18 +35,17 @@ const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) =
 	useEffect(init, []);
 
 	if (auction === null) {
-		return <div>Loading...</div>;
+		return <Container>Loading...</Container>;
 	}
 
 	return (
-		<div>
-			<form onSubmit={handleSubmit}>
-				<div>
-					<label>Name:</label>
+		<Container>
+			<Heading>Auction</Heading>
+			<Form onSubmit={handleSubmit}>
+				<FormGroup label="Name">
 					<Input type="text" placeholder="Name" dataContext={auction} dataMember="name" />
-				</div>
-				<div>
-					<label>Country:</label>
+				</FormGroup>
+				<FormGroup label="Country">
 					<Select
 						dataContext={auction}
 						dataMember="country_code"
@@ -50,11 +53,13 @@ const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) =
 						idFieldName="code"
 						labelFieldName="name"
 					/>
-				</div>
-				<Button label="Save" />
-			</form>
+				</FormGroup>
+				<FormGroup>
+					<Button label="Save" type="submit" primary />
+				</FormGroup>
+			</Form>
 			<Link to="/">Back</Link>
-		</div>
+		</Container>
 	);
 };
 
