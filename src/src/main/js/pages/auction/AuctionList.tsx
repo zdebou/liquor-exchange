@@ -1,32 +1,26 @@
-import React, {FC, useState, useEffect} from 'react';
+import React, {FC, useState, useEffect, useCallback, useImperativeHandle} from 'react';
 import {RouteChildrenProps} from 'react-router';
 import {Link} from 'react-router-dom';
 
-import client from '../../client';
+import {Collection, loadDocuments, deleteDocument} from '../../client/actions';
 import Button from '../../components/Button';
 
 const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 	const [rows, setRows] = useState(null);
 
-	const loadAuctions = () => {
-		client({method: 'GET', path: '/api/views/auctions'}).done(response => {
-			setRows(response.entity);
-		});
+	const fetchAuctions = () => {
+		loadDocuments(Collection.AuctionsView).then(response => setRows(response.entity));
 	};
-
-	useEffect(() => {
-		loadAuctions();
-	}, []);
 
 	const handleAddAuction = () => {
 		history.push('/auction/new');
 	};
 
-	const deleteAuction = (id) => {
-		client({method: 'DELETE', path: `/api/auctions/${id}`}).done(response => {
-			loadAuctions();
-		});
+	const handleDeleteAuction = (id: string) => {
+		deleteDocument(Collection.Auctions, id).then(fetchAuctions);
 	};
+
+	useEffect(fetchAuctions, []);
 
 	return (
 		<div>
@@ -35,7 +29,7 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 					<tr>
 						<th>Auction name</th>
 						<th>Country</th>
-						<th></th>
+						<th />
 					</tr>
 				</thead>
 				<tbody>
@@ -43,22 +37,27 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 						<tr>
 							<td colSpan={3}>Loading...</td>
 						</tr>
+					) : rows.length == 0 ? (
+						<tr>
+							<td colSpan={3}>No auctions available.</td>
+						</tr>
 					) : (
-						rows.length == 0 ? (
-							<tr>
-								<td colSpan={3}>No auctions available.</td>
+						rows.map(row => (
+							<tr key={row.auction.id}>
+								<td>
+									<Link to={`/auction/${row.auction.id}`}>
+										{row.auction.name}
+									</Link>
+								</td>
+								<td>{row.country.name}</td>
+								<td>
+									<Button
+										label="Delete"
+										onClick={() => handleDeleteAuction(row.auction.id)}
+									/>
+								</td>
 							</tr>
-						) : (
-							rows.map((row) => (
-								<tr key={row.auction.id}>
-									<td>
-										<Link to={`/auction/${row.auction.id}`}>{row.auction.name}</Link>
-									</td>
-									<td>{row.country.name}</td>
-									<td><Button label="Delete" onClick={() => {deleteAuction(row.auction.id)}} /></td>
-								</tr>
-							))
-						)
+						))
 					)}
 				</tbody>
 			</table>
