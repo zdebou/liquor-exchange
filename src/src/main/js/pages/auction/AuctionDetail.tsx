@@ -45,7 +45,7 @@ const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) =
 					<label>Country:</label>
 					<Select
 						dataContext={auction}
-						dataMember="country_code"
+						dataMember="countryCode"
 						collection={Collection.Countries}
 						idFieldName="code"
 						labelFieldName="name"

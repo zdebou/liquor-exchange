@@ -16,13 +16,13 @@ public class Auction {
 	private String name;
 
 	@NotBlank(message = "Auction must be associated with a country.")
-	private String country_code;
+	private String countryCode;
 
 	public Auction() {
 	}
 
 	public Auction(String name, Country country) {
 		this.name = name;
-		this.country_code = country.getCode();
+		this.countryCode = country.getCode();
 	}
 }

@@ -11,7 +11,7 @@ public class AuctionView {
     @Autowired
     public AuctionView(Auction auction, CountryRepository country_repository) {
         this.auction = auction;
-        this.country = country_repository.findById(this.auction.getCountry_code()).get();
+        this.country = country_repository.findById(this.auction.getCountryCode()).get();
     }
 
     private Auction auction;
