@@ -3,6 +3,9 @@ import {RouteChildrenProps} from 'react-router';
 import {Link} from 'react-router-dom';
 
 import {Collection, loadDocuments, deleteDocument} from '../../client/actions';
+import Container from '../../components/Container';
+import Heading from '../../components/Heading';
+import Table from '../../components/Table';
 import Button from '../../components/Button';
 
 const AuctionList: FC<RouteChildrenProps> = ({history}) => {
@@ -23,46 +26,31 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 	useEffect(fetchAuctions, []);
 
 	return (
-		<div>
-			<table>
-				<thead>
-					<tr>
-						<th>Auction name</th>
-						<th>Country</th>
-						<th />
+		<Container>
+			<Heading>All Auctions</Heading>
+			<Table
+				cols={['Auction name', 'Country', '']}
+				data={rows}
+				loading={rows === null}
+				emptyMessage="No auctions available."
+			>
+				{row => (
+					<tr key={row.auction.id}>
+						<td>
+							<Link to={`/auction/${row.auction.id}`}>{row.auction.name}</Link>
+						</td>
+						<td>{row.country.name}</td>
+						<td>
+							<Button
+								label="Delete"
+								onClick={() => handleDeleteAuction(row.auction.id)}
+							/>
+						</td>
 					</tr>
-				</thead>
-				<tbody>
-					{rows === null ? (
-						<tr>
-							<td colSpan={3}>Loading...</td>
-						</tr>
-					) : rows.length == 0 ? (
-						<tr>
-							<td colSpan={3}>No auctions available.</td>
-						</tr>
-					) : (
-						rows.map(row => (
-							<tr key={row.auction.id}>
-								<td>
-									<Link to={`/auction/${row.auction.id}`}>
-										{row.auction.name}
-									</Link>
-								</td>
-								<td>{row.country.name}</td>
-								<td>
-									<Button
-										label="Delete"
-										onClick={() => handleDeleteAuction(row.auction.id)}
-									/>
-								</td>
-							</tr>
-						))
-					)}
-				</tbody>
-			</table>
-			<Button label="Add auction" onClick={handleAddAuction} />
-		</div>
+				)}
+			</Table>
+			<Button label="Add auction" primary onClick={handleAddAuction} />
+		</Container>
 	);
 };
 

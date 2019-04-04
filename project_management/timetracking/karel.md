@@ -10,3 +10,4 @@
 | 3.4.  | fix bug #4                       | 1h  |
 | 3.4.  | delete                           | 1h  |
 | 3.4.  | expose IDs + select component    | 2h  |
+| 3.4.  | actions                          | 1h  |

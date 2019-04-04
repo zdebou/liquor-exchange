@@ -1,4 +1,5 @@
 import React, {FC, useState, ChangeEvent} from 'react';
+import BSForm from 'react-bootstrap/Form';
 
 interface IProps {
 	type: string;
@@ -16,7 +17,12 @@ const Input: FC<IProps> = ({type, placeholder, dataContext, dataMember}) => {
 	};
 
 	return (
-		<input type={type} value={value} placeholder={placeholder || ''} onChange={handleChange} />
+		<BSForm.Control
+			type={type}
+			value={value}
+			placeholder={placeholder || ''}
+			onChange={handleChange as any}
+		/>
 	);
 };
 
