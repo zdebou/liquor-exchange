@@ -1,6 +1,7 @@
 import React, {FC, useState, useEffect, ChangeEvent} from 'react';
+import BSForm from 'react-bootstrap/Form';
 
-import {Collection, loadDocuments } from '../client/actions';
+import {Collection, loadDocuments} from '../client/actions';
 
 interface IProps {
 	dataContext: object;
@@ -49,13 +50,13 @@ const Select: FC<IProps> = ({dataContext, dataMember, collection, idFieldName, l
 	}
 
 	return (
-		<select onChange={handleChange} value={selectedValue}>
+		<BSForm.Control as="select" onChange={handleChange as any} value={selectedValue}>
 			{items.map((item: object) => (
 				<option key={item[idFieldName]} value={item[idFieldName]}>
 					{item[labelFieldName]}
 				</option>
 			))}
-		</select>
+		</BSForm.Control>
 	);
 };
 
