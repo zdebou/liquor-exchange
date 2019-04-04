@@ -26,18 +26,37 @@ public class DatabaseLoader implements CommandLineRunner {
 		this.auction_repository = auction_repository;
 	}
 
+	/**
+	 * Find out whether database is empty of data.
+	 * @return True if database is assumed empty.
+	 */
+	private boolean isEmpty() {
+		return (this.country_repository.count() == 0);
+	}
+
 	@Override
 	public void run(String... strings) throws Exception {
+		// DELETE EVERYTHING!
 		if (this.reset_db) {
 			this.country_repository.deleteAll();
 			this.auction_repository.deleteAll();
+		}
 
+		// INSERT EVERYTHING (if db is empty)
+		if (this.isEmpty()) {
 			Country czech_rep = new Country("CZ", "Czech Republic");
 			this.country_repository.save(czech_rep);
-			this.country_repository.save(new Country("US", "United States"));
 
-			this.auction_repository.save(new Auction("test auction 1", czech_rep));
-			this.auction_repository.save(new Auction("test auction 2", czech_rep));
+			Country usa = new Country("US", "United States");
+			this.country_repository.save(usa);
+
+			this.auction_repository.save(new Auction("aukce 1", czech_rep));
+			this.auction_repository.save(new Auction("aukce 2", czech_rep));
+			this.auction_repository.save(new Auction("test auction 3", usa));
+			this.auction_repository.save(new Auction("test auction 4", usa));
+			this.auction_repository.save(new Auction("test auction 5", usa));
 		}
+
 	}
+
 }

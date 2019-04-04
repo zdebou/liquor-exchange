@@ -1,9 +1,10 @@
 package com.liquorexchange;
 
-import com.liquorexchange.db.model.*;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.stereotype.Component;
+
+import com.liquorexchange.db.model.*;
 
 @Component
 public class ExposeEntityIdRestMvcConfiguration implements RepositoryRestConfigurer {

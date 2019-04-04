@@ -76,4 +76,6 @@ mvnw clean install spring-boot:repackage
  - https://medium.com/founding-ithaka/setting-up-and-connecting-to-a-remote-mongodb-database-5df754a4da89
  - https://docs.mongodb.com/manual/tutorial/enable-authentication/
  - https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/
+ - jak se rozhodnout mezi *embedd* a *reference*: https://stackoverflow.com/questions/5373198/mongodb-relationships-embed-or-reference?rq=1
+ - filtering: https://www.baeldung.com/queries-in-spring-data-mongodb
 - Lombok: https://projectlombok.org/
