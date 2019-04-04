@@ -8,7 +8,7 @@ import Heading from '../../components/Heading';
 import Form from '../../components/Form';
 import FormGroup from '../../components/FormGroup';
 import Input from '../../components/Input';
-import SelectFromCollection from '../../components/SelectFromCollection';
+import SelectDocument from '../../components/SelectDocument';
 import Button from '../../components/Button';
 
 const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) => {
@@ -46,7 +46,7 @@ const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) =
 					<Input type="text" placeholder="Name" dataContext={auction} dataMember="name" />
 				</FormGroup>
 				<FormGroup label="Country">
-					<SelectFromCollection
+					<SelectDocument
 						dataContext={auction}
 						dataMember="countryCode"
 						collection={Collection.Countries}

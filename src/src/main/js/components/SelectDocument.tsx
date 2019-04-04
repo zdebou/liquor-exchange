@@ -13,7 +13,10 @@ interface IProps {
 	labelFieldName: string;
 }
 
-const SelectFromCollection: FC<IProps> = ({dataContext, dataMember, collection, idFieldName, labelFieldName}) => {
+/**
+* Tato komponenta slouží k výběru dokumentu z kolekce - automaticky načte celou kolekci z REST API.
+*/
+const SelectDocument: FC<IProps> = ({dataContext, dataMember, collection, idFieldName, labelFieldName}) => {
 	const [items, setItems] = useState(null);
 
 	const extractCollectionName = (path: string) => {
@@ -40,4 +43,4 @@ const SelectFromCollection: FC<IProps> = ({dataContext, dataMember, collection, 
 	);
 };
 
-export default SelectFromCollection;
+export default SelectDocument;

@@ -21,11 +21,11 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 		));
 	};
 
-	const fetchAuctions = (country?: string) => {
-		if (country == null || country == '') {
+	const fetchAuctions = (country_code?: string) => {
+		if (country_code == null || country_code == '') {
 			loadDocuments(Collection.AuctionsView).then(response => setRows(response.entity));
 		} else {
-			loadDocuments(Collection.AuctionsViewByCountry + '/' + country).then(response => setRows(response.entity));
+			loadDocuments(Collection.AuctionsViewByCountry, {'countryCode': country_code}).then(response => setRows(response.entity));
 		}
 	};
 
