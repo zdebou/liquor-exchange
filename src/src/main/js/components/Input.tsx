@@ -4,7 +4,7 @@ import BSForm from 'react-bootstrap/Form';
 interface IProps {
 	type: string;
 	placeholder?: string;
-	dataContext: object;
+	dataContext: {[key: string]: any};
 	dataMember: string;
 }
 

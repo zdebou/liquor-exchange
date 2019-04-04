@@ -1,8 +1,8 @@
 # Prerekvizity
 
-- Maven
-- GIT
-- MongoDB (pro správu např. MongoDB Compass)
+-   Maven
+-   GIT
+-   MongoDB (pro správu např. MongoDB Compass)
 
 # Instalace
 
@@ -12,7 +12,8 @@ cd liquor-exchange/src
 mvnw install
 ```
 
-Stalo se mi, že selhalo spuštění `npm install` na chybě *CreateProcess error=193, %1 is not a valid Win32 application* a potom mi pomohlo toto:
+Stalo se mi, že selhalo spuštění `npm install` na chybě _CreateProcess error=193, %1 is not a valid Win32 application_ a potom mi pomohlo toto:
+
 ```
 mvnw dependency:purge-local-repository -DmanualInclude=com.github.eirslett:node
 mvnw clean package
@@ -40,9 +41,14 @@ Aplikace teď běží adrese `http://localhost:8080`.
 
 # Vývoj
 
+## TypeScript
+
+-   Doporučené jsou pluginy pro `tslint` a `prettier`, které jsou dostupné pro většinu IDE
+-   Alternativně lze kontrolu kódu pustit ručně přes `npm run check`
+
 ## Lombok
 
-- doporučuji plugin pro Lombok, pokud jej vaše IDE podporuje
+-   doporučuji plugin pro Lombok, pokud jej vaše IDE podporuje
 
 ## Hot Swap
 
@@ -52,10 +58,9 @@ Aplikace se při změně automaticky zbuildí a restartuje. Je to vlastnost modu
 
 Pro automatický refresh stránky je potřeba do prohlížeče přidat plugin **LiveReload** (Firefox nebo Chrome). Pro práci na frontendu je třeba spustit `npm run watch`.
 
-
 # Verzování a práce s GITem
 
-Budeme určitě používat *developer branches* a kdo chce, tak může dělat *feature brnaches*. Vývoj a přidávání vlastního kódu je potřeba dělat ve vlastní větvi a následně udělat pull request! Nikdo prosím nedělejte commit do **master**, ale pouze do vlastní větve.
+Budeme určitě používat _developer branches_ a kdo chce, tak může dělat _feature brnaches_. Vývoj a přidávání vlastního kódu je potřeba dělat ve vlastní větvi a následně udělat pull request! Nikdo prosím nedělejte commit do **master**, ale pouze do vlastní větve.
 
 # Build WAR
 
@@ -67,13 +72,13 @@ mvnw clean install spring-boot:repackage
 
 # Návody a tutoriály
 
-- Spring Boot: https://spring.io/guides/gs/spring-boot/
-- React & Spring Data: https://spring.io/guides/tutorials/react-and-spring-data-rest/
-- Debugging in Spring: https://www.baeldung.com/spring-debugging
-- Auto reload: https://dzone.com/articles/spring-boot-developer-tools-and-live-reload
-- MongoDB:
- - https://www.tutorialspoint.com/mongodb/
- - https://medium.com/founding-ithaka/setting-up-and-connecting-to-a-remote-mongodb-database-5df754a4da89
- - https://docs.mongodb.com/manual/tutorial/enable-authentication/
- - https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/
-- Lombok: https://projectlombok.org/
+-   Spring Boot: https://spring.io/guides/gs/spring-boot/
+-   React & Spring Data: https://spring.io/guides/tutorials/react-and-spring-data-rest/
+-   Debugging in Spring: https://www.baeldung.com/spring-debugging
+-   Auto reload: https://dzone.com/articles/spring-boot-developer-tools-and-live-reload
+-   MongoDB:
+-   https://www.tutorialspoint.com/mongodb/
+-   https://medium.com/founding-ithaka/setting-up-and-connecting-to-a-remote-mongodb-database-5df754a4da89
+-   https://docs.mongodb.com/manual/tutorial/enable-authentication/
+-   https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/
+-   Lombok: https://projectlombok.org/

@@ -4,7 +4,7 @@ import BSForm from 'react-bootstrap/Form';
 import {Collection, loadDocuments} from '../client/actions';
 
 interface IProps {
-	dataContext: object;
+	dataContext: {[key: string]: any};
 	dataMember: string;
 	collection: Collection;
 	idFieldName: string;
@@ -41,17 +41,17 @@ const Select: FC<IProps> = ({dataContext, dataMember, collection, idFieldName, l
 		return <span>Loading...</span>;
 	}
 
-	if (items.length == 0) {
+	if (items.length === 0) {
 		return <span>No items available.</span>;
 	}
 
-	if (selectedValue == null || selectedValue == '') {
+	if (selectedValue === null || selectedValue === '') {
 		changeValue(items[0][idFieldName]);
 	}
 
 	return (
 		<BSForm.Control as="select" onChange={handleChange as any} value={selectedValue}>
-			{items.map((item: object) => (
+			{items.map((item: {[key: string]: any}) => (
 				<option key={item[idFieldName]} value={item[idFieldName]}>
 					{item[labelFieldName]}
 				</option>

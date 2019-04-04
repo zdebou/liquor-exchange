@@ -1,4 +1,5 @@
 # Burza archivních lihovin
+
 Projekt je v rámci předmětu RSP - FEL CVUT.
 
 ## Idea
@@ -18,6 +19,7 @@ Obchodníky a investory s archivními lihovinami.
 - deployment formou **Docker** container s možností nasazení v **Kubernetes**
 
 ## Team
+
 Výkazy práce se posílají jednou za 14 dní před konzultací/nejpozději během ní na slack v soukromé zprávě projekťákovi [(chat)](https://rspnetwork.slack.com/messages/DGQFLKP8X/details/). Vyjímkou je, pokud jste v daném období nic neodpracovali.
 
 [Slack](https://rspnetwork.slack.com/messages/CGPDK2090/details/)
@@ -29,17 +31,28 @@ Výkazy práce se posílají jednou za 14 dní před konzultací/nejpozději bě
 [Analýza](https://docs.google.com/document/d/18rA39qKGTYdcZNuclX0DbqMWP2Jt0rdyYCgSYZj8HnI/edit#heading=h.snvlu8n2ejro) (přihlásit školním účtem)
 
 ### Projektové vedení
+
 - Zdeněk (bousazde@fel.cvut.cz) [ Zodpovědný za pull requesty mimo kód ]
+
 ### Analytici
+
 - Karolína (pencakar@fel.cvut.cz)
 - Michaela (zelenm10@fel.cvut.cz)
+
 ### Šéf vývojářů
+
 - Karel (zavadka1@fel.cvut.cz) (+ vývojář frontendu) [ Zodpovědný za pull requesty kódu ]
+
 ### Vývojáři frontendu
+
 - Tomáš (navrato2@fel.cvut.cz)
+
 ### Vývojáři backendu
+
 - Honza (seligja2@fel.cvut.cz)
 - David T. (tetoudav@fel.cvut.cz)
 - David Š. (storedav@fel.cvut.cz) (+ tester)
+
 ### Testeři
+
 - Petr (maresp10@fel.cvut.cz)
