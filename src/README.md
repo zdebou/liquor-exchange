@@ -41,14 +41,14 @@ Aplikace teď běží adrese `http://localhost:8080`.
 
 # Vývoj
 
-## TypeScript
-
--   Doporučené jsou pluginy pro `tslint` a `prettier`, které jsou dostupné pro většinu IDE
--   Alternativně lze kontrolu kódu pustit ručně přes `npm run check`
-
 ## Lombok
 
--   doporučuji plugin pro Lombok, pokud jej vaše IDE podporuje
+-   pro vývoj backendu doporučuji plugin pro Lombok, který IDE upozorní na metody generované Lombokem
+
+## TypeScript (frontend)
+
+-   doporučené jsou pluginy pro TSLint a Prettier, které jsou dostupné pro většinu IDE
+-   alternativně lze kontrolu kódu pustit ručně přes `npm run check`
 
 ## Hot Swap
 
@@ -81,4 +81,6 @@ mvnw clean install spring-boot:repackage
 -   https://medium.com/founding-ithaka/setting-up-and-connecting-to-a-remote-mongodb-database-5df754a4da89
 -   https://docs.mongodb.com/manual/tutorial/enable-authentication/
 -   https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/
+-   jak se rozhodnout mezi _embedd_ a _reference_: https://stackoverflow.com/questions/5373198/mongodb-relationships-embed-or-reference?rq=1
+-   filtering: https://www.baeldung.com/queries-in-spring-data-mongodb
 -   Lombok: https://projectlombok.org/
