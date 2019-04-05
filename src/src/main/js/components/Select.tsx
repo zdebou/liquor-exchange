@@ -18,15 +18,17 @@ const Select: FC<IProps> = ({
 	labelFieldName,
 	onChange,
 }) => {
-	const [selectedValue, setSelectedValue] = useState(
-		(dataContext && dataContext[dataMember]) || '',
-	);
+	const [selectedValue, setSelectedValue] = useState(dataContext ? dataContext[dataMember] : '');
 
 	const changeValue = (value: string) => {
-		dataContext && (dataContext[dataMember] = value);
+		if (dataContext) {
+			dataContext[dataMember] = value;
+		}
 		if (value != selectedValue) {
 			setSelectedValue(value);
-			onChange && onChange(value);
+			if (onChange) {
+				onChange(value);
+			}
 		}
 	};
 

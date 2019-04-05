@@ -44,8 +44,8 @@ const SelectDocument: FC<IProps> = ({
 					emptyOptionName = 'None';
 				}
 				let emptyItem = {};
-				emptyItem[`${idFieldName}`] = '';
-				emptyItem[`${labelFieldName}`] = emptyOptionName;
+				emptyItem[idFieldName] = '';
+				emptyItem[labelFieldName] = emptyOptionName;
 				items.unshift(emptyItem);
 			}
 			setItems(items);
