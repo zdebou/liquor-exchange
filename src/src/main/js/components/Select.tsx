@@ -10,8 +10,17 @@ interface IProps {
 	onChange?: () => any;
 }
 
-const Select: FC<IProps> = ({dataContext, dataMember, items, idFieldName, labelFieldName, onChange}) => {
-	const [selectedValue, setSelectedValue] = useState((dataContext && dataContext[dataMember]) || '');
+const Select: FC<IProps> = ({
+	dataContext,
+	dataMember,
+	items,
+	idFieldName,
+	labelFieldName,
+	onChange,
+}) => {
+	const [selectedValue, setSelectedValue] = useState(
+		(dataContext && dataContext[dataMember]) || '',
+	);
 
 	const changeValue = (value: string) => {
 		dataContext && (dataContext[dataMember] = value);

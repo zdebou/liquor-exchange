@@ -16,16 +16,18 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 	const [country, setCountry] = useState(null);
 
 	const fetchCountries = () => {
-		loadDocuments(Collection.Countries).then(response => setCountries(
-			[{code: '', name: 'All'}].concat(response.entity._embedded.countries)
-		));
+		loadDocuments(Collection.Countries).then(response =>
+			setCountries([{code: '', name: 'All'}].concat(response.entity._embedded.countries)),
+		);
 	};
 
 	const fetchAuctions = (country_code?: string) => {
 		if (country_code == null || country_code == '') {
 			loadDocuments(Collection.AuctionsView).then(response => setRows(response.entity));
 		} else {
-			loadDocuments(Collection.AuctionsViewByCountry, {'countryCode': country_code}).then(response => setRows(response.entity));
+			loadDocuments(Collection.AuctionsViewByCountry, {countryCode: country_code}).then(
+				response => setRows(response.entity),
+			);
 		}
 	};
 
@@ -34,7 +36,7 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 	};
 
 	const handleDeleteAuction = (id: string) => {
-		deleteDocument(Collection.Auctions, id).then(() => fetchAuctions(country) );
+		deleteDocument(Collection.Auctions, id).then(() => fetchAuctions(country));
 	};
 
 	const handleCountryChange = (country_code: string) => {
@@ -54,7 +56,7 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 				labelFieldName="name"
 				onChange={handleCountryChange}
 			/>
-			<br/>
+			<br />
 			<Table
 				cols={['Auction name', 'Country', '']}
 				data={rows}
