@@ -11,6 +11,9 @@ interface IProps {
 	collection: Collection;
 	idFieldName: string;
 	labelFieldName: string;
+	allowEmpty?: boolean;
+	emptyOptionName?: string;
+	onChange?: () => any;
 }
 
 /**
@@ -22,6 +25,9 @@ const SelectDocument: FC<IProps> = ({
 	collection,
 	idFieldName,
 	labelFieldName,
+	allowEmpty,
+	emptyOptionName,
+	onChange,
 }) => {
 	const [items, setItems] = useState(null);
 
@@ -32,7 +38,17 @@ const SelectDocument: FC<IProps> = ({
 
 	const loadItems = () => {
 		loadDocuments(collection).then(response => {
-			setItems(response.entity._embedded[extractCollectionName(collection)]);
+			let items = response.entity._embedded[extractCollectionName(collection)];
+			if (allowEmpty) {
+				if (!emptyOptionName) {
+					emptyOptionName = 'None';
+				}
+				let emptyItem = {};
+				emptyItem[`${idFieldName}`] = '';
+				emptyItem[`${labelFieldName}`] = emptyOptionName;
+				items.unshift(emptyItem);
+			}
+			setItems(items);
 		});
 	};
 
@@ -45,6 +61,7 @@ const SelectDocument: FC<IProps> = ({
 			items={items}
 			idFieldName={idFieldName}
 			labelFieldName={labelFieldName}
+			onChange={onChange}
 		/>
 	);
 };

@@ -7,19 +7,11 @@ import Container from '../../components/Container';
 import Heading from '../../components/Heading';
 import Table from '../../components/Table';
 import Button from '../../components/Button';
-import Select from '../../components/Select';
+import SelectDocument from '../../components/SelectDocument';
 
 const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 	const [rows, setRows] = useState(null);
-
-	const [countries, setCountries] = useState(null);
 	const [country, setCountry] = useState(null);
-
-	const fetchCountries = () => {
-		loadDocuments(Collection.Countries).then(response =>
-			setCountries([{code: '', name: 'All'}].concat(response.entity._embedded.countries)),
-		);
-	};
 
 	const fetchAuctions = (country_code?: string) => {
 		if (country_code == null || country_code == '') {
@@ -45,13 +37,14 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 	};
 
 	useEffect(fetchAuctions, []);
-	useEffect(fetchCountries, []);
 
 	return (
 		<Container>
 			<Heading>Auctions</Heading>
-			<Select
-				items={countries}
+			<SelectDocument
+				collection={Collection.Countries}
+				allowEmpty={true}
+				emptyOptionName="All"
 				idFieldName="code"
 				labelFieldName="name"
 				onChange={handleCountryChange}
