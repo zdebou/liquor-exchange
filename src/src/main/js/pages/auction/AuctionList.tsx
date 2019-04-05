@@ -7,12 +7,20 @@ import Container from '../../components/Container';
 import Heading from '../../components/Heading';
 import Table from '../../components/Table';
 import Button from '../../components/Button';
+import SelectDocument from '../../components/SelectDocument';
 
 const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 	const [rows, setRows] = useState(null);
+	const [country, setCountry] = useState(null);
 
-	const fetchAuctions = () => {
-		loadDocuments(Collection.AuctionsView).then(response => setRows(response.entity));
+	const fetchAuctions = (country_code?: string) => {
+		if (country_code == null || country_code == '') {
+			loadDocuments(Collection.AuctionsView).then(response => setRows(response.entity));
+		} else {
+			loadDocuments(Collection.AuctionsViewByCountry, {countryCode: country_code}).then(
+				response => setRows(response.entity),
+			);
+		}
 	};
 
 	const handleAddAuction = () => {
@@ -20,14 +28,28 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 	};
 
 	const handleDeleteAuction = (id: string) => {
-		deleteDocument(Collection.Auctions, id).then(fetchAuctions);
+		deleteDocument(Collection.Auctions, id).then(() => fetchAuctions(country));
+	};
+
+	const handleCountryChange = (country_code: string) => {
+		fetchAuctions(country_code);
+		setCountry(country_code);
 	};
 
 	useEffect(fetchAuctions, []);
 
 	return (
 		<Container>
-			<Heading>All Auctions</Heading>
+			<Heading>Auctions</Heading>
+			<SelectDocument
+				collection={Collection.Countries}
+				allowEmpty={true}
+				emptyOptionName="All"
+				idFieldName="code"
+				labelFieldName="name"
+				onChange={handleCountryChange}
+			/>
+			<br />
 			<Table
 				cols={['Auction name', 'Country', '']}
 				data={rows}
