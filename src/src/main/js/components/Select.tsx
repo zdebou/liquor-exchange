@@ -2,27 +2,30 @@ import React, {FC, useState, useEffect, ChangeEvent} from 'react';
 import BSForm from 'react-bootstrap/Form';
 
 import {Collection, loadDocuments} from '../client/actions';
+import {withForm} from './Form';
 
 interface IProps {
-	dataContext: {[key: string]: any};
-	dataMember: string;
+	value?: string | null;
+	onChange: (value: string) => void;
+	isInvalid?: boolean;
 	collection: Collection;
 	idFieldName: string;
 	labelFieldName: string;
 }
 
-const Select: FC<IProps> = ({dataContext, dataMember, collection, idFieldName, labelFieldName}) => {
-	const [selectedValue, setSelectedValue] = useState(dataContext[dataMember] || '');
+export const SelectRaw: FC<IProps> = ({
+	value,
+	onChange,
+	collection,
+	isInvalid = false,
+	idFieldName,
+	labelFieldName,
+}) => {
 	const [items, setItems] = useState(null);
 
 	const extractCollectionName = (path: string) => {
 		const pieces = path.split('/');
 		return pieces[pieces.length - 1];
-	};
-
-	const changeValue = (value: string) => {
-		dataContext[dataMember] = value;
-		setSelectedValue(value);
 	};
 
 	const loadItems = () => {
@@ -32,7 +35,7 @@ const Select: FC<IProps> = ({dataContext, dataMember, collection, idFieldName, l
 	};
 
 	const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-		changeValue(event.target.value);
+		onChange(event.target.value);
 	};
 
 	useEffect(loadItems, []);
@@ -45,12 +48,18 @@ const Select: FC<IProps> = ({dataContext, dataMember, collection, idFieldName, l
 		return <span>No items available.</span>;
 	}
 
-	if (selectedValue === null || selectedValue === '') {
-		changeValue(items[0][idFieldName]);
+	if (!value) {
+		value = items[0][idFieldName];
+		setTimeout(() => onChange(value));
 	}
 
 	return (
-		<BSForm.Control as="select" onChange={handleChange as any} value={selectedValue}>
+		<BSForm.Control
+			as="select"
+			onChange={handleChange as any}
+			value={value}
+			isInvalid={isInvalid}
+		>
 			{items.map((item: {[key: string]: any}) => (
 				<option key={item[idFieldName]} value={item[idFieldName]}>
 					{item[labelFieldName]}
@@ -60,4 +69,4 @@ const Select: FC<IProps> = ({dataContext, dataMember, collection, idFieldName, l
 	);
 };
 
-export default Select;
+export default withForm(SelectRaw);
