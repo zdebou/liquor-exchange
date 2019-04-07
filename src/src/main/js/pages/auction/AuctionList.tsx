@@ -7,11 +7,11 @@ import Container from '../../components/Container';
 import Heading from '../../components/Heading';
 import Table from '../../components/Table';
 import Button from '../../components/Button';
-import SelectDocument from '../../components/SelectDocument';
+import {SelectDocumentRaw} from '../../components/SelectDocument';
 
 const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 	const [rows, setRows] = useState(null);
-	const [country, setCountry] = useState(null);
+	const [country, setCountry] = useState('');
 
 	const fetchAuctions = (countryCode?: string) => {
 		if (!countryCode) {
@@ -32,8 +32,8 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 	};
 
 	const handleCountryChange = (countryCode: string) => {
-		fetchAuctions(countryCode);
 		setCountry(countryCode);
+		fetchAuctions(countryCode);
 	};
 
 	useEffect(fetchAuctions, []);
@@ -41,13 +41,14 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 	return (
 		<Container>
 			<Heading>Auctions</Heading>
-			<SelectDocument
+			<SelectDocumentRaw
+				value={country}
+				onChange={handleCountryChange}
 				collection={Collection.Countries}
 				allowEmpty={true}
 				emptyOptionName="All"
 				idFieldName="code"
 				labelFieldName="name"
-				onChange={handleCountryChange}
 			/>
 			<br />
 			<Table

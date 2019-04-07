@@ -4,3 +4,5 @@
 | 3.4.  | Refactoring akcí na frontendu                    | 1h   |
 | 4.4.  | Integrace Bootstrapu                             | 2.5h |
 | 4.4.  | Přidání nástrojů pro kontrolu a formátování kódu | 1h   |
+| 5.4.  | Formuláře + validace                             | 3h   |
+| 7.4.  | Formuláře + validace                             | 1h   |

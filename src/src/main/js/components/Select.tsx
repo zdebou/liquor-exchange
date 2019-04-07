@@ -1,39 +1,27 @@
-import React, {FC, useState, useEffect, ChangeEvent} from 'react';
+import React, {FC, ChangeEvent} from 'react';
 import BSForm from 'react-bootstrap/Form';
 
+import {withForm} from './Form';
+
 interface IProps {
-	dataContext?: {[key: string]: any};
-	dataMember?: string;
+	value?: any | null;
+	onChange: (value: any) => void;
+	isInvalid?: boolean;
 	items: Array<{[key: string]: any}>;
 	idFieldName: string;
 	labelFieldName: string;
-	onChange?: (value: any) => any;
 }
 
-const Select: FC<IProps> = ({
-	dataContext,
-	dataMember,
+export const SelectRaw: FC<IProps> = ({
+	value,
+	onChange,
+	isInvalid = false,
 	items,
 	idFieldName,
 	labelFieldName,
-	onChange,
 }) => {
-	const [selectedValue, setSelectedValue] = useState(dataContext ? dataContext[dataMember] : '');
-
-	const changeValue = (value: string) => {
-		if (dataContext) {
-			dataContext[dataMember] = value;
-		}
-		if (value !== selectedValue) {
-			setSelectedValue(value);
-			if (onChange) {
-				onChange(value);
-			}
-		}
-	};
-
 	const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-		changeValue(event.target.value);
+		onChange(event.target.value);
 	};
 
 	if (items === null) {
@@ -44,12 +32,21 @@ const Select: FC<IProps> = ({
 		return <span>No items available.</span>;
 	}
 
-	if (selectedValue === null || selectedValue === undefined || selectedValue === '') {
-		changeValue(items[0][idFieldName]);
+	if (value === null || value === undefined || value === '') {
+		const newValue = items[0][idFieldName];
+		if (newValue !== value) {
+			value = newValue;
+			setTimeout(() => onChange(value));
+		}
 	}
 
 	return (
-		<BSForm.Control as="select" onChange={handleChange as any} value={selectedValue}>
+		<BSForm.Control
+			as="select"
+			onChange={handleChange as any}
+			value={value}
+			isInvalid={isInvalid}
+		>
 			{items.map(item => (
 				<option key={item[idFieldName]} value={item[idFieldName]}>
 					{item[labelFieldName]}
@@ -58,5 +55,7 @@ const Select: FC<IProps> = ({
 		</BSForm.Control>
 	);
 };
+
+const Select = withForm(SelectRaw);
 
 export default Select;

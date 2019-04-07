@@ -1,29 +1,37 @@
-import React, {FC, useState, ChangeEvent} from 'react';
+import React, {FC, ChangeEvent} from 'react';
 import BSForm from 'react-bootstrap/Form';
+import {withForm} from './Form';
 
 interface IProps {
-	type: string;
+	value?: string | null;
+	onChange: (value: string) => void;
+	isInvalid?: boolean;
+	type?: string;
 	placeholder?: string;
-	dataContext: {[key: string]: any};
-	dataMember: string;
 }
 
-const Input: FC<IProps> = ({type, placeholder, dataContext, dataMember}) => {
-	const [value, setValue] = useState(dataContext[dataMember] || '');
-
+export const InputRaw: FC<IProps> = ({
+	value,
+	onChange,
+	isInvalid = false,
+	type = 'text',
+	placeholder = '',
+}) => {
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-		dataContext[dataMember] = event.target.value;
-		setValue(event.target.value);
+		onChange(event.target.value);
 	};
 
 	return (
 		<BSForm.Control
 			type={type}
-			value={value}
-			placeholder={placeholder || ''}
+			value={value || ''}
+			placeholder={placeholder}
 			onChange={handleChange as any}
+			isInvalid={isInvalid}
 		/>
 	);
 };
+
+const Input = withForm(InputRaw);
 
 export default Input;
