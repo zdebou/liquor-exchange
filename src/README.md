@@ -84,3 +84,4 @@ mvnw clean install spring-boot:repackage
 -   jak se rozhodnout mezi _embedd_ a _reference_: https://stackoverflow.com/questions/5373198/mongodb-relationships-embed-or-reference?rq=1
 -   filtering: https://www.baeldung.com/queries-in-spring-data-mongodb
 -   Lombok: https://projectlombok.org/
+-   schéma yup (validace formulářů): https://github.com/jquense/yup

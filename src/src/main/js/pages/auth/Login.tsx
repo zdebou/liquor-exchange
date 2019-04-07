@@ -8,7 +8,11 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 
 const USER_SCHEMA = yup.object().shape({
-	name: yup.string().required('This is a required field'),
+	name: yup
+		.string()
+		.strict()
+		.trim("Login can't start or end with spaces.")
+		.required('This is a required field'),
 	password: yup.string().required('This is a required field'),
 });
 
