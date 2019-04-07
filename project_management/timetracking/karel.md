@@ -12,4 +12,5 @@
 | 3.4.  | expose IDs + select component    | 2h  |
 | 3.4.  | actions                          | 1h  |
 | 4.4.  | data filtering                   | 4h  |
-| 7.4.  | merge + bugfix                   | 1h  |
+| 7.4.  | merge + bugfix (TS tools)        | 1h  |
+| 8.4.  | merge + bugfix (form validation) | 1h  |

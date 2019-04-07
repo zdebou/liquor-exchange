@@ -28,6 +28,7 @@ Výkazy práce se posílají jednou za 14 dní před konzultací/nejpozději bě
 
 [Průběžné hodnocení](project_management/hodnocení/body.md)
 
+[Google Drive](https://drive.google.com/drive/u/1/folders/1CTIrvNO3kiiKZhdFaRrJtBsy3nddvaph), 
 [Analýza](https://docs.google.com/document/d/18rA39qKGTYdcZNuclX0DbqMWP2Jt0rdyYCgSYZj8HnI/edit#heading=h.snvlu8n2ejro) (přihlásit školním účtem)
 
 ### Projektové vedení
