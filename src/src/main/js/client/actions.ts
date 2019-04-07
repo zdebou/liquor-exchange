@@ -5,15 +5,24 @@ const restBasePath = '/api';
 export enum Collection {
 	Auctions = '/auctions',
 	AuctionsView = '/views/auctions',
+	AuctionsViewByCountry = '/views/auctions/byCountryCode',
 	Countries = '/countries',
 }
+
+const encodeParams = (p: object) =>
+	p == null
+		? ''
+		: Object.entries(p)
+				.map(kv => kv.map(encodeURIComponent).join('='))
+				.join('&');
 
 /**
  * Loads all documents from a collection
  * @param collection Name/identifier of a collection.
+ * @param params URL parameters for filtering
  */
-export const loadDocuments = (collection: Collection) =>
-	asyncRestClient({method: 'GET', path: `${restBasePath}${collection}`});
+export const loadDocuments = (collection: Collection, params?: object) =>
+	asyncRestClient({method: 'GET', path: `${restBasePath}${collection}?${encodeParams(params)}`});
 
 /**
  * Loads a single document from a collection

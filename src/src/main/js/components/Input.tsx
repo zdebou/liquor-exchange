@@ -1,4 +1,4 @@
-import React, {FC, useState, ChangeEvent} from 'react';
+import React, {FC, ChangeEvent} from 'react';
 import BSForm from 'react-bootstrap/Form';
 import {withForm} from './Form';
 
@@ -32,4 +32,6 @@ export const InputRaw: FC<IProps> = ({
 	);
 };
 
-export default withForm(InputRaw);
+const Input = withForm(InputRaw);
+
+export default Input;

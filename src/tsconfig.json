@@ -4,6 +4,7 @@
 		"jsx": "react",
 		"lib": ["dom", "es2018"],
 		"noImplicitAny": true,
+		"noUnusedLocals": true,
 		"rootDir": "src/main/js"
 	},
 	"exclude": ["node_modules"]

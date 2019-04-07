@@ -1,14 +1,13 @@
-import React, {FC, useState, useEffect, ChangeEvent} from 'react';
+import React, {FC, ChangeEvent} from 'react';
 import BSForm from 'react-bootstrap/Form';
 
-import {Collection, loadDocuments} from '../client/actions';
 import {withForm} from './Form';
 
 interface IProps {
-	value?: string | null;
-	onChange: (value: string) => void;
+	value?: any | null;
+	onChange: (value: any) => void;
 	isInvalid?: boolean;
-	collection: Collection;
+	items: Array<{[key: string]: any}>;
 	idFieldName: string;
 	labelFieldName: string;
 }
@@ -16,29 +15,14 @@ interface IProps {
 export const SelectRaw: FC<IProps> = ({
 	value,
 	onChange,
-	collection,
 	isInvalid = false,
+	items,
 	idFieldName,
 	labelFieldName,
 }) => {
-	const [items, setItems] = useState(null);
-
-	const extractCollectionName = (path: string) => {
-		const pieces = path.split('/');
-		return pieces[pieces.length - 1];
-	};
-
-	const loadItems = () => {
-		loadDocuments(collection).then(response => {
-			setItems(response.entity._embedded[extractCollectionName(collection)]);
-		});
-	};
-
 	const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
 		onChange(event.target.value);
 	};
-
-	useEffect(loadItems, []);
 
 	if (items === null) {
 		return <span>Loading...</span>;
@@ -48,9 +32,12 @@ export const SelectRaw: FC<IProps> = ({
 		return <span>No items available.</span>;
 	}
 
-	if (!value) {
-		value = items[0][idFieldName];
-		setTimeout(() => onChange(value));
+	if (value === null || value === undefined || value === '') {
+		const newValue = items[0][idFieldName];
+		if (newValue !== value) {
+			value = newValue;
+			setTimeout(() => onChange(value));
+		}
 	}
 
 	return (
@@ -60,7 +47,7 @@ export const SelectRaw: FC<IProps> = ({
 			value={value}
 			isInvalid={isInvalid}
 		>
-			{items.map((item: {[key: string]: any}) => (
+			{items.map(item => (
 				<option key={item[idFieldName]} value={item[idFieldName]}>
 					{item[labelFieldName]}
 				</option>
@@ -69,4 +56,6 @@ export const SelectRaw: FC<IProps> = ({
 	);
 };
 
-export default withForm(SelectRaw);
+const Select = withForm(SelectRaw);
+
+export default Select;

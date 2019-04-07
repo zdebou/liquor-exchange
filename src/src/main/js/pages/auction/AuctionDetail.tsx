@@ -9,7 +9,7 @@ import Heading from '../../components/Heading';
 import Form from '../../components/Form';
 import FormGroup from '../../components/FormGroup';
 import Input from '../../components/Input';
-import Select from '../../components/Select';
+import SelectDocument from '../../components/SelectDocument';
 import Button from '../../components/Button';
 
 const AUCTION_SCHEMA = yup.object().shape({
@@ -22,7 +22,7 @@ const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) =
 
 	const init = () => {
 		if (id === null) {
-			setAuction({auction: {}});
+			setAuction({});
 		} else {
 			loadDocument(Collection.Auctions, id).then(response => setAuction(response.entity));
 		}
@@ -49,8 +49,8 @@ const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) =
 			<Heading>Auction</Heading>
 			<Form schema={AUCTION_SCHEMA} onSubmit={handleSubmit} initialValues={auction}>
 				<Input id="name" label="Name" />
-				<Select
-					id="country_code"
+				<SelectDocument
+					id="countryCode"
 					label="Country"
 					collection={Collection.Countries}
 					idFieldName="code"
