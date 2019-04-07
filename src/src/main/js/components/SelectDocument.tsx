@@ -1,19 +1,18 @@
-import React, {FC, useState, useEffect, ChangeEvent} from 'react';
-import BSForm from 'react-bootstrap/Form';
+import React, {FC, useState, useEffect} from 'react';
 
 import {Collection, loadDocuments} from '../client/actions';
 
 import Select from './Select';
 
 interface IProps {
-	dataContext: object;
-	dataMember: string;
+	dataContext?: object;
+	dataMember?: string;
 	collection: Collection;
 	idFieldName: string;
 	labelFieldName: string;
 	allowEmpty?: boolean;
 	emptyOptionName?: string;
-	onChange?: () => any;
+	onChange?: (value: any) => void;
 }
 
 /**
@@ -25,8 +24,8 @@ const SelectDocument: FC<IProps> = ({
 	collection,
 	idFieldName,
 	labelFieldName,
-	allowEmpty,
-	emptyOptionName,
+	allowEmpty = false,
+	emptyOptionName = 'None',
 	onChange,
 }) => {
 	const [items, setItems] = useState(null);
@@ -38,17 +37,14 @@ const SelectDocument: FC<IProps> = ({
 
 	const loadItems = () => {
 		loadDocuments(collection).then(response => {
-			let items = response.entity._embedded[extractCollectionName(collection)];
+			const newItems: object[] = response.entity._embedded[extractCollectionName(collection)];
 			if (allowEmpty) {
-				if (!emptyOptionName) {
-					emptyOptionName = 'None';
-				}
-				let emptyItem = {};
-				emptyItem[idFieldName] = '';
-				emptyItem[labelFieldName] = emptyOptionName;
-				items.unshift(emptyItem);
+				newItems.unshift({
+					[idFieldName]: '',
+					[labelFieldName]: emptyOptionName,
+				});
 			}
-			setItems(items);
+			setItems(newItems);
 		});
 	};
 

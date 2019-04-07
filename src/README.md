@@ -43,8 +43,12 @@ Aplikace teď běží adrese `http://localhost:8080`.
 
 ## Lombok
 
--   pro vývoj frontendu se doporučuje plugin Prettier, který zajístí správné formátování kódu
 -   pro vývoj backendu doporučuji plugin pro Lombok, který IDE upozorní na metody generované Lombokem
+
+## TypeScript (frontend)
+
+-   doporučené jsou pluginy pro TSLint a Prettier, které jsou dostupné pro většinu IDE
+-   alternativně lze kontrolu kódu pustit ručně přes `npm run check`
 
 ## Hot Swap
 

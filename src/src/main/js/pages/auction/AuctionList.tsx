@@ -13,12 +13,12 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 	const [rows, setRows] = useState(null);
 	const [country, setCountry] = useState(null);
 
-	const fetchAuctions = (country_code?: string) => {
-		if (country_code == null || country_code == '') {
+	const fetchAuctions = (countryCode?: string) => {
+		if (!countryCode) {
 			loadDocuments(Collection.AuctionsView).then(response => setRows(response.entity));
 		} else {
-			loadDocuments(Collection.AuctionsViewByCountry, {countryCode: country_code}).then(
-				response => setRows(response.entity),
+			loadDocuments(Collection.AuctionsViewByCountry, {countryCode}).then(response =>
+				setRows(response.entity),
 			);
 		}
 	};
@@ -31,9 +31,9 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 		deleteDocument(Collection.Auctions, id).then(() => fetchAuctions(country));
 	};
 
-	const handleCountryChange = (country_code: string) => {
-		fetchAuctions(country_code);
-		setCountry(country_code);
+	const handleCountryChange = (countryCode: string) => {
+		fetchAuctions(countryCode);
+		setCountry(countryCode);
 	};
 
 	useEffect(fetchAuctions, []);

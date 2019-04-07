@@ -2,12 +2,12 @@ import React, {FC, useState, useEffect, ChangeEvent} from 'react';
 import BSForm from 'react-bootstrap/Form';
 
 interface IProps {
-	dataContext?: object;
+	dataContext?: {[key: string]: any};
 	dataMember?: string;
-	items: array;
+	items: Array<{[key: string]: any}>;
 	idFieldName: string;
 	labelFieldName: string;
-	onChange?: () => any;
+	onChange?: (value: any) => any;
 }
 
 const Select: FC<IProps> = ({
@@ -24,7 +24,7 @@ const Select: FC<IProps> = ({
 		if (dataContext) {
 			dataContext[dataMember] = value;
 		}
-		if (value != selectedValue) {
+		if (value !== selectedValue) {
 			setSelectedValue(value);
 			if (onChange) {
 				onChange(value);
@@ -40,17 +40,17 @@ const Select: FC<IProps> = ({
 		return <span>Loading...</span>;
 	}
 
-	if (items.length == 0) {
+	if (items.length === 0) {
 		return <span>No items available.</span>;
 	}
 
-	if (selectedValue == null || selectedValue == '') {
+	if (selectedValue === null || selectedValue === undefined || selectedValue === '') {
 		changeValue(items[0][idFieldName]);
 	}
 
 	return (
 		<BSForm.Control as="select" onChange={handleChange as any} value={selectedValue}>
-			{items.map((item: object) => (
+			{items.map(item => (
 				<option key={item[idFieldName]} value={item[idFieldName]}>
 					{item[labelFieldName]}
 				</option>
