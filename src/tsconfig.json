@@ -1,0 +1,10 @@
+{
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"jsx": "react",
+		"lib": ["dom", "es2018"],
+		"noImplicitAny": true,
+		"rootDir": "src/main/js"
+	},
+	"exclude": ["node_modules"]
+}
