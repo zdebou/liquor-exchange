@@ -8,17 +8,28 @@ import Heading from '../../components/Heading';
 import Table from '../../components/Table';
 import Button from '../../components/Button';
 import {SelectDocumentRaw} from '../../components/SelectDocument';
+import {Modal, ModalMessage, ModalType} from '../../components/Modal';
 
 const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 	const [rows, setRows] = useState(null);
 	const [country, setCountry] = useState('');
+	const [modalMessage, setModalMessage] = useState(null);
+
+	const onFail = response => {
+		setModalMessage({type: ModalType.Error, title: response.error, text: response.message});
+	};
+
+	const onLoadSuccess = response => {
+		setRows(response.entity);
+	};
 
 	const fetchAuctions = (countryCode?: string) => {
 		if (!countryCode) {
-			loadDocuments(Collection.AuctionsView).then(response => setRows(response.entity));
+			loadDocuments(Collection.AuctionsView).then(onLoadSuccess, onFail);
 		} else {
-			loadDocuments(Collection.AuctionsViewByCountry, {countryCode}).then(response =>
-				setRows(response.entity),
+			loadDocuments(Collection.AuctionsViewByCountry, {countryCode}).then(
+				onLoadSuccess,
+				onFail,
 			);
 		}
 	};
@@ -27,8 +38,12 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 		history.push('/auction/new');
 	};
 
+	const onDeleteSuccess = response => {
+		fetchAuctions(country);
+	};
+
 	const handleDeleteAuction = (id: string) => {
-		deleteDocument(Collection.Auctions, id).then(() => fetchAuctions(country));
+		deleteDocument(Collection.Auctions, id).then(onDeleteSuccess, onFail);
 	};
 
 	const handleCountryChange = (countryCode: string) => {
@@ -73,6 +88,7 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 				)}
 			</Table>
 			<Button label="Add auction" primary onClick={handleAddAuction} />
+			{modalMessage && <Modal message={modalMessage} />}
 		</Container>
 	);
 };
