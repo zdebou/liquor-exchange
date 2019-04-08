@@ -11,6 +11,7 @@ import FormGroup from '../../components/FormGroup';
 import Input from '../../components/Input';
 import SelectDocument from '../../components/SelectDocument';
 import Button from '../../components/Button';
+import {Modal, ModalMessage, ModalType} from '../../components/Modal';
 
 const AUCTION_SCHEMA = yup.object().shape({
 	name: yup.string().required('Name cannot be empty'),
@@ -19,23 +20,34 @@ const AUCTION_SCHEMA = yup.object().shape({
 const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) => {
 	const id = match.params.id === 'new' ? null : match.params.id;
 	const [auction, setAuction] = useState(null);
+	const [modalMessage, setModalMessage] = useState(null);
+
+	const onFail = response => {
+		setModalMessage({type: ModalType.Error, title: response.error, text: response.message});
+	};
+
+	const onSaveSuccess = response => {
+		history.push('/');
+	};
+
+	const onLoadSuccess = response => {
+		setAuction(response.entity);
+	};
 
 	const init = () => {
 		if (id === null) {
 			setAuction({});
 		} else {
-			loadDocument(Collection.Auctions, id).then(response => setAuction(response.entity));
+			loadDocument(Collection.Auctions, id).then(onLoadSuccess, onFail);
 		}
 	};
 
 	const handleSubmit = async (data: object) => {
 		if (id === null) {
-			await insertDocument(Collection.Auctions, data);
+			await insertDocument(Collection.Auctions, data).then(onSaveSuccess, onFail);
 		} else {
-			await updateDocument(Collection.Auctions, data, id);
+			await updateDocument(Collection.Auctions, data, id).then(onSaveSuccess, onFail);
 		}
-		setAuction(data);
-		history.push('/');
 	};
 
 	useEffect(init, []);
@@ -61,6 +73,7 @@ const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) =
 				</FormGroup>
 			</Form>
 			<Link to="/">Back</Link>
+			{modalMessage && <Modal message={modalMessage} />}
 		</Container>
 	);
 };
