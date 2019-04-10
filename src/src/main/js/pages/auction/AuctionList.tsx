@@ -24,11 +24,11 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 	};
 
 	const fetchAuctions = (countryCode?: string) => {
-		if (!countryCode) {
-			loadDocuments(Collection.AuctionsView).then(onLoadSuccess, onFail);
-		} else {
-			loadDocuments(Collection.AuctionsView, {countryCode}).then(onLoadSuccess, onFail);
+		const params: object[] = [];
+		if (countryCode) {
+			params['countryCode'] = countryCode;
 		}
+		loadDocuments(Collection.AuctionsView, params).then(onLoadSuccess, onFail);
 	};
 
 	const handleAddAuction = () => {
