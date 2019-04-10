@@ -4,7 +4,7 @@ import restClient from './restClient';
 
 const asyncRestClient = (request: Request): Promise<any> =>
 	new Promise((resolve, reject) =>
-		restClient(request).then(resolve, function(response) {
+		restClient(request).then(resolve, response => {
 			if (response.entity) {
 				reject(response.entity);
 			} else {

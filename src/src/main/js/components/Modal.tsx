@@ -1,4 +1,4 @@
-import React, {FC, useState, ComponentType} from 'react';
+import React, {FC, useState} from 'react';
 import BSModal from 'react-bootstrap/Modal';
 
 export enum ModalType {
@@ -7,7 +7,7 @@ export enum ModalType {
 	Default = 'info',
 }
 
-export interface ModalMessage {
+export interface IModalMessage {
 	type?: ModalType;
 	title: string;
 	text: string;
@@ -15,13 +15,14 @@ export interface ModalMessage {
 }
 
 interface IProps {
-	message?: ModalMessage;
+	message: IModalMessage;
 }
 
 export const Modal: FC<IProps> = ({message}) => {
+	const {type = ModalType.Default, title, text, handled = false} = message;
 	const [visible, setVisible] = useState(true);
 
-	if (!visible && !message.handled) {
+	if (!visible && !handled) {
 		setVisible(true);
 	}
 
@@ -32,11 +33,11 @@ export const Modal: FC<IProps> = ({message}) => {
 
 	return (
 		<BSModal show={visible} onHide={handleOnHide}>
-			<BSModal.Header closeButton variant={message ? message.type : ''}>
-				<BSModal.Title>{message.title ? message.title : message.type}</BSModal.Title>
+			<BSModal.Header closeButton className={`text-${type}`}>
+				<BSModal.Title>{title}</BSModal.Title>
 			</BSModal.Header>
 			<BSModal.Body>
-				<p>{message.text}</p>
+				<p>{text}</p>
 			</BSModal.Body>
 		</BSModal>
 	);

@@ -8,18 +8,18 @@ import Heading from '../../components/Heading';
 import Table from '../../components/Table';
 import Button from '../../components/Button';
 import {SelectDocumentRaw} from '../../components/SelectDocument';
-import {Modal, ModalMessage, ModalType} from '../../components/Modal';
+import {Modal, ModalType} from '../../components/Modal';
 
 const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 	const [rows, setRows] = useState(null);
 	const [country, setCountry] = useState('');
 	const [modalMessage, setModalMessage] = useState(null);
 
-	const onFail = response => {
+	const onFail = (response: {[key: string]: any}) => {
 		setModalMessage({type: ModalType.Error, title: response.error, text: response.message});
 	};
 
-	const onLoadSuccess = response => {
+	const onLoadSuccess = (response: {[key: string]: any}) => {
 		setRows(response.entity.content);
 	};
 
@@ -35,7 +35,7 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 		history.push('/auction/new');
 	};
 
-	const onDeleteSuccess = response => {
+	const onDeleteSuccess = () => {
 		fetchAuctions(country);
 	};
 
