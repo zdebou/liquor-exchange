@@ -20,7 +20,7 @@ interface IProps {
  */
 export const SelectDocumentRaw: FC<IProps> = ({
 	value,
-	onChange,
+	onChange = () => void 0,
 	isInvalid,
 	collection,
 	idFieldName,
@@ -28,7 +28,7 @@ export const SelectDocumentRaw: FC<IProps> = ({
 	allowEmpty = false,
 	emptyOptionName = 'None',
 }) => {
-	const [items, setItems] = useState(null);
+	const [items, setItems] = useState<object[] | null>(null);
 
 	const extractCollectionName = (path: string) => {
 		const pieces = path.split('/');

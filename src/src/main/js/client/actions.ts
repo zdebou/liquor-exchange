@@ -8,19 +8,47 @@ export enum Collection {
 	Countries = '/countries',
 }
 
-const encodeParams = (p: object) =>
-	p == null
-		? ''
-		: Object.entries(p)
-				.map(kv => kv.map(encodeURIComponent).join('='))
-				.join('&');
+export enum SortOrder {
+	Asc = 'asc',
+	Desc = 'desc',
+}
+
+export interface ISortParams {
+	column: string;
+	order?: SortOrder;
+}
+
+export interface IRequestParams {
+	sort?: ISortParams;
+	size?: number;
+	page?: number;
+	[key: string]: any;
+}
+
+const encodeParams = (params: IRequestParams) =>
+	Object.entries(params)
+		.filter(([_, value]) => value !== undefined)
+		.reduce((result, [key, value]) => {
+			let finalValue;
+			if (key === 'sort') {
+				finalValue = value.column;
+				if (value.order) {
+					finalValue += `,${value.order}`;
+				}
+			} else {
+				finalValue = value;
+			}
+			result.append(key, finalValue);
+			return result;
+		}, new URLSearchParams())
+		.toString();
 
 /**
  * Loads all documents from a collection
  * @param collection Name/identifier of a collection.
  * @param params URL parameters for filtering
  */
-export const loadDocuments = (collection: Collection, params?: object) =>
+export const loadDocuments = (collection: Collection, params: IRequestParams = {}) =>
 	asyncRestClient({method: 'GET', path: `${restBasePath}${collection}?${encodeParams(params)}`});
 
 /**
