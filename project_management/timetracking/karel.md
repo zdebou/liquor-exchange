@@ -16,3 +16,4 @@
 | 8.4.  | merge + bugfix (form validation) | 1h  |
 | 8.4.  | error handling and modal dialog  | 3h  |
 | 8.4.  | backend - paging                 | 1h  |
+| 8.4.  | backend - sorting                | 1h  |
