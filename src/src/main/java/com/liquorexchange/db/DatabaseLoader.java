@@ -50,11 +50,13 @@ public class DatabaseLoader implements CommandLineRunner {
 			Country usa = new Country("US", "United States");
 			this.country_repository.save(usa);
 
-			this.auction_repository.save(new Auction("aukce 1", czech_rep));
-			this.auction_repository.save(new Auction("aukce 2", czech_rep));
-			this.auction_repository.save(new Auction("test auction 3", usa));
-			this.auction_repository.save(new Auction("test auction 4", usa));
-			this.auction_repository.save(new Auction("test auction 5", usa));
+			for (int i = 1; i <= 30; i++) {
+				this.auction_repository.save(new Auction(String.format("aukce %d", i), czech_rep));
+			}
+			for (int i = 1; i <= 30; i++) {
+				this.auction_repository.save(new Auction(String.format("test auction %d",i), usa));
+			}
+
 		}
 
 	}

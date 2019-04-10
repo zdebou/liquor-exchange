@@ -20,17 +20,14 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 	};
 
 	const onLoadSuccess = response => {
-		setRows(response.entity);
+		setRows(response.entity.content);
 	};
 
 	const fetchAuctions = (countryCode?: string) => {
 		if (!countryCode) {
 			loadDocuments(Collection.AuctionsView).then(onLoadSuccess, onFail);
 		} else {
-			loadDocuments(Collection.AuctionsViewByCountry, {countryCode}).then(
-				onLoadSuccess,
-				onFail,
-			);
+			loadDocuments(Collection.AuctionsView, {countryCode}).then(onLoadSuccess, onFail);
 		}
 	};
 
