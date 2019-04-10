@@ -44,7 +44,7 @@ const Table: FC<IProps> = ({
 		}
 
 		if (!sortDescription) {
-			onSortChange({column: newColumn, order: SortOrder.Asc});
+			onSortChange({column: newColumn, order: DEFAULT_ORDER});
 			return;
 		}
 
