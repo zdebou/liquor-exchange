@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  web:
+    build: .
+    container_name: web
+    ports:
+      - 8080:8080
+    hostname: web
+    links:
+      - mongodb:mongo
+
+  mongodb:
+    image: mongo
+    container_name: mongo
+    ports:
+      - 27017:27017
+    hostname: ubuntu-server.loc
+    volumes:
+      - ./docker/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh
+    restart: always
