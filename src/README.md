@@ -39,6 +39,14 @@ mvnw spring-boot:run
 
 Aplikace teď běží adrese `http://localhost:8080`.
 
+## Docker
+- je třeba nainstalovat docker a docker-compose
+   - https://hub.docker.com/editions/community/docker-ce-desktop-windows
+   - https://docs.docker.com/compose/install/
+```
+mvnw package && docker-compose up
+```
+
 # Vývoj
 
 ## Lombok
