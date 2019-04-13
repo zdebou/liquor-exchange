@@ -6,7 +6,6 @@ services:
     container_name: web
     ports:
       - 8080:8080
-    hostname: web
     links:
       - mongodb:mongo
 
@@ -19,3 +18,7 @@ services:
     volumes:
       - ./docker/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh
     restart: always
+    networks:
+      default:
+        aliases:
+          - ubuntu-server.loc
