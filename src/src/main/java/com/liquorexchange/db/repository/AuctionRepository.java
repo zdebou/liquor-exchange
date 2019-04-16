@@ -5,10 +5,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import java.util.List;
-
 public interface AuctionRepository extends MongoRepository<Auction, String> {
 
+    @Deprecated()
     Page<Auction> findByCountryCode(String code, Pageable pageable);
+
+    Page<Auction> findAuctionsByCountry_Code(String code, Pageable pageable);
 
 }

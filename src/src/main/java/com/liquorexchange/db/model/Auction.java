@@ -2,6 +2,8 @@ package com.liquorexchange.db.model;
 
 import lombok.Data;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -15,15 +17,14 @@ public class Auction {
 	@NotBlank(message = "Auction name cannot be empty.")
 	private String name;
 
-	@NotBlank(message = "Auction must be associated with a country.")
-	private String countryCode;
+	@NotNull(message = "Auction must be associated with a country.")
+	private Country country;
 
-	public Auction() {
-	}
+	public Auction() { }
 
 	public Auction(String name, Country country) {
 		this.name = name;
-		this.countryCode = country.getCode();
+		this.country = country;
 	}
 
 	public String getId() {
@@ -42,11 +43,11 @@ public class Auction {
 		this.name = name;
 	}
 
-	public String getCountryCode() {
-		return countryCode;
+	public Country getCountry() {
+		return country;
 	}
 
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
+	public void setCountry(Country country) {
+		this.country = country;
 	}
 }

@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.liquorexchange.db.repository.CountryRepository;
 
 @Data
+@Deprecated
 public class AuctionView {
 
     @Autowired
-    public AuctionView(Auction auction, CountryRepository country_repository) {
+    public AuctionView(Auction auction) {
         this.auction = auction;
-        this.country = country_repository.findById(this.auction.getCountryCode()).get();
+        this.country = auction.getCountry();
     }
 
     private Auction auction;

@@ -19,9 +19,6 @@ public class ViewsController {
     @Autowired
     private AuctionRepository auction_repository;
 
-    @Autowired
-    private CountryRepository country_repository;
-
     @GetMapping("/auctions")
     public Page<AuctionView> auctions(
             @RequestParam(value = "countryCode", required = false, defaultValue = "") String countryCode,
@@ -30,9 +27,9 @@ public class ViewsController {
         if (countryCode.trim().equals("")) {
             auctions = auction_repository.findAll(pageable);
         } else {
-            auctions = auction_repository.findByCountryCode(countryCode, pageable);
+            auctions = auction_repository.findAuctionsByCountry_Code(countryCode, pageable);
         }
-        Page<AuctionView> auctionView = new PageImpl<>(auctions.stream().map(auction -> new AuctionView(auction, country_repository)).collect(Collectors.toList()), pageable, auctions.getTotalElements());
+        Page<AuctionView> auctionView = new PageImpl<>(auctions.stream().map(auction -> new AuctionView(auction)).collect(Collectors.toList()), pageable, auctions.getTotalElements());
         return auctionView;
     }
 }
