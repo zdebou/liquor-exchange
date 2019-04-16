@@ -11,26 +11,26 @@ import FormGroup from '../../components/FormGroup';
 import Input from '../../components/Input';
 import SelectDocument from '../../components/SelectDocument';
 import Button from '../../components/Button';
-import {Modal, ModalMessage, ModalType} from '../../components/Modal';
+import {Modal, ModalType, IModalMessage} from '../../components/Modal';
 
 const AUCTION_SCHEMA = yup.object().shape({
 	name: yup.string().required('Name cannot be empty'),
 });
 
 const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) => {
-	const id = match.params.id === 'new' ? null : match.params.id;
-	const [auction, setAuction] = useState(null);
-	const [modalMessage, setModalMessage] = useState(null);
+	const id = !match || match.params.id === 'new' ? null : match.params.id;
+	const [auction, setAuction] = useState<object | null>(null);
+	const [modalMessage, setModalMessage] = useState<IModalMessage | null>(null);
 
-	const onFail = response => {
+	const onFail = (response: {[key: string]: any}) => {
 		setModalMessage({type: ModalType.Error, title: response.error, text: response.message});
 	};
 
-	const onSaveSuccess = response => {
+	const onSaveSuccess = () => {
 		history.push('/');
 	};
 
-	const onLoadSuccess = response => {
+	const onLoadSuccess = (response: {[key: string]: any}) => {
 		setAuction(response.entity);
 	};
 

@@ -7,7 +7,7 @@ interface IProps {
 	value?: any | null;
 	onChange: (value: any) => void;
 	isInvalid?: boolean;
-	items: Array<{[key: string]: any}>;
+	items: Array<{[key: string]: any}> | null;
 	idFieldName: string;
 	labelFieldName: string;
 }

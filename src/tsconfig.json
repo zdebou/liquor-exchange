@@ -5,7 +5,8 @@
 		"lib": ["dom", "es2018"],
 		"noImplicitAny": true,
 		"noUnusedLocals": true,
-		"rootDir": "src/main/js"
+		"rootDir": "src/main/js",
+		"strictNullChecks": true
 	},
 	"exclude": ["node_modules"]
 }
