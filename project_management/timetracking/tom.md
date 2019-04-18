@@ -8,3 +8,4 @@
 | 7.4.  | Formuláře + validace                             | 1h   |
 | 11.4. | Frontend pro řazení záznamů                      | 2,5h |
 | 13.4. | Docker                                           | 2h   |
+| 18.4. | Docker                                           | 2h   |
