@@ -5,11 +5,14 @@ com.liquorexchange.resetdb=true
 spring.data.rest.base-path=/api
 
 # configure mongo connection based on your installation
+
+# these properties are not needed when you run MongoDB locally
 spring.data.mongodb.host=localhost
 spring.data.mongodb.port=27017
 spring.data.mongodb.authentication-database=liquor
 spring.data.mongodb.username=usr
 spring.data.mongodb.password=xyz123
+# this is always needed, but you can change db  if you like
 spring.data.mongodb.database=liquor
 
 # for backend development set to true, for frontend set to false
