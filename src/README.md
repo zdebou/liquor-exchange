@@ -1,8 +1,8 @@
-# Prerekvizity
+﻿# Prerekvizity
 
 -   Maven
 -   GIT
--   MongoDB (pro správu např. MongoDB Compass)
+-   MongoDB (pro správu např. MongoDB Compass) nebo Docker
 
 # Instalace
 
