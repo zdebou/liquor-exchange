@@ -27,7 +27,7 @@ export interface IRequestParams {
 
 const encodeParams = (params: IRequestParams) =>
 	Object.entries(params)
-		.filter(([_, value]) => value !== undefined)
+		.filter(([_, value]) => value !== undefined && value !== null && value !== '')
 		.reduce((result, [key, value]) => {
 			let finalValue;
 			if (key === 'sort') {
