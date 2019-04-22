@@ -10,7 +10,6 @@ import com.liquorexchange.db.model.*;
 public class ExposeEntityIdRestMvcConfiguration implements RepositoryRestConfigurer {
 
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-        config.exposeIdsFor(Country.class);
-        config.exposeIdsFor(Auction.class);
+        config.exposeIdsFor(Country.class, Auction.class, User.class, Category.class);
     }
 }
