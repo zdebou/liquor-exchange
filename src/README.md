@@ -50,6 +50,10 @@ mvnw package && docker-run
 
 # Vývoj
 
+Obecný diagram komponent:
+
+![](../docs/component-diagram.svg)
+
 ## Lombok
 
 -   pro vývoj backendu doporučuji plugin pro Lombok, který IDE upozorní na metody generované Lombokem
