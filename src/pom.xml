@@ -13,7 +13,7 @@
 	<groupId>com</groupId>
 	<artifactId>liquorexchange</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<name>Liquor Exchange</name>
 	<description>An online liquor investment auction house.</description>
