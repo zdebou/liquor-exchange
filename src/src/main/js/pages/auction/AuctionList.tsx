@@ -6,6 +6,7 @@ import {Collection, loadDocuments, deleteDocument, ISortParams} from '../../clie
 import Container from '../../components/Container';
 import Heading from '../../components/Heading';
 import Table from '../../components/Table';
+import ButtonGroup from '../../components/ButtonGroup';
 import Button from '../../components/Button';
 import {SelectDocumentRaw} from '../../components/SelectDocument';
 import {Modal, ModalType, IModalMessage} from '../../components/Modal';
@@ -98,7 +99,9 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 					</tr>
 				)}
 			</Table>
-			<Button label="Add auction" primary onClick={handleAddAuction} />
+			<ButtonGroup>
+				<Button label="Add auction" primary onClick={handleAddAuction} />
+			</ButtonGroup>
 			{modalMessage && <Modal message={modalMessage} />}
 		</Container>
 	);
