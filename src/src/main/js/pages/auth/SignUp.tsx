@@ -12,7 +12,7 @@ import Checkbox from '../../components/Checkbox';
 const REGISTRAION_SCHEMA = yup.object({
 	email: yup
 		.string()
-		.required('Pleasae provide a valid email address.')
+		.required('Please provide a valid email address.')
 		.email('Pleasae provide a valid email address.'),
 	password: yup
 		.string()
