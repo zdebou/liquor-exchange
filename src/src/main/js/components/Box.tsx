@@ -6,7 +6,7 @@ interface IProps {
 }
 
 const Box: FC<IProps> = ({title, children}) => (
-	<BSCard className="ml-auto mr-auto" style={{maxWidth: '600px'}}>
+	<BSCard className="ml-auto mr-auto mb-5" style={{maxWidth: '650px'}}>
 		<BSCard.Body>
 			{title && <h2 className="card-title h4 mb-5">{title}</h2>}
 			{children}

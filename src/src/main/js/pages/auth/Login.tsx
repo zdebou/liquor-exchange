@@ -5,15 +5,16 @@ import Container from '../../components/Container';
 import Box from '../../components/Box';
 import Form from '../../components/Form';
 import Input from '../../components/Input';
+import ButtonGroup from '../../components/ButtonGroup';
 import Button from '../../components/Button';
 
-const USER_SCHEMA = yup.object().shape({
+const USER_SCHEMA = yup.object({
 	name: yup
 		.string()
 		.strict(true)
 		.trim("Login can't start or end with spaces.")
-		.required('This is a required field'),
-	password: yup.string().required('This is a required field'),
+		.required('This is a required field.'),
+	password: yup.string().required('This is a required field.'),
 });
 
 interface IUser {
@@ -29,7 +30,7 @@ const Login: FC = () => {
 
 	return (
 		<Container>
-			<Box title="Log In">
+			<Box title="Sign In">
 				<Form
 					initialValues={{name: '', password: ''}}
 					schema={USER_SCHEMA}
@@ -37,7 +38,9 @@ const Login: FC = () => {
 				>
 					<Input id="name" label="Name" />
 					<Input id="password" label="Password" type="password" />
-					<Button type="submit" label="Submit" primary />
+					<ButtonGroup>
+						<Button type="submit" label="Submit" primary />
+					</ButtonGroup>
 				</Form>
 			</Box>
 		</Container>

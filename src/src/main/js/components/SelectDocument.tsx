@@ -8,6 +8,7 @@ interface IProps {
 	value?: any | null;
 	onChange?: (value: any) => void;
 	isInvalid?: boolean;
+	htmlId?: string;
 	collection: Collection;
 	idFieldName: string;
 	labelFieldName: string;
@@ -22,6 +23,7 @@ export const SelectDocumentRaw: FC<IProps> = ({
 	value,
 	onChange = () => void 0,
 	isInvalid,
+	htmlId,
 	collection,
 	idFieldName,
 	labelFieldName,
@@ -55,6 +57,7 @@ export const SelectDocumentRaw: FC<IProps> = ({
 			value={value}
 			onChange={onChange}
 			isInvalid={isInvalid}
+			htmlId={htmlId}
 			items={items}
 			idFieldName={idFieldName}
 			labelFieldName={labelFieldName}
@@ -65,6 +68,6 @@ export const SelectDocumentRaw: FC<IProps> = ({
 /**
  * Tato komponenta slouží k výběru dokumentu z kolekce ve formuláři - automaticky načte celou kolekci z REST API.
  */
-const SelectDocument = withForm(SelectDocumentRaw);
+const SelectDocument = withForm()(SelectDocumentRaw);
 
 export default SelectDocument;

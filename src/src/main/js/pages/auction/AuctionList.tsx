@@ -6,13 +6,14 @@ import {Collection, loadDocuments, deleteDocument, ISortParams} from '../../clie
 import Container from '../../components/Container';
 import Heading from '../../components/Heading';
 import Table from '../../components/Table';
+import ButtonGroup from '../../components/ButtonGroup';
 import Button from '../../components/Button';
 import {SelectDocumentRaw} from '../../components/SelectDocument';
 import {Modal, ModalType, IModalMessage} from '../../components/Modal';
 
 const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 	const [rows, setRows] = useState<Array<{[key: string]: any}> | null>(null);
-	const [country, setCountry] = useState<string>();
+	const [country, setCountry] = useState<string>('');
 	const [sorting, setSorting] = useState<ISortParams>();
 	const [modalMessage, setModalMessage] = useState<IModalMessage | null>(null);
 
@@ -22,6 +23,10 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 
 	const onLoadSuccess = (response: {[key: string]: any}) => {
 		setRows(response.entity.content);
+	};
+
+	const onDeleteSuccess = () => {
+		fetchAuctions(country);
 	};
 
 	const fetchAuctions = (
@@ -36,10 +41,6 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 
 	const handleAddAuction = () => {
 		history.push('/auction/new');
-	};
-
-	const onDeleteSuccess = () => {
-		fetchAuctions(country);
 	};
 
 	const handleSortChange = (sortingValue: ISortParams) => {
@@ -98,7 +99,9 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 					</tr>
 				)}
 			</Table>
-			<Button label="Add auction" primary onClick={handleAddAuction} />
+			<ButtonGroup>
+				<Button label="Add auction" primary onClick={handleAddAuction} />
+			</ButtonGroup>
 			{modalMessage && <Modal message={modalMessage} />}
 		</Container>
 	);

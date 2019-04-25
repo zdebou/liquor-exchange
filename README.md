@@ -18,6 +18,8 @@ Obchodníky a investory s archivními lihovinami.
 - databáze: **MongoDB 4**
 - deployment formou **Docker** container s možností nasazení v **Kubernetes**
 
+![](docs/app-overview.svg)
+
 ## Team
 
 Výkazy práce se posílají jednou za 14 dní před konzultací/nejpozději během ní na slack v soukromé zprávě projekťákovi [(chat)](https://rspnetwork.slack.com/messages/DGQFLKP8X/details/). Vyjímkou je, pokud jste v daném období nic neodpracovali.
@@ -28,7 +30,7 @@ Výkazy práce se posílají jednou za 14 dní před konzultací/nejpozději bě
 
 [Průběžné hodnocení](project_management/hodnocení/body.md)
 
-[Google Drive](https://drive.google.com/drive/u/1/folders/1CTIrvNO3kiiKZhdFaRrJtBsy3nddvaph), 
+[Google Drive](https://drive.google.com/drive/u/1/folders/1CTIrvNO3kiiKZhdFaRrJtBsy3nddvaph),
 [Analýza](https://docs.google.com/document/d/18rA39qKGTYdcZNuclX0DbqMWP2Jt0rdyYCgSYZj8HnI/edit#heading=h.snvlu8n2ejro) (přihlásit školním účtem)
 
 ### Projektové vedení
