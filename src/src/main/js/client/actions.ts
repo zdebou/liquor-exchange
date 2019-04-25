@@ -6,6 +6,7 @@ export enum Collection {
 	Auctions = '/auctions',
 	AuctionsView = '/views/auctions',
 	Countries = '/countries',
+	Categories = '/categories',
 }
 
 export enum SortOrder {

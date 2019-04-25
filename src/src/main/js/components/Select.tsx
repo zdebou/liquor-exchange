@@ -12,6 +12,7 @@ interface IProps {
 	items: Array<{[key: string]: any}> | null;
 	idFieldName: string;
 	labelFieldName: string;
+	assignObject?: boolean;
 }
 
 export const SelectRaw: FC<IProps> = ({
@@ -22,11 +23,20 @@ export const SelectRaw: FC<IProps> = ({
 	items,
 	idFieldName,
 	labelFieldName,
+	assignObject = false,
 }) => {
 	const id = useUniqueId(htmlId);
 
 	const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-		onChange(event.target.value);
+		if (!assignObject) {
+			onChange(event.target.value);
+			return;
+		}
+		if (!items) {
+			return;
+		}
+
+		onChange(items.find(item => item[idFieldName] === event.target.value) || items[0]);
 	};
 
 	if (items === null) {
@@ -37,12 +47,15 @@ export const SelectRaw: FC<IProps> = ({
 		return <span>No items available.</span>;
 	}
 
+	let rawValue = value;
 	if (value === null || value === undefined || value === '') {
-		const newValue = items[0][idFieldName];
+		rawValue = '';
+		const newValue = assignObject ? items[0] : items[0][idFieldName];
 		if (newValue !== value) {
-			value = newValue;
-			setTimeout(() => onChange(value));
+			setTimeout(() => onChange(newValue));
 		}
+	} else if (assignObject) {
+		rawValue = value[idFieldName] || '';
 	}
 
 	return (
@@ -50,7 +63,7 @@ export const SelectRaw: FC<IProps> = ({
 			id={id}
 			as="select"
 			onChange={handleChange as any}
-			value={value}
+			value={rawValue}
 			isInvalid={isInvalid}
 		>
 			{items.map(item => (
