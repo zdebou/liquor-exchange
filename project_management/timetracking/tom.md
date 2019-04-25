@@ -9,3 +9,5 @@
 | 11.4. | Frontend pro řazení záznamů                      | 2,5h |
 | 13.4. | Docker                                           | 2h   |
 | 18.4. | Docker                                           | 2h   |
+| 22.4. | Registrační formulář                             | 1h   |
+| 23.4. | Registrační formulář + vylepšení formulářů       | 3h   |

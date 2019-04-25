@@ -1,12 +1,14 @@
 import React, {FC, ChangeEvent} from 'react';
 import BSForm from 'react-bootstrap/Form';
 
+import useUniqueId from '../utils/useUniqueId';
 import {withForm} from './Form';
 
 interface IProps {
 	value?: any | null;
 	onChange: (value: any) => void;
 	isInvalid?: boolean;
+	htmlId?: string;
 	items: Array<{[key: string]: any}> | null;
 	idFieldName: string;
 	labelFieldName: string;
@@ -16,10 +18,13 @@ export const SelectRaw: FC<IProps> = ({
 	value,
 	onChange,
 	isInvalid = false,
+	htmlId,
 	items,
 	idFieldName,
 	labelFieldName,
 }) => {
+	const id = useUniqueId(htmlId);
+
 	const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
 		onChange(event.target.value);
 	};
@@ -42,6 +47,7 @@ export const SelectRaw: FC<IProps> = ({
 
 	return (
 		<BSForm.Control
+			id={id}
 			as="select"
 			onChange={handleChange as any}
 			value={value}
@@ -56,6 +62,6 @@ export const SelectRaw: FC<IProps> = ({
 	);
 };
 
-const Select = withForm(SelectRaw);
+const Select = withForm()(SelectRaw);
 
 export default Select;

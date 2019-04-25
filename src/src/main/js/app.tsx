@@ -6,15 +6,20 @@ import Navbar from './components/Navbar';
 import AuctionList from './pages/auction/AuctionList';
 import AuctionDetail from './pages/auction/AuctionDetail';
 import Login from './pages/auth/Login';
+import SignUp from './pages/auth/SignUp';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App: FC = () => (
 	<Router>
-		<Navbar brand="Liquor Exchange" menu={[{label: 'Log In', href: '/login'}]} />
+		<Navbar
+			brand="Liquor Exchange"
+			menu={[{label: 'Sign In', href: '/login'}, {label: 'Sign Up', href: '/signup'}]}
+		/>
 		<Route path="/" exact component={AuctionList} />
 		<Route path="/auction/:id" component={AuctionDetail} />
 		<Route path="/login" component={Login} />
+		<Route path="/signup" component={SignUp} />
 	</Router>
 );
 

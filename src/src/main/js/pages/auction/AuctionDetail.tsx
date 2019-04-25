@@ -7,13 +7,13 @@ import {Collection, loadDocument, insertDocument, updateDocument} from '../../cl
 import Container from '../../components/Container';
 import Heading from '../../components/Heading';
 import Form from '../../components/Form';
-import FormGroup from '../../components/FormGroup';
 import Input from '../../components/Input';
 import SelectDocument from '../../components/SelectDocument';
+import ButtonGroup from '../../components/ButtonGroup';
 import Button from '../../components/Button';
 import {Modal, ModalType, IModalMessage} from '../../components/Modal';
 
-const AUCTION_SCHEMA = yup.object().shape({
+const AUCTION_SCHEMA = yup.object({
 	name: yup.string().required('Name cannot be empty'),
 });
 
@@ -68,11 +68,13 @@ const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) =
 					idFieldName="code"
 					labelFieldName="name"
 				/>
-				<FormGroup>
+				<ButtonGroup>
 					<Button label="Save" type="submit" primary />
-				</FormGroup>
+				</ButtonGroup>
 			</Form>
-			<Link to="/">Back</Link>
+			<p className="mt-3">
+				<Link to="/">Back</Link>
+			</p>
 			{modalMessage && <Modal message={modalMessage} />}
 		</Container>
 	);
