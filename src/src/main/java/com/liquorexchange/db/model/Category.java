@@ -17,7 +17,10 @@ public class Category {
     @NotBlank
     private String name;
 
-    public Category(@NotBlank String name) {
+    public Category(String id, @NotBlank String name) {
+        if (id != null) {
+            this.id = id;
+        }
         this.name = name;
     }
 }

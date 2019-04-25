@@ -20,8 +20,8 @@ public class DatabaseLoader implements CommandLineRunner {
     private static final Country CZECH_REPUBLIC = new Country("CZ", "Czech Republic");
     private static final Country UNITED_STATES = new Country("US", "United States");
 
-    private static final Category WINE = new Category("Wine");
-    private static final Category BOURBON = new Category("Bourbon");
+    private static final Category WINE = new Category(null, "Wine");
+    private static final Category BOURBON = new Category(null, "Bourbon");
 
     private static final User JOHN = new User(
             "johny",
