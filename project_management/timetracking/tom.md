@@ -11,3 +11,4 @@
 | 18.4. | Docker                                           | 2h   |
 | 22.4. | Registrační formulář                             | 1h   |
 | 23.4. | Registrační formulář + vylepšení formulářů       | 3h   |
+| 25.4. | Opravy formulářů pro novou DB                    | 2h   |
