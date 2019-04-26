@@ -1,5 +1,6 @@
 package com.liquorexchange.db.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -11,11 +12,12 @@ import java.util.Date;
 import java.util.UUID;
 
 @Data
+@AllArgsConstructor
 @Document
 public class Auction {
 
 	@Id
-	private String id = UUID.randomUUID().toString();
+	private String id;
 
 	@NotBlank(message = "Auction name cannot be empty.")
 	private String name;
@@ -54,43 +56,4 @@ public class Auction {
 	@NotNull(message = "Auction must be associated with a category.")
 	private Category category;
 
-	public Auction() { }
-
-	public Auction(
-			String name,
-			String auctionState,
-			String productState,
-			String description,
-			Integer quantity,
-			Double volume,
-			Date start,
-			Date end,
-			User seller,
-			User winner,
-			Integer initialValue,
-			Integer lastValue,
-			Integer minimumBid,
-			Country country,
-			Category category) {
-		this.name = name;
-		this.auctionState = auctionState;
-		this.productState = productState;
-		this.description = description;
-		this.quantity = quantity;
-		this.volume = volume;
-		this.start = start;
-		this.end = end;
-		this.seller = seller;
-		this.winner = winner;
-		this.initialValue = initialValue;
-		this.lastValue = lastValue;
-		this.minimumBid = minimumBid;
-		this.country = country;
-		this.category = category;
-	}
-
-	public Auction(String name, Country country) {
-		this.name = name;
-		this.country = country;
-	}
 }

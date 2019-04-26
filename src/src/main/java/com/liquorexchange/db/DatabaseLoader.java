@@ -107,43 +107,44 @@ public class DatabaseLoader implements CommandLineRunner {
 
 			for (int i = 1; i <= 30; i++) {
 				this.auctionRepository.save(new Auction(
-				        String.format("aukce %d", i),
-                        "ACTIVE",
-                        "GOOD",
-                        "Scratches on paper box",
-                        1,
-                        0.7,
-                        Date.from(Instant.now()),
-                        Date.from(Instant.now().plusSeconds(5 * 3600)),
-                        ANNA,
-                        JOHN,
-                        700,
-                        800,
-                        5,
-                        CZECH_REPUBLIC,
-                        WINE
+					null,
+					String.format("aukce %d", i),
+					"ACTIVE",
+					"GOOD",
+					"Scratches on paper box",
+					1,
+					0.7,
+					Date.from(Instant.now()),
+					Date.from(Instant.now().plusSeconds(5 * 3600)),
+					ANNA,
+					JOHN,
+					700,
+					800,
+					5,
+					CZECH_REPUBLIC,
+					WINE
                 ));
 			}
 			for (int i = 1; i <= 30; i++) {
 				this.auctionRepository.save(new Auction(
-				        String.format("test auction %d",i),
-                        "ACTIVE",
-                        "VERY GOOD",
-                        "As new",
-                        2,
-                        0.5,
-                        Date.from(Instant.now()),
-                        Date.from(Instant.now().plusSeconds(6 * 3600)),
-                        JOHN,
-                        ANNA,
-                        1000,
-                        1255,
-                        10,
-                        UNITED_STATES,
-                        BOURBON
+					null,
+					String.format("test auction %d",i),
+					"ACTIVE",
+					"VERY GOOD",
+					"As new",
+					2,
+					0.5,
+					Date.from(Instant.now()),
+					Date.from(Instant.now().plusSeconds(6 * 3600)),
+					JOHN,
+					ANNA,
+					1000,
+					1255,
+					10,
+					UNITED_STATES,
+					BOURBON
                 ));
 			}
-
 		}
 
 	}

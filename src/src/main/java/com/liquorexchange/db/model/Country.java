@@ -1,11 +1,13 @@
 package com.liquorexchange.db.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
+@AllArgsConstructor
 @Document
 public class Country {
 
@@ -15,8 +17,4 @@ public class Country {
 	@NotBlank(message = "Country name cannot be empty.")
 	private String name;
 
-	public Country(String code, String name) {
-		this.code = code;
-		this.name = name;
-	}
 }
