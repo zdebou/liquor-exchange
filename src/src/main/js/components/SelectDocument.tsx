@@ -6,12 +6,13 @@ import {withForm} from './Form';
 
 interface IProps {
 	value?: any | null;
-	onChange?: (value: any) => void;
+	onChange: (value: any) => void;
 	isInvalid?: boolean;
 	htmlId?: string;
 	collection: Collection;
 	idFieldName: string;
 	labelFieldName: string;
+	assignObject?: boolean;
 	allowEmpty?: boolean;
 	emptyOptionName?: string;
 }
@@ -21,12 +22,13 @@ interface IProps {
  */
 export const SelectDocumentRaw: FC<IProps> = ({
 	value,
-	onChange = () => void 0,
+	onChange,
 	isInvalid,
 	htmlId,
 	collection,
 	idFieldName,
 	labelFieldName,
+	assignObject,
 	allowEmpty = false,
 	emptyOptionName = 'None',
 }) => {
@@ -61,6 +63,7 @@ export const SelectDocumentRaw: FC<IProps> = ({
 			items={items}
 			idFieldName={idFieldName}
 			labelFieldName={labelFieldName}
+			assignObject={assignObject}
 		/>
 	);
 };

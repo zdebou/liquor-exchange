@@ -3,11 +3,14 @@ import {RouteChildrenProps} from 'react-router';
 import {Link} from 'react-router-dom';
 import * as yup from 'yup';
 
+import AuctionState from '../../model/enums/AuctionState';
+import ProductState from '../../model/enums/ProductState';
 import {Collection, loadDocument, insertDocument, updateDocument} from '../../client/actions';
 import Container from '../../components/Container';
 import Heading from '../../components/Heading';
 import Form from '../../components/Form';
 import Input from '../../components/Input';
+import SelectEnum from '../../components/SelectEnum';
 import SelectDocument from '../../components/SelectDocument';
 import ButtonGroup from '../../components/ButtonGroup';
 import Button from '../../components/Button';
@@ -61,12 +64,23 @@ const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) =
 			<Heading>Auction</Heading>
 			<Form schema={AUCTION_SCHEMA} onSubmit={handleSubmit} initialValues={auction}>
 				<Input id="name" label="Name" />
+				<SelectEnum id="auctionState" label="Auction State" enumObject={AuctionState} />
+				<SelectEnum id="productState" label="Product State" enumObject={ProductState} />
 				<SelectDocument
-					id="countryCode"
+					id="category"
+					label="Category"
+					collection={Collection.Categories}
+					idFieldName="id"
+					labelFieldName="name"
+					assignObject
+				/>
+				<SelectDocument
+					id="country"
 					label="Country"
 					collection={Collection.Countries}
 					idFieldName="code"
 					labelFieldName="name"
+					assignObject
 				/>
 				<ButtonGroup>
 					<Button label="Save" type="submit" primary />

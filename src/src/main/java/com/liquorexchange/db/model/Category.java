@@ -2,19 +2,21 @@ package com.liquorexchange.db.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import javax.validation.constraints.NotBlank;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.validation.constraints.NotBlank;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @Document
-public class Country {
+public class Category {
 
-	@Id
-	private String code;
+    @Id
+    private String id;
 
-	@NotBlank(message = "Country name cannot be empty.")
-	private String name;
+    @NotBlank
+    private String name;
 
 }
