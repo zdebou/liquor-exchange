@@ -10,6 +10,7 @@ import AuctionDetail from './pages/auction/AuctionDetail';
 import Login from './pages/auth/Login';
 import Logout from './pages/auth/Logout';
 import SignUp from './pages/auth/SignUp';
+import Profile from './pages/user/Profile';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -40,6 +41,7 @@ const App: FC = () => (
 			<Route path="/login" component={Login} />
 			<Route path="/logout" component={Logout} />
 			<Route path="/signup" component={SignUp} />
+			<Route path="/user/me/" component={Profile} />
 		</Router>
 	</StoreProvider>
 );

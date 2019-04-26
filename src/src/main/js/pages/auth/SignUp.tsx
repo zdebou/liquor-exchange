@@ -13,7 +13,7 @@ const REGISTRAION_SCHEMA = yup.object({
 	email: yup
 		.string()
 		.required('Please provide a valid email address.')
-		.email('Pleasae provide a valid email address.'),
+		.email('Please provide a valid email address.'),
 	password: yup
 		.string()
 		.required('This is a required field.')
