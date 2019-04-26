@@ -20,7 +20,7 @@ const REGISTRAION_SCHEMA = yup.object({
 		.min(8, 'Provide at least 8 characters'),
 	password2: yup
 		.string()
-		.required('This is a required field.')
+		.required('Please retype your password.')
 		.oneOf([yup.ref('password')], 'Passwords do not match.'),
 	legalAge: yup.bool().oneOf([true], 'Sorry, you are not allowed to proceed.'),
 });
