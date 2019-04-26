@@ -1,4 +1,5 @@
 import asyncRestClient from './asyncRestClient';
+import store from './store';
 
 const restBasePath = '/api';
 
@@ -93,3 +94,24 @@ export const updateDocument = (collection: Collection, data: object, id: string)
  */
 export const deleteDocument = (collection: Collection, id: string) =>
 	asyncRestClient({method: 'DELETE', path: `${restBasePath}${collection}/${id}`});
+
+/**
+ * MOCKED: Logs in user.
+ * @param user User credentials.
+ */
+export const logIn = ({email, password}: {email: string; password: string}) => {
+	if (email !== 'user@email.cz' || password !== 'password') {
+		return Promise.reject(Error('Log in failed.'));
+	}
+
+	store.dispatch.auth.setUser({email});
+	return Promise.resolve();
+};
+
+/**
+ * MOCKED: Logs out user.
+ */
+export const logOut = () => {
+	store.dispatch.auth.setUser(null);
+	return Promise.resolve();
+};
