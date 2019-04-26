@@ -4,7 +4,7 @@ const restBasePath = '/api';
 
 export enum Collection {
 	Auctions = '/auctions',
-	AuctionsView = '/views/auctions',
+	AuctionsByCountry = '/auctions/search/findByCountryCode',
 	Countries = '/countries',
 	Categories = '/categories',
 }
