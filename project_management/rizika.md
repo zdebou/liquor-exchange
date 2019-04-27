@@ -10,3 +10,4 @@ Analýza rizik FMEA
 | Změna legislativních požadavků | Libovolný | Zpoždění dodání | Změna legislativy v průběhu projektu | Sledování legislativních změn | Analytik | 5 | 1 | 1 | 5 |
 | Nepřívětivé GUI | Testování u zákazníka | Zpoždění dodání | Špatný návrh GUI | Komunikace se zákazníkem nad návrhem GUI | Frontend vývojáři | 2 | 2 | 2 | 8 |
 | Neúplná nebo chybějící dokumentace | Dokumentace | Finanční penalizace | Neochota vývojářů dokumentovat skutečný stav provedení | Průběžná tvorba podkladů pro finální dokumentaci | Analytik | 3 | 1 | 2 | 6 |
+| Neuplné odevzdání MVP v termínu | Vývoj | Poškození klienta | Komunikace směrem ke klientovi a domluvení změn | Vedoucí projektu | 10 | 6 | 5 | 300
