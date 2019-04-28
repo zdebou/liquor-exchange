@@ -13,14 +13,14 @@ const REGISTRAION_SCHEMA = yup.object({
 	email: yup
 		.string()
 		.required('Please provide a valid email address.')
-		.email('Pleasae provide a valid email address.'),
+		.email('Please provide a valid email address.'),
 	password: yup
 		.string()
 		.required('This is a required field.')
 		.min(8, 'Provide at least 8 characters'),
 	password2: yup
 		.string()
-		.required('This is a required field.')
+		.required('Please retype your password.')
 		.oneOf([yup.ref('password')], 'Passwords do not match.'),
 	legalAge: yup.bool().oneOf([true], 'Sorry, you are not allowed to proceed.'),
 });

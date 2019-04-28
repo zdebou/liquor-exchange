@@ -20,6 +20,8 @@ interface IProps {
 	cols: Array<IColProps | null>;
 	data: any[] | null;
 	emptyMessage: string;
+	caption?: string;
+	compact?: boolean;
 	loading?: boolean;
 	sortDescription?: ISortProps;
 	onSortChange?: (value: ISortProps) => void;
@@ -32,6 +34,8 @@ const Table: FC<IProps> = ({
 	cols,
 	data,
 	emptyMessage,
+	caption,
+	compact = false,
 	loading = false,
 	sortDescription,
 	onSortChange,
@@ -72,43 +76,46 @@ const Table: FC<IProps> = ({
 	};
 
 	return (
-		<BSTable striped>
-			<thead>
-				<tr>
-					{cols.map((col, index) => (
-						<th key={index}>
-							{!col ? (
-								''
-							) : col.sortColumn ? (
-								<a
-									href="#"
-									onClick={event =>
-										handleHeaderClick(event, col.sortColumn as string)
-									}
-								>
-									{renderSortSymbol(col.sortColumn)} {col.title}
-								</a>
-							) : (
-								col.title
-							)}
-						</th>
-					))}
-				</tr>
-			</thead>
-			<tbody>
-				{loading ? (
+		<>
+			{caption && <h2 className="h3 mt-5 mb-4">{caption}</h2>}
+			<BSTable striped bordered={compact} size={compact ? 'sm' : undefined}>
+				<thead>
 					<tr>
-						<td colSpan={cols.length}>Loading...</td>
+						{cols.map((col, index) => (
+							<th key={index}>
+								{!col ? (
+									''
+								) : col.sortColumn ? (
+									<a
+										href="#"
+										onClick={event =>
+											handleHeaderClick(event, col.sortColumn as string)
+										}
+									>
+										{renderSortSymbol(col.sortColumn)} {col.title}
+									</a>
+								) : (
+									col.title
+								)}
+							</th>
+						))}
 					</tr>
-				) : !data || data.length === 0 ? (
-					<tr>
-						<td colSpan={cols.length}>{emptyMessage}</td>
-					</tr>
-				) : (
-					data.map(children)
-				)}
-			</tbody>
-		</BSTable>
+				</thead>
+				<tbody>
+					{loading ? (
+						<tr>
+							<td colSpan={cols.length}>Loading...</td>
+						</tr>
+					) : !data || data.length === 0 ? (
+						<tr>
+							<td colSpan={cols.length}>{emptyMessage}</td>
+						</tr>
+					) : (
+						data.map(children)
+					)}
+				</tbody>
+			</BSTable>
+		</>
 	);
 };
 
