@@ -60,17 +60,21 @@ public class DatabaseLoader implements CommandLineRunner {
 	private final AuctionRepository auctionRepository;
 	private final CategoryRepository categoryRepository;
 	private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
 	@Autowired
 	public DatabaseLoader(
 	        CountryRepository countryRepository,
             AuctionRepository auctionRepository,
             CategoryRepository categoryRepository,
-            UserRepository userRepository) {
+            UserRepository userRepository,
+            RoleRepository roleRepository
+    ) {
 		this.countryRepository = countryRepository;
 		this.auctionRepository = auctionRepository;
 		this.categoryRepository = categoryRepository;
 		this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
 	}
 
 	/**
@@ -78,13 +82,11 @@ public class DatabaseLoader implements CommandLineRunner {
 	 * @return True if database is assumed empty.
 	 */
 	private boolean isEmpty() {
-		return (this.countryRepository.count() == 0);
+		return this.countryRepository.count() == 0;
 	}
 
 	@Override
 	public void run(String... strings) {
-
-
 		// DELETE EVERYTHING!
 		if (this.reset_db) {
 			this.countryRepository.deleteAll();
@@ -145,8 +147,10 @@ public class DatabaseLoader implements CommandLineRunner {
 					BOURBON
                 ));
 			}
+
+			this.roleRepository.save(new Role(RoleName.ADMIN));
+			this.roleRepository.save(new Role(RoleName.USER));
 		}
 
 	}
-
 }
