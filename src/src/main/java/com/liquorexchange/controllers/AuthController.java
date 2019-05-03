@@ -76,7 +76,7 @@ public class AuthController {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
+        Role userRole = roleRepository.findByName(RoleName.USER)
                 .orElseThrow(() -> new LiquorExchangeException("User Role not set."));
 
         user.setRoles(new ArrayList<>(Collections.singleton(userRole)));

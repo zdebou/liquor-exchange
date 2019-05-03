@@ -19,11 +19,13 @@ public class DatabaseLoader implements CommandLineRunner {
 
 	private final CountryRepository country_repository;
 	private final AuctionRepository auction_repository;
+	private final RoleRepository roleRepository;
 
 	@Autowired
-	public DatabaseLoader(CountryRepository country_repository, AuctionRepository auction_repository) {
+	public DatabaseLoader(CountryRepository country_repository, AuctionRepository auction_repository, RoleRepository roleRepository) {
 		this.country_repository = country_repository;
 		this.auction_repository = auction_repository;
+		this.roleRepository = roleRepository;
 	}
 
 	/**
@@ -31,7 +33,7 @@ public class DatabaseLoader implements CommandLineRunner {
 	 * @return True if database is assumed empty.
 	 */
 	private boolean isEmpty() {
-		return (this.country_repository.count() == 0);
+		return this.country_repository.count() == 0 && this.roleRepository.count() == 0;
 	}
 
 	@Override
@@ -40,6 +42,7 @@ public class DatabaseLoader implements CommandLineRunner {
 		if (this.reset_db) {
 			this.country_repository.deleteAll();
 			this.auction_repository.deleteAll();
+			this.roleRepository.deleteAll();
 		}
 
 		// INSERT EVERYTHING (if db is empty)
@@ -57,8 +60,8 @@ public class DatabaseLoader implements CommandLineRunner {
 				this.auction_repository.save(new Auction(String.format("test auction %d",i), usa));
 			}
 
+			this.roleRepository.save(new Role(RoleName.ADMIN));
+			this.roleRepository.save(new Role(RoleName.USER));
 		}
-
 	}
-
 }
