@@ -72,14 +72,16 @@ public class AuthController {
                     HttpStatus.BAD_REQUEST);
         }
 
-        User user = new User(signUpRequest.getUsername(), signUpRequest.getPassword());
-
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-
         Role userRole = roleRepository.findByName(RoleName.USER)
                 .orElseThrow(() -> new LiquorExchangeException("User Role not set."));
 
-        user.setRoles(new ArrayList<>(Collections.singleton(userRole)));
+        User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(), signUpRequest.getFirstName(),
+                signUpRequest.getLastName(), signUpRequest.getPassword(), signUpRequest.getIdentityCardNumber(),
+                signUpRequest.getBirthDate(), signUpRequest.getAddress(), signUpRequest.getCompanyAddress(),
+                signUpRequest.getCompanyName(), signUpRequest.getCompanyIdentificationNumber(), signUpRequest.getVATNumber(),
+                new ArrayList<>(Collections.singleton(userRole)));
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         User result = userRepository.save(user);
 

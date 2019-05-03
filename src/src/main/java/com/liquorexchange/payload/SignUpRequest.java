@@ -1,7 +1,13 @@
 package com.liquorexchange.payload;
 
-import javax.validation.constraints.*;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.validation.constraints.*;
+import java.util.Date;
+
+@Getter
+@Setter
 public class SignUpRequest {
     @NotBlank
     @Size(min = 3, max = 15)
@@ -11,19 +17,26 @@ public class SignUpRequest {
     @Size(min = 6, max = 20)
     private String password;
 
-    public String getUsername() {
-        return username;
-    }
+    @NotBlank
+    private String email;
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    @NotBlank
+    private String firstName;
 
-    public String getPassword() {
-        return password;
-    }
+    @NotBlank
+    private String lastName;
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    private String identityCardNumber;
+
+    private Date birthDate;
+
+    private String address;
+
+    private String companyAddress;
+
+    private String companyName;
+
+    private Integer companyIdentificationNumber;
+
+    private Integer VATNumber;
 }
