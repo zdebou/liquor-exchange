@@ -8,6 +8,9 @@ import com.liquorexchange.db.repository.*;
 import com.liquorexchange.db.model.*;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -30,12 +33,16 @@ public class DatabaseLoader implements CommandLineRunner {
             "Parker",
             "*****",
             "12345",
-            new Date(1995, 5, 5),
+			new Calendar.Builder().setDate(1995, Calendar.MAY, 5).build().getTime(),
             "5th Avenue, 500000 NYC",
             "5th Avenue, 500000 NYC",
             "GM",
             123456,
-            1234567
+            1234567,
+			new ArrayList<Role>() {{
+				add(new Role(RoleName.ADMIN));
+				add(new Role(RoleName.USER));
+			}}
     );
 
     private static final User ANNA = new User(
@@ -45,12 +52,16 @@ public class DatabaseLoader implements CommandLineRunner {
             "Parker",
             "*****",
             "12345",
-            new Date(1995, 5, 5),
+			new Calendar.Builder().setDate(1995, Calendar.MAY, 5).build().getTime(),
             "5th Avenue, 500000 NYC",
             "5th Avenue, 500000 NYC",
             "GM",
             123456,
-            1234567
+            1234567,
+			new ArrayList<Role>() {{
+				add(new Role(RoleName.ADMIN));
+				add(new Role(RoleName.USER));
+			}}
     );
 
     @Value("${com.liquorexchange.resetdb}")
