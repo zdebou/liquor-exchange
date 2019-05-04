@@ -1,14 +1,16 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {Redirect} from 'react-router';
 import * as yup from 'yup';
 
 import {useStore} from '../../client/store';
+import {changePassword, IPasswordChangeData} from '../../client/actions';
 import Container from '../../components/Container';
 import Box from '../../components/Box';
 import Form from '../../components/Form';
 import Input from '../../components/Input';
 import ButtonGroup from '../../components/ButtonGroup';
 import Button from '../../components/Button';
+import {Modal, ModalType, IModalMessage} from '../../components/Modal';
 
 const NEW_PASSWORD_SCHEMA = yup.object({
 	old: yup.string().required('This is a required field.'),
@@ -22,18 +24,20 @@ const NEW_PASSWORD_SCHEMA = yup.object({
 		.oneOf([yup.ref('new')], 'Passwords do not match'),
 });
 
-interface IPasswordChangeData {
-	old: string;
-	new: string;
-	new2: string;
-}
-
 const PasswordChange: FC = () => {
 	const loggedUser = useStore(state => state.auth.user);
+	const [modalMessage, setModalMessage] = useState<IModalMessage | null>(null);
+
+	const onFail = (response: {[key: string]: any}) => {
+		setModalMessage({type: ModalType.Error, title: response.error, text: response.message});
+	};
+
+	const onChangePasswordSuccess = () => {
+		history.push('/me');
+	};
 
 	const handleSubmit = (data: IPasswordChangeData) => {
-		// tslint:disable-next-line: no-console
-		console.log('CHANGE PASSWORD', data);
+		changePassword(data).then(onChangePasswordSuccess, onFail);
 	};
 
 	if (!loggedUser) {
@@ -44,7 +48,7 @@ const PasswordChange: FC = () => {
 		<Container>
 			<Box title="Password Change">
 				<Form
-					initialValues={{old: '', new: '', new2: ''}}
+					initialValues={{oldPassword: '', newPassword: '', newPasswordConfirm: ''}}
 					schema={NEW_PASSWORD_SCHEMA}
 					onSubmit={handleSubmit}
 				>
@@ -56,6 +60,7 @@ const PasswordChange: FC = () => {
 					</ButtonGroup>
 				</Form>
 			</Box>
+			{modalMessage && <Modal message={modalMessage} />}
 		</Container>
 	);
 };
