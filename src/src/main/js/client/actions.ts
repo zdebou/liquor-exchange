@@ -116,3 +116,23 @@ export const logOut = () => {
 	store.dispatch.auth.setUser(null);
 	return Promise.resolve();
 };
+
+interface IPasswordChangeData {
+	oldPassword: string;
+	newPassword: string;
+	newPasswordConfirm: string;
+}
+
+/**
+ * Updates a document in a collection
+ * @param collection Name/identifier of a collection.
+ * @param data Document data to be updated.
+ * @param id Document unique identifier.
+ */
+export const changePassword = (data: IPasswordChangeData) =>
+	asyncRestClient({
+		method: 'PUT',
+		path: `${restBasePath}/auth/changepass`,
+		entity: data,
+		headers: {'Content-Type': 'application/json'},
+	});

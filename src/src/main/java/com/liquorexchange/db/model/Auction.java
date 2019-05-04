@@ -37,9 +37,9 @@ public class Auction {
 
 	private Date end;
 
-	private User seller;
+	private UserInfo seller;
 
-	private User winner;
+	private UserInfo winner;
 
 	private Integer initialValue;
 

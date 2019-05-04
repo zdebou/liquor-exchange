@@ -1,23 +1,24 @@
 package com.liquorexchange.controllers;
 
-import com.liquorexchange.db.model.Role;
-import com.liquorexchange.db.model.RoleName;
-import com.liquorexchange.db.model.User;
+import com.liquorexchange.db.model.*;
 import com.liquorexchange.db.repository.RoleRepository;
 import com.liquorexchange.db.repository.UserRepository;
+import com.liquorexchange.db.repository.UserSecurityRepository;
 import com.liquorexchange.exception.LiquorExchangeException;
-import com.liquorexchange.payload.ApiResponse;
-import com.liquorexchange.payload.JwtAuthenticationResponse;
-import com.liquorexchange.payload.LoginRequest;
-import com.liquorexchange.payload.SignUpRequest;
+import com.liquorexchange.payload.*;
 import com.liquorexchange.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import java.security.Principal;
+
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +30,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -38,57 +40,111 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
     UserRepository userRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    UserSecurityRepository userSecurityRepository;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    RoleRepository roleRepository;
 
     @Autowired
     JwtTokenProvider tokenProvider;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsername(),
-                        loginRequest.getPassword()
-                )
+            new UsernamePasswordAuthenticationToken(
+                loginRequest.getEmail(),
+                loginRequest.getPassword()
+            )
         );
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         String jwt = tokenProvider.generateToken(authentication);
         return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
     }
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             return new ResponseEntity(new ApiResponse(false, "Username is already taken!"),
-                    HttpStatus.BAD_REQUEST);
+                HttpStatus.BAD_REQUEST);
         }
 
-        Role userRole = roleRepository.findByName(RoleName.USER)
-                .orElseThrow(() -> new LiquorExchangeException("User Role not set."));
-
-        User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(), signUpRequest.getFirstName(),
-                signUpRequest.getLastName(), signUpRequest.getPassword(), signUpRequest.getIdentityCardNumber(),
-                signUpRequest.getBirthDate(), signUpRequest.getAddress(), signUpRequest.getCompanyAddress(),
-                signUpRequest.getCompanyName(), signUpRequest.getCompanyIdentificationNumber(), signUpRequest.getVATNumber(),
-                new ArrayList<>(Collections.singleton(userRole)));
-
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User user = new User(
+            signUpRequest.getEmail(),
+            new UserInfo(signUpRequest.getFirstName(), signUpRequest.getLastName()),
+            signUpRequest.getIdentityCardNumber(),
+            signUpRequest.getBirthDate(),
+            signUpRequest.getAddress(),
+            signUpRequest.getCompanyAddress(),
+            signUpRequest.getCompanyName(),
+            signUpRequest.getCompanyIdentificationNumber(),
+            signUpRequest.getVATNumber()
+        );
 
         User result = userRepository.save(user);
 
+        Role userRole = roleRepository.findByName(RoleName.USER)
+            .orElseThrow(() -> new LiquorExchangeException("User role not found."));
+
+        UserSecurity security = new UserSecurity(
+            null,
+            user,
+            signUpRequest.getPassword(),
+            new ArrayList<>(Collections.singleton(userRole))
+        );
+
+        userSecurityRepository.save(security);
+
         URI location = ServletUriComponentsBuilder
-                .fromCurrentContextPath().path("/api/users/{username}")
-                .buildAndExpand(result.getUsername()).toUri();
+            .fromCurrentContextPath().path("/api/users/{email}")
+            .buildAndExpand(result.getEmail()).toUri();
 
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
+    }
+
+    @PostMapping("/changepass")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<?> changePassword(Principal principal, @Valid @RequestBody ChangePasswordRequest changepassRequest) {
+        Boolean success;
+        String message;
+        String email = principal.getName();
+        Optional<User> user = userRepository.findByEmail(email);
+
+        if (!changepassRequest.getNewPassword().matches(changepassRequest.getNewPasswordConfirm())) {
+            success = false;
+            message = "Password does not match with confirmation!";
+        } else {
+            if (!user.isPresent()) {
+                success = false;
+                message = "User not found!";
+            } else {
+                Optional<UserSecurity> security = userSecurityRepository.findByUser(user.get());
+                if (security.isPresent()) {
+                    if (!passwordEncoder.matches(changepassRequest.getOldPassword(), security.get().getPasswordHash())) {
+                        success = false;
+                        message = "Old password does not match!";
+                    } else {
+                        security.get().setPassword(changepassRequest.getNewPassword());
+                        userSecurityRepository.save(security.get());
+                        success = true;
+                        message = "Password was changed.";
+                    }
+                } else {
+                    success = false;
+                    message = "User credentials not found!";
+                }
+            }
+        }
+
+        URI location = ServletUriComponentsBuilder
+            .fromCurrentContextPath().path("/api/users/{email}")
+            .buildAndExpand(email).toUri();
+
+        return ResponseEntity.created(location).body(new ApiResponse(success, message));
     }
 }

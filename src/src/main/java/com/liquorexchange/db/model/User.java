@@ -2,32 +2,29 @@ package com.liquorexchange.db.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Holds private user data that should not be exposed to anonymous users.
+ */
 @Data
 @AllArgsConstructor
 @Document
 public class User {
 
     @Id
-    private String username;
-
-    @NotBlank
     private String email;
 
-    @NotBlank
-    private String firstName;
-
-    @NotBlank
-    private String lastName;
-
-    @NotBlank
-    private String password;
+    @NotNull
+    private UserInfo info;
 
     private String identityCardNumber;
 
@@ -42,7 +39,5 @@ public class User {
     private Integer companyIdentificationNumber;
 
     private Integer VATNumber;
-
-    private List<Role> roles;
 
 }
