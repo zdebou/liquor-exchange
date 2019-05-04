@@ -8,6 +8,9 @@ import com.liquorexchange.db.repository.*;
 import com.liquorexchange.db.model.*;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -23,6 +26,9 @@ public class DatabaseLoader implements CommandLineRunner {
     private static final Category WINE = new Category(null, "Wine");
     private static final Category BOURBON = new Category(null, "Bourbon");
 
+	private static final Role ADMIN = new Role(RoleName.ADMIN);
+	private static final Role USER = new Role(RoleName.USER);
+
     private static final User JOHN = new User(
             "johny",
             "johny@gmail.com",
@@ -30,12 +36,16 @@ public class DatabaseLoader implements CommandLineRunner {
             "Parker",
             "*****",
             "12345",
-            new Date(1995, 5, 5),
+			new Calendar.Builder().setDate(1995, Calendar.MAY, 5).build().getTime(),
             "5th Avenue, 500000 NYC",
             "5th Avenue, 500000 NYC",
             "GM",
             123456,
-            1234567
+            1234567,
+			new ArrayList<Role>() {{
+				add(ADMIN);
+				add(USER);
+			}}
     );
 
     private static final User ANNA = new User(
@@ -45,12 +55,16 @@ public class DatabaseLoader implements CommandLineRunner {
             "Parker",
             "*****",
             "12345",
-            new Date(1995, 5, 5),
+			new Calendar.Builder().setDate(1995, Calendar.MAY, 5).build().getTime(),
             "5th Avenue, 500000 NYC",
             "5th Avenue, 500000 NYC",
             "GM",
             123456,
-            1234567
+            1234567,
+			new ArrayList<Role>() {{
+				add(ADMIN);
+				add(USER);
+			}}
     );
 
     @Value("${com.liquorexchange.resetdb}")
@@ -60,17 +74,21 @@ public class DatabaseLoader implements CommandLineRunner {
 	private final AuctionRepository auctionRepository;
 	private final CategoryRepository categoryRepository;
 	private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
 	@Autowired
 	public DatabaseLoader(
 	        CountryRepository countryRepository,
             AuctionRepository auctionRepository,
             CategoryRepository categoryRepository,
-            UserRepository userRepository) {
+            UserRepository userRepository,
+            RoleRepository roleRepository
+    ) {
 		this.countryRepository = countryRepository;
 		this.auctionRepository = auctionRepository;
 		this.categoryRepository = categoryRepository;
 		this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
 	}
 
 	/**
@@ -78,19 +96,18 @@ public class DatabaseLoader implements CommandLineRunner {
 	 * @return True if database is assumed empty.
 	 */
 	private boolean isEmpty() {
-		return (this.countryRepository.count() == 0);
+		return this.countryRepository.count() == 0;
 	}
 
 	@Override
 	public void run(String... strings) {
-
-
 		// DELETE EVERYTHING!
 		if (this.reset_db) {
 			this.countryRepository.deleteAll();
 			this.auctionRepository.deleteAll();
 			this.categoryRepository.deleteAll();
 			this.userRepository.deleteAll();
+			this.roleRepository.deleteAll();
 		}
 
 		// INSERT EVERYTHING (if db is empty)
@@ -105,7 +122,7 @@ public class DatabaseLoader implements CommandLineRunner {
 			this.categoryRepository.save(WINE);
 			this.categoryRepository.save(BOURBON);
 
-			for (int i = 1; i <= 30; i++) {
+			for (int i = 1; i <= 5; i++) {
 				this.auctionRepository.save(new Auction(
 					null,
 					String.format("aukce %d", i),
@@ -125,7 +142,7 @@ public class DatabaseLoader implements CommandLineRunner {
 					WINE
                 ));
 			}
-			for (int i = 1; i <= 30; i++) {
+			for (int i = 1; i <= 5; i++) {
 				this.auctionRepository.save(new Auction(
 					null,
 					String.format("test auction %d",i),
@@ -145,8 +162,10 @@ public class DatabaseLoader implements CommandLineRunner {
 					BOURBON
                 ));
 			}
+
+			this.roleRepository.save(ADMIN);
+			this.roleRepository.save(USER);
 		}
 
 	}
-
 }

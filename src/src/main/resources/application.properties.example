@@ -17,3 +17,7 @@ spring.data.mongodb.database=liquor
 
 # for backend development set to true, for frontend set to false
 # spring.devtools.remote.restart.enabled=true
+
+# jwt properties
+app.jwtSecret=S3cretApp11icationK3y
+app.jwtExpirationInMs=604800000

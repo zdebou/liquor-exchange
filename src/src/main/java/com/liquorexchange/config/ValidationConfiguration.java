@@ -1,4 +1,4 @@
-package com.liquorexchange.db;
+package com.liquorexchange.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

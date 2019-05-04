@@ -1,4 +1,4 @@
-package com.liquorexchange;
+package com.liquorexchange.config;
 
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;

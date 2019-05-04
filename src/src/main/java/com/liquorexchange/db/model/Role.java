@@ -2,20 +2,17 @@ package com.liquorexchange.db.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.validation.constraints.NotBlank;
-
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 @Document
-public class Category {
+public class Role {
 
     @Id
-    private String id;
-
-    @NotBlank
-    private String name;
+    private RoleName name;
 
 }

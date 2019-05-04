@@ -1,21 +1,19 @@
-package com.liquorexchange.db.model;
+package com.liquorexchange.payload;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.*;
 import java.util.Date;
-import java.util.List;
 
 @Data
-@AllArgsConstructor
-@Document
-public class User {
-
-    @Id
+public class SignUpRequest {
+    @NotBlank
+    @Size(min = 3, max = 15)
     private String username;
+
+    @NotBlank
+    @Size(min = 6, max = 20)
+    private String password;
 
     @NotBlank
     private String email;
@@ -25,9 +23,6 @@ public class User {
 
     @NotBlank
     private String lastName;
-
-    @NotBlank
-    private String password;
 
     private String identityCardNumber;
 
@@ -42,7 +37,4 @@ public class User {
     private Integer companyIdentificationNumber;
 
     private Integer VATNumber;
-
-    private List<Role> roles;
-
 }
