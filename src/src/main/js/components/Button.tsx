@@ -9,13 +9,8 @@ interface IProps {
 	onClick?: () => void;
 }
 
-const Button: FC<IProps> = ({label, type = 'button', size, primary = false, onClick}) => (
-	<BSButton
-		onClick={onClick ? onClick : undefined}
-		type={type}
-		variant={primary ? 'primary' : 'outline-secondary'}
-		size={size}
-	>
+const Button: FC<IProps> = ({label, type = 'button', size, variant = 'primary', onClick}) => (
+	<BSButton onClick={onClick ? onClick : undefined} type={type} variant={variant} size={size}>
 		{label}
 	</BSButton>
 );
