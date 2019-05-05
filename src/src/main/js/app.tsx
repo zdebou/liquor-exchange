@@ -82,7 +82,7 @@ const Footer: FC = () => {
 				<Col>
 					<div>
 						<p>
-							<strong>Addess</strong>
+							<strong>Address</strong>
 						</p>
 						<hr />
 						<address>
