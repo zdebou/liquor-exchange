@@ -17,11 +17,13 @@ Feature: SimpleLogin
       Given user on login page
       When use Email and Password
       And Email have '@' 
-      And Email have max length 20
+      And Email have max length = 20
       And Email is not null
       And Password is not null
+      And Password min lenght = 8
       And Email and Password are in database
-      Then user is login correct
+      Then user is login correct 
+      And see auction list
 
 #uzivatel zada spatne udaje
     Scenario: Denied Login
@@ -29,6 +31,13 @@ Feature: SimpleLogin
       When use Email and Password
       And use incorrect Email and Password format
       And Email aren´t in database
-      And 
+      And Password desagree
       Then user isn´t login
+      And see warning
    
+#uzivatel se chce odhlasit
+    Scenario: Sign Out
+      Given user is sign in
+      When user click on Sign Out
+      Then user is sign out
+      And see homepage
