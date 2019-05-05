@@ -23,6 +23,7 @@ app.jwtSecret=S3cretApp11icationK3y
 app.jwtExpirationInMs=604800000
 
 # smtp email
+spring.mail.enabled=true
 spring.mail.host=email-smtp.us-west-2.amazonaws.com
 spring.mail.username=username
 spring.mail.password=password
