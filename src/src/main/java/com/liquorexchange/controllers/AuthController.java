@@ -4,6 +4,7 @@ import com.liquorexchange.db.model.*;
 import com.liquorexchange.db.repository.RoleRepository;
 import com.liquorexchange.db.repository.UserRepository;
 import com.liquorexchange.db.repository.UserSecurityRepository;
+import com.liquorexchange.emails.SMTPEmailSender;
 import com.liquorexchange.exception.LiquorExchangeException;
 import com.liquorexchange.payload.*;
 import com.liquorexchange.security.JwtTokenProvider;
@@ -12,13 +13,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import java.security.Principal;
 
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,6 +52,9 @@ public class AuthController {
 
     @Autowired
     JwtTokenProvider tokenProvider;
+
+    @Autowired
+    SMTPEmailSender emailSender;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -104,6 +106,8 @@ public class AuthController {
             .fromCurrentContextPath().path("/api/users/{email}")
             .buildAndExpand(result.getEmail()).toUri();
 
+        emailSender.sendSimpleMessage(user.getEmail(), "Liquor Exchange: Thank you for your registration", "Dear " + user.getInfo().getFirstName() + ", \n thank you for your registration on Liquor Exchange.");
+
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
     }
 
@@ -133,6 +137,7 @@ public class AuthController {
                         userSecurityRepository.save(security.get());
                         success = true;
                         message = "Password was changed.";
+                        emailSender.sendSimpleMessage(email, "Liquor Exchange: Your password was changed.", "Dear " + user.get().getInfo().getFirstName() + ", \n your password on Liquor Exchange was changed.");
                     }
                 } else {
                     success = false;
