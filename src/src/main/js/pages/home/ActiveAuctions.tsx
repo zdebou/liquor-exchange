@@ -8,7 +8,7 @@ import Heading from '../../components/Heading';
 import Table from '../../components/Table';
 import {Modal, ModalType, IModalMessage} from '../../components/Modal';
 
-const ActiveAuctions: FC<RouteChildrenProps> = ({history}) => {
+const ActiveAuctions: FC<RouteChildrenProps> = () => {
 	const [rows, setRows] = useState<Array<{[key: string]: any}> | null>(null);
 	const [modalMessage, setModalMessage] = useState<IModalMessage | null>(null);
 
@@ -21,17 +21,18 @@ const ActiveAuctions: FC<RouteChildrenProps> = ({history}) => {
 	};
 
 	const fetchAuctions = () => {
-		loadDocuments(Collection.Auctions, {sort: {column: 'start', order: 'desc'}, size: 5}).then(
-			onLoadSuccess,
-			onFail,
-		);
+		loadDocuments(Collection.Auctions, {
+			sort: {column: 'start', order: 'desc'},
+			size: 5,
+			page: 1,
+		}).then(onLoadSuccess, onFail);
 	};
 
 	useEffect(fetchAuctions, []);
 
 	return (
 		<Container className="mt-5">
-			<Heading>Active Auctions</Heading>
+			<h2>Active Auctions</h2>
 			<Table
 				cols={[{title: 'Auction name'}, {title: 'Country'}, {title: 'Seller'}, null]}
 				data={rows}

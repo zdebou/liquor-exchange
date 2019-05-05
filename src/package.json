@@ -10,7 +10,6 @@
 	"homepage": "https://github.com/zdebou/liquor-exchange",
 	"dependencies": {
 		"bootstrap": "^4.3.1",
-		"mdbreact": "^4.13.0",
 		"easy-peasy": "^2.1.6",
 		"formik": "^1.5.2",
 		"jquery": "^3.3.1",
