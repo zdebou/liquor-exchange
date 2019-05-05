@@ -17,3 +17,5 @@
 | 8.4.  | error handling and modal dialog  | 3h  |
 | 8.4.  | backend - paging                 | 1h  |
 | 8.4.  | backend - sorting                | 1h  |
+| 4.5.  | homepage, change password        | 4h  |
+| 5.5.  | SMTP                             | 1h  |
