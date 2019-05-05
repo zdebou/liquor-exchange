@@ -3,11 +3,21 @@
 #----------------------------------
     
 @RunWith 
-Feature: TestLogin
+Feature: SimpleLogin
 
    # A very simple scenario
-   Scenario: Simple Chuck
-      Given the ninja has a third level black-belt 
-      When attacked by "Chuck Norris"
-      Then the ninja should apologise 
+   Scenario: Simple Login
+      Given user on homepage
+      When click on login
+      Then user is on login page
+   
+    Scenario: Accept Login
+      Given user on login page
+      When use username and password
+      Then user is login correct
+
+    Scenario: Denied Login
+      Given user on login page
+      When use username and password
+      Then user isn´t login
    
