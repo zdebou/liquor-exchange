@@ -8,6 +8,7 @@ package runner;
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
+import seleniumgluecode.common.TestUtils;
 
 /**
  * Main test class for example test. This file can be run as standard Unit test
@@ -23,4 +24,12 @@ features = "src/test/java/features"
 
 public class TestRunner {
 
+    public TestRunner() {
+        //check if driver environment variable is set. 
+        if (System.getenv(TestUtils.DRIVER_VARIABLE_NAME) == null) {
+            //If not, kill the tests
+            throw new UnsupportedOperationException("Environment variable " + TestUtils.DRIVER_VARIABLE_NAME + " is not set. Please the variable to path to lacation of gecko driver.");
+        }
+    }
+    
 }

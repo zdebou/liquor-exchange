@@ -8,14 +8,15 @@ package seleniumgluecode;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
+import seleniumgluecode.common.TestUtils;
 
 /**
  * Gluecode for example cucumber test.
+ *
  * @author divad_000
  */
 public class test {
@@ -24,8 +25,9 @@ public class test {
 
     @Given("^user is  on homepage$")
     public void user_is_on_homepage() throws Throwable {
-        System.setProperty("webdriver.gecko.driver", "d:\\Data\\drivers\\geckodriver.exe");
-        driver = new FirefoxDriver();
+//        System.setProperty("webdriver.gecko.driver", "d:\\Data\\drivers\\geckodriver.exe");
+//        driver = new FirefoxDriver();
+        driver = TestUtils.getDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.get("http://localhost:8080/index.php");
     }
