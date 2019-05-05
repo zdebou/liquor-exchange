@@ -10,7 +10,7 @@ import {
 } from 'mdbreact';
 
 const AuctionsScroller: FC = () => (
-	<MDBContainer>
+	<MDBContainer className="mb-5">
 		<MDBCarousel
 			activeItem={1}
 			length={3}
