@@ -21,3 +21,15 @@ spring.data.mongodb.database=liquor
 # jwt properties
 app.jwtSecret=S3cretApp11icationK3y
 app.jwtExpirationInMs=604800000
+
+# smtp email
+spring.mail.host=email-smtp.us-west-2.amazonaws.com
+spring.mail.username=username
+spring.mail.password=password
+spring.mail.from=Liquor Exchange <info@liquor-exchange.com>
+spring.mail.properties.mail.transport.protocol=smtp
+spring.mail.properties.mail.smtp.port=465
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.ssl.enable=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.smtp.starttls.required=true
