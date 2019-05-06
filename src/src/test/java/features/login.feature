@@ -8,8 +8,8 @@ Feature: User Login
 #uzivatel se z domovske stranky dostane na stranku, kde se muze prihlasit
    Scenario: Simple Login
       Given user is on "homepage"
-      When click on "Sign in"
-      Then user is on "login page"
+      When click on "Sign In"
+      Then user should be on "login page"
 
 #uzivatel je na prihlasovaci strance a vyplni spravne email a heslo a diky tomu se korektne prihlasi
     Scenario: Accept Login
