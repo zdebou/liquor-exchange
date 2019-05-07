@@ -126,6 +126,61 @@ export const logOut = () => {
 	return Promise.resolve();
 };
 
+export const signUp = ({
+	email,
+	password,
+	firstName,
+	lastName,
+	identityCardNumber,
+	birthDate,
+	address,
+	companyAddress,
+	companyName,
+	companyIdentificationNumber,
+	VATNumber,
+}: {
+	email: string;
+	password: string;
+	firstName: string;
+	lastName: string;
+	identityCardNumber: string;
+	birthDate: string;
+	address: string;
+	companyAddress: string;
+	companyName: string;
+	companyIdentificationNumber: bigint;
+	VATNumber: bigint;
+}) => {
+	return asyncRestClient({
+		method: 'POST',
+		path: `${restBasePath}/auth/signup`,
+		entity: {
+			email,
+			password,
+			firstName,
+			lastName,
+			identityCardNumber,
+			birthDate,
+			address,
+			companyAddress,
+			companyName,
+			companyIdentificationNumber,
+			VATNumber,
+		},
+		headers: {'Content-Type': 'application/json'},
+	}).then(
+		success => {
+			if (!success.entity.success) {
+				return Promise.reject(Error(success.message));
+			}
+			return Promise.resolve();
+		},
+		failure => {
+			return Promise.reject(Error(failure.message));
+		},
+	);
+};
+
 interface IPasswordChangeData {
 	oldPassword: string;
 	newPassword: string;
