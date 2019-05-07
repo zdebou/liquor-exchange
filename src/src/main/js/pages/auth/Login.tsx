@@ -20,6 +20,7 @@ const USER_SCHEMA = yup.object({
 interface IUser {
 	email: string;
 	password: string;
+	accessToken: string;
 }
 
 const Login: FC = () => {
@@ -31,7 +32,7 @@ const Login: FC = () => {
 	};
 
 	const handleSubmit = (user: IUser) => {
-		logIn(user).then(undefined, onFail);
+		logIn(user).catch(onFail);
 	};
 
 	if (loggedUser) {

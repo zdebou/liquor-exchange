@@ -101,12 +101,21 @@ export const deleteDocument = (collection: Collection, id: string) =>
  * @param user User credentials.
  */
 export const logIn = ({email, password}: {email: string; password: string}) => {
-	if (email !== 'user@email.cz' || password !== 'password') {
-		return Promise.reject(Error('Log in failed.'));
-	}
-
-	store.dispatch.auth.setUser({email});
-	return Promise.resolve();
+	return asyncRestClient({
+		method: 'POST',
+		path: `${restBasePath}/auth/signin`,
+		entity: {email, password},
+		headers: {'Content-Type': 'application/json'},
+	}).then(
+		success => {
+			const accessToken: string = success.entity.accessToken;
+			store.dispatch.auth.setUser({email, accessToken});
+			return Promise.resolve();
+		},
+		failure => {
+			return Promise.reject(Error(failure.message));
+		},
+	);
 };
 
 /**
