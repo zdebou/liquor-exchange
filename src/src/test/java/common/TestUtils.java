@@ -20,7 +20,7 @@ public class TestUtils {
 
     //Pages list
     public static final Map<String, String> pages;
-    
+
     //places list
     public static final Map<String, String> places;
 
@@ -29,12 +29,13 @@ public class TestUtils {
         Map<String, String> tmpPages = new HashMap<>();
         tmpPages.put("homepage", "#/");
         tmpPages.put("login page", "#/login/");
+        tmpPages.put("registration form", "#/signup/");
         pages = Collections.unmodifiableMap(tmpPages);
-        
+
         //create places list
         Map<String, String> tmpPlaces = new HashMap<>();
         tmpPlaces.put("top bar", "//nav[contains(concat(' ',normalize-space(@class),' '),' navbar')]");
-//        tmpPlaces.put("login box", "//nav[contains(concat(' ',normalize-space(@class),' '),' navbar')]");
+        tmpPlaces.put("login box", "//h2[text()='Sign In']/parent::div[@class='card-body']");
         places = Collections.unmodifiableMap(tmpPlaces);
     }
 
@@ -45,7 +46,7 @@ public class TestUtils {
             return page;
         }
     }
-    
+
     public static String getPlace(String place) {
         if (places.containsKey(place)) {
             return places.get(place);
@@ -87,7 +88,7 @@ public class TestUtils {
     }
 
     //////////////////////End of driver management
-    public static String getURL(String server, String path) {
+    public static String getURI(String server, String path) {
 //        String server = this.
         StringBuilder b = new StringBuilder();
         if (!(server.startsWith("http://") || server.startsWith("https://"))) {
@@ -106,8 +107,19 @@ public class TestUtils {
         return b.toString();
     }
 
-    public static String getURL(String path) {
-        return getURL("http://localhost:8080/", path);
+    public static String getURI(String path) {
+        return getURI("http://localhost:8080/", path);
+    }
+
+    public static boolean compareURIs(String URI1, String URI2) {
+        if (URI1.endsWith("/") == false) {
+            URI1 = URI1 + "/";
+        }
+        if (URI2.endsWith("/") == false) {
+            URI2 = URI2 + "/";
+        }
+
+        return URI1.equals(URI2);
     }
 
 }
