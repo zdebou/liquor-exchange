@@ -76,7 +76,7 @@ public class TestUtils {
         }
         System.setProperty("webdriver.gecko.driver", driverPath);
         currentDriver = new FirefoxDriver();
-        currentDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        currentDriver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         return currentDriver;
     }
 
