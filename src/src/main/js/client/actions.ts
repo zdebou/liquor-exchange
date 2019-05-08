@@ -27,6 +27,11 @@ export interface IRequestParams {
 	[key: string]: any;
 }
 
+/**
+ * Encodes params object into URL-encoded query string
+ * @param params Params object to be encoded
+ * @return string String with URL-encoded params
+ */
 const encodeParams = (params: IRequestParams) =>
 	Object.entries(params)
 		.filter(([_, value]) => value !== undefined && value !== null && value !== '')
@@ -97,8 +102,8 @@ export const deleteDocument = (collection: Collection, id: string) =>
 	asyncRestClient({method: 'DELETE', path: `${restBasePath}${collection}/${id}`});
 
 /**
- * MOCKED: Logs in user.
- * @param user User credentials.
+ * Logs in user.
+ * @param user User credentials - {email, password}.
  */
 export const logIn = ({email, password}: {email: string; password: string}) => {
 	return asyncRestClient({
@@ -119,13 +124,16 @@ export const logIn = ({email, password}: {email: string; password: string}) => {
 };
 
 /**
- * MOCKED: Logs out user.
+ * Logs out user.
  */
 export const logOut = () => {
 	store.dispatch.auth.setUser(null);
 	return Promise.resolve();
 };
 
+/**
+ * Register new user.
+ */
 export const signUp = ({
 	email,
 	password,
@@ -188,10 +196,8 @@ interface IPasswordChangeData {
 }
 
 /**
- * Updates a document in a collection
- * @param collection Name/identifier of a collection.
- * @param data Document data to be updated.
- * @param id Document unique identifier.
+ * Change user password
+ * @param data IPasswordChangeData New password data.
  */
 export const changePassword = (data: IPasswordChangeData) =>
 	asyncRestClient({
