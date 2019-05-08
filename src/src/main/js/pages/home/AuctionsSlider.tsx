@@ -47,10 +47,9 @@ const AuctionsSlider: FC<RouteChildrenProps> = ({history}) => {
 						<span className="text-muted">Origin:</span> {row.country.name},{' '}
 						<span className="text-muted">Description:</span> {row.description}
 					</p>
-					<p>
-						<span className="text-muted">Current price:</span>
-						<h3>{row.lastValue.toLocaleString()} CZK</h3>
-					</p>
+					<p />
+					<span className="text-muted">Current price:</span>
+					<h3>{row.lastValue.toLocaleString()} CZK</h3>
 					<ButtonGroup>
 						<Button label="Bid now!" variant="light" onClick={() => bidNow(row.id)} />{' '}
 						or{' '}

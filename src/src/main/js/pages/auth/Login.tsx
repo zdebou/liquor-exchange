@@ -31,7 +31,7 @@ const Login: FC = () => {
 	};
 
 	const handleSubmit = (user: IUser) => {
-		logIn(user).then(undefined, onFail);
+		logIn(user).catch(onFail);
 	};
 
 	if (loggedUser) {
@@ -47,8 +47,8 @@ const Login: FC = () => {
 					onSubmit={handleSubmit}
 				>
 					{error && <FormGroup error={error} />}
-					<Input id="email" label="Email" />
-					<Input id="password" label="Password" type="password" />
+					<Input name="email" id="email" label="Email" />
+					<Input name="password" id="password" label="Password" type="password" />
 					<ButtonGroup>
 						<Button type="submit" label="Submit" primary />
 					</ButtonGroup>

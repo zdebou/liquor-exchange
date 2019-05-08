@@ -93,8 +93,7 @@ public class AuthController {
         Role userRole = roleRepository.findByName(RoleName.USER)
             .orElseThrow(() -> new LiquorExchangeException("User role not found."));
 
-        UserSecurity security = new UserSecurity(
-            null,
+        UserSecurity security = UserSecurity.create(
             user,
             signUpRequest.getPassword(),
             new ArrayList<>(Collections.singleton(userRole))

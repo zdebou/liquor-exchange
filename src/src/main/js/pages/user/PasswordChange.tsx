@@ -13,15 +13,15 @@ import Button from '../../components/Button';
 import {Modal, ModalType, IModalMessage} from '../../components/Modal';
 
 const NEW_PASSWORD_SCHEMA = yup.object({
-	old: yup.string().required('This is a required field.'),
-	new: yup
+	oldPassword: yup.string().required('This is a required field.'),
+	newPassword: yup
 		.string()
 		.required('Choose a new password.')
 		.min(8, 'Provide at least 8 characters.'),
-	new2: yup
+	newPasswordConfirm: yup
 		.string()
 		.required('Please retype your password.')
-		.oneOf([yup.ref('new')], 'Passwords do not match'),
+		.oneOf([yup.ref('newPassword')], 'Passwords do not match'),
 });
 
 const PasswordChange: FC = () => {
@@ -52,9 +52,9 @@ const PasswordChange: FC = () => {
 					schema={NEW_PASSWORD_SCHEMA}
 					onSubmit={handleSubmit}
 				>
-					<Input type="password" id="old" label="Current Password" />
-					<Input type="password" id="new" label="New Password" />
-					<Input type="password" id="new2" label="Confirm Password" />
+					<Input type="password" id="oldPassword" label="Current Password" />
+					<Input type="password" id="newPassword" label="New Password" />
+					<Input type="password" id="newPasswordConfirm" label="Confirm Password" />
 					<ButtonGroup>
 						<Button type="submit" label="Submit" primary />
 					</ButtonGroup>

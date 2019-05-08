@@ -1,5 +1,5 @@
 import asyncRestClient from './asyncRestClient';
-import store from './store';
+import store, {useStore} from './store';
 
 const restBasePath = '/api';
 
@@ -8,6 +8,9 @@ export enum Collection {
 	AuctionsByCountry = '/auctions/search/findByCountryCode',
 	Countries = '/countries',
 	Categories = '/categories',
+	SignIn = '/auth/signin',
+	SignUp = '/auth/signup',
+	ChangePassword = '/auth/changepass',
 }
 
 export enum SortOrder {
@@ -45,13 +48,32 @@ const encodeParams = (params: IRequestParams) =>
 		}, new URLSearchParams())
 		.toString();
 
+const authorizationHeader = () => {
+	const loggedUser = store.getState().auth.user;
+	if (loggedUser) {
+		return 'Bearer ' + loggedUser.accessToken;
+	} else {
+		return 'Anonymous';
+	}
+};
+
+const httpHeaders = (contentType?: string) => {
+	return {
+		'Content-Type': contentType ? contentType : 'application/json',
+		Authorization: authorizationHeader(),
+	};
+};
 /**
  * Loads all documents from a collection
  * @param collection Name/identifier of a collection.
  * @param params URL parameters for filtering
  */
 export const loadDocuments = (collection: Collection, params: IRequestParams = {}) =>
-	asyncRestClient({method: 'GET', path: `${restBasePath}${collection}?${encodeParams(params)}`});
+	asyncRestClient({
+		method: 'GET',
+		path: `${restBasePath}${collection}?${encodeParams(params)}`,
+		headers: httpHeaders(),
+	});
 
 /**
  * Loads a single document from a collection
@@ -59,7 +81,11 @@ export const loadDocuments = (collection: Collection, params: IRequestParams = {
  * @param id Document unique identifier.
  */
 export const loadDocument = (collection: Collection, id: string) =>
-	asyncRestClient({method: 'GET', path: `${restBasePath}${collection}/${id}`});
+	asyncRestClient({
+		method: 'GET',
+		path: `${restBasePath}${collection}/${id}`,
+		headers: httpHeaders(),
+	});
 
 /**
  * Inserts new document into a collection
@@ -71,7 +97,7 @@ export const insertDocument = (collection: Collection, data: object) =>
 		method: 'POST',
 		path: `${restBasePath}${collection}`,
 		entity: data,
-		headers: {'Content-Type': 'application/json'},
+		headers: httpHeaders(),
 	});
 
 /**
@@ -85,7 +111,7 @@ export const updateDocument = (collection: Collection, data: object, id: string)
 		method: 'PUT',
 		path: `${restBasePath}${collection}/${id}`,
 		entity: data,
-		headers: {'Content-Type': 'application/json'},
+		headers: httpHeaders(),
 	});
 
 /**
@@ -94,19 +120,32 @@ export const updateDocument = (collection: Collection, data: object, id: string)
  * @param id Document unique identifier.
  */
 export const deleteDocument = (collection: Collection, id: string) =>
-	asyncRestClient({method: 'DELETE', path: `${restBasePath}${collection}/${id}`});
+	asyncRestClient({
+		method: 'DELETE',
+		path: `${restBasePath}${collection}/${id}`,
+		headers: httpHeaders(),
+	});
 
 /**
  * MOCKED: Logs in user.
  * @param user User credentials.
  */
 export const logIn = ({email, password}: {email: string; password: string}) => {
-	if (email !== 'user@email.cz' || password !== 'password') {
-		return Promise.reject(Error('Log in failed.'));
-	}
-
-	store.dispatch.auth.setUser({email});
-	return Promise.resolve();
+	return asyncRestClient({
+		method: 'POST',
+		path: `${restBasePath}/auth/signin`,
+		entity: {email, password},
+		headers: httpHeaders(),
+	}).then(
+		success => {
+			const accessToken: string = success.entity.accessToken;
+			store.dispatch.auth.setUser({email, accessToken});
+			return Promise.resolve();
+		},
+		failure => {
+			return Promise.reject(Error(failure.message));
+		},
+	);
 };
 
 /**
@@ -115,6 +154,61 @@ export const logIn = ({email, password}: {email: string; password: string}) => {
 export const logOut = () => {
 	store.dispatch.auth.setUser(null);
 	return Promise.resolve();
+};
+
+export const signUp = ({
+	email,
+	password,
+	firstName,
+	lastName,
+	identityCardNumber,
+	birthDate,
+	address,
+	companyAddress,
+	companyName,
+	companyIdentificationNumber,
+	VATNumber,
+}: {
+	email: string;
+	password: string;
+	firstName: string;
+	lastName: string;
+	identityCardNumber: string;
+	birthDate: string;
+	address: string;
+	companyAddress: string;
+	companyName: string;
+	companyIdentificationNumber: bigint;
+	VATNumber: bigint;
+}) => {
+	return asyncRestClient({
+		method: 'POST',
+		path: `${restBasePath}/auth/signup`,
+		entity: {
+			email,
+			password,
+			firstName,
+			lastName,
+			identityCardNumber,
+			birthDate,
+			address,
+			companyAddress,
+			companyName,
+			companyIdentificationNumber,
+			VATNumber,
+		},
+		headers: httpHeaders(),
+	}).then(
+		success => {
+			if (!success.entity.success) {
+				return Promise.reject(Error(success.message));
+			}
+			return Promise.resolve();
+		},
+		failure => {
+			return Promise.reject(Error(failure.message));
+		},
+	);
 };
 
 interface IPasswordChangeData {
@@ -130,9 +224,4 @@ interface IPasswordChangeData {
  * @param id Document unique identifier.
  */
 export const changePassword = (data: IPasswordChangeData) =>
-	asyncRestClient({
-		method: 'PUT',
-		path: `${restBasePath}/auth/changepass`,
-		entity: data,
-		headers: {'Content-Type': 'application/json'},
-	});
+	insertDocument(Collection.ChangePassword, data);
