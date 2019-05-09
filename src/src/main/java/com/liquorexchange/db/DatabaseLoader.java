@@ -25,8 +25,8 @@ public class DatabaseLoader implements CommandLineRunner {
     private static final Category WINE = new Category(null, "Wine");
     private static final Category BOURBON = new Category(null, "Bourbon");
 
-	private static final Role ADMIN = new Role(RoleName.ADMIN);
-	private static final Role USER = new Role(RoleName.USER);
+	private static final Role ADMIN = new Role(RoleName.ROLE_ADMIN);
+	private static final Role USER = new Role(RoleName.ROLE_USER);
 
     private static final User JOHN = new User(
 		"johny@gmail.com",
