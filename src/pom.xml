@@ -101,6 +101,8 @@
 			<version>1.2.5</version>
 			<scope>test</scope>
 		</dependency>
+
+		<!--Pretty cucumber reports -->
 		<dependency>
 			<groupId>com.vimalselvam</groupId>
 			<artifactId>cucumber-extentsreport</artifactId>
