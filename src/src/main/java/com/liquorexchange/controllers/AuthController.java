@@ -26,6 +26,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Optional;
@@ -111,10 +112,10 @@ public class AuthController {
 
     @PostMapping("/changepass")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordRequest changepassRequest) {
+    public ResponseEntity<?> changePassword(Principal principal, @Valid @RequestBody ChangePasswordRequest changepassRequest) {
         Boolean success;
         String message;
-        String email = "anna@gmail.com";
+        String email = principal.getName();
         Optional<User> user = userRepository.findByEmail(email);
 
         if (!changepassRequest.getNewPassword().matches(changepassRequest.getNewPasswordConfirm())) {
