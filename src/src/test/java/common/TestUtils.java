@@ -72,7 +72,7 @@ public class TestUtils {
         closeDriver();
         String driverPath = System.getenv(DRIVER_VARIABLE_NAME);
         if (driverPath == null) {
-            driverPath = "geckodriver.exe";
+            driverPath = "node_modules/geckodriver/geckodriver.exe";
         }
         System.setProperty("webdriver.gecko.driver", driverPath);
         currentDriver = new FirefoxDriver();

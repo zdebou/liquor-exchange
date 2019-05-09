@@ -20,7 +20,8 @@
 		"react-router": "^5.0.0",
 		"react-router-dom": "^5.0.0",
 		"rest": "^1.3.2",
-		"yup": "^0.27.0"
+		"yup": "^0.27.0",
+		"geckodriver": "^1.16.2"
 	},
 	"scripts": {
 		"watch": "webpack --watch -d",
