@@ -111,7 +111,7 @@ public class AuthController {
     }
 
     @PostMapping("/changepass")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> changePassword(Principal principal, @Valid @RequestBody ChangePasswordRequest changepassRequest) {
         Boolean success;
         String message;
