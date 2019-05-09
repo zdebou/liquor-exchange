@@ -11,7 +11,6 @@ import com.liquorexchange.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import java.security.Principal;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,6 +26,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Optional;
@@ -90,7 +90,7 @@ public class AuthController {
 
         User result = userRepository.save(user);
 
-        Role userRole = roleRepository.findByName(RoleName.USER)
+        Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
             .orElseThrow(() -> new LiquorExchangeException("User role not found."));
 
         UserSecurity security = UserSecurity.create(
@@ -111,7 +111,7 @@ public class AuthController {
     }
 
     @PostMapping("/changepass")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> changePassword(Principal principal, @Valid @RequestBody ChangePasswordRequest changepassRequest) {
         Boolean success;
         String message;
