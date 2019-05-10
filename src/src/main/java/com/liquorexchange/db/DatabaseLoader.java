@@ -9,6 +9,7 @@ import com.liquorexchange.db.model.*;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -27,6 +28,26 @@ public class DatabaseLoader implements CommandLineRunner {
 
 	private static final Role ADMIN = new Role(RoleName.ROLE_ADMIN);
 	private static final Role USER = new Role(RoleName.ROLE_USER);
+
+	private static final User TEST_USER = new User(
+			"user@email.com",
+			new UserInfo("Test","User"),
+			"12345",
+			new Calendar.Builder().setDate(1995, Calendar.MAY, 5).build().getTime(),
+			"5th Avenue, 500000 NYC",
+			"5th Avenue, 500000 NYC",
+			"GM",
+			123456,
+			1234567
+	);
+
+	private static final UserSecurity TEST_USER_SEC = UserSecurity.create(
+			TEST_USER,
+			"password",
+			new ArrayList<Role>() {{
+				add(USER);
+			}}
+	);
 
     private static final User JOHN = new User(
 		"johny@gmail.com",
@@ -125,9 +146,11 @@ public class DatabaseLoader implements CommandLineRunner {
 
 			this.userRepository.save(JOHN);
 			this.userRepository.save(ANNA);
+			this.userRepository.save(TEST_USER);
 
 			this.userSecurityRepository.save(JOHN_SEC);
 			this.userSecurityRepository.save(ANNA_SEC);
+			this.userSecurityRepository.save(TEST_USER_SEC);
 
 			this.countryRepository.save(CZECH_REPUBLIC);
 			this.countryRepository.save(UNITED_STATES);
@@ -135,10 +158,23 @@ public class DatabaseLoader implements CommandLineRunner {
 			this.categoryRepository.save(WINE);
 			this.categoryRepository.save(BOURBON);
 
+			ArrayList<String> beverages = new ArrayList<String>(Arrays.asList(
+				"Riesling, archive 2002",
+				"Chardonnay, old archive",
+				"Sauvignon blanc from 1983",
+				"Syrah, rustical",
+				"Pinot noir",
+				"Presidente Brandy",
+				"E & J. Calvados Bushnell",
+				"Germain-Robin Brandy. Ansac Cognac",
+				"Courvoisier Cognac",
+				"Asbach Uralt Brandy"
+			));
+
 			for (int i = 1; i <= 5; i++) {
 				this.auctionRepository.save(new Auction(
 					null,
-					String.format("aukce %d", i),
+					beverages.get(i % beverages.size()),
 					"ACTIVE",
 					"GOOD",
 					"Scratches on paper box",
@@ -155,10 +191,11 @@ public class DatabaseLoader implements CommandLineRunner {
 					WINE
                 ));
 			}
-			for (int i = 1; i <= 5; i++) {
+
+			for (int i = 6; i <= 10; i++) {
 				this.auctionRepository.save(new Auction(
 					null,
-					String.format("test auction %d",i),
+					beverages.get(i % beverages.size()),
 					"ACTIVE",
 					"VERY GOOD",
 					"As new",
