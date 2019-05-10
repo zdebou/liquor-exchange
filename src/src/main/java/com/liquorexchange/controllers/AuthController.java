@@ -145,10 +145,11 @@ public class AuthController {
             }
         }
 
-        URI location = ServletUriComponentsBuilder
-            .fromCurrentContextPath().path("/api/users/{email}")
-            .buildAndExpand(email).toUri();
+        if (success) {
+            return ResponseEntity.ok(new ApiResponse(success, message));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse(success, message));
+        }
 
-        return ResponseEntity.created(location).body(new ApiResponse(success, message));
     }
 }

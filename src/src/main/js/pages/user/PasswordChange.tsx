@@ -29,7 +29,7 @@ const PasswordChange: FC = () => {
 	const [modalMessage, setModalMessage] = useState<IModalMessage | null>(null);
 
 	const onFail = (response: {[key: string]: any}) => {
-		setModalMessage({type: ModalType.Error, title: response.error, text: response.message});
+		setModalMessage({type: ModalType.Error, title: response.error || "Error", text: response.message});
 	};
 
 	const onChangePasswordSuccess = () => {
