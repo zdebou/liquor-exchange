@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
-import {RouteChildrenProps} from 'react-router';
+import {RouteChildrenProps, Redirect} from 'react-router';
 import {Link} from 'react-router-dom';
 import * as yup from 'yup';
 
@@ -30,7 +30,7 @@ const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) =
 	};
 
 	const onSaveSuccess = () => {
-		history.push('/');
+		return <Redirect to="/auctions" />;
 	};
 
 	const onLoadSuccess = (response: {[key: string]: any}) => {

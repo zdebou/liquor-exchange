@@ -10,7 +10,7 @@ interface IProps {
 
 const Navbar: FC<IProps> = ({brand, menu}) => (
 	<BSNavbar bg="dark" variant="dark" expand="md" className="mb-5">
-		<BSNavbar.Brand href="/">{brand}</BSNavbar.Brand>
+		<BSNavbar.Brand href="/#/">{brand}</BSNavbar.Brand>
 		<BSNavbar.Toggle aria-controls="basic-navbar-nav" />
 		<BSNavbar.Collapse id="basic-navbar-nav">
 			<BSNav className="ml-auto">

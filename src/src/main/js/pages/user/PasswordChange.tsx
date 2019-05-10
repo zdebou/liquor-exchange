@@ -33,7 +33,7 @@ const PasswordChange: FC = () => {
 	};
 
 	const onChangePasswordSuccess = () => {
-		history.push('/me');
+		return <Redirect to="/me" />;
 	};
 
 	const handleSubmit = (data: IPasswordChangeData) => {
