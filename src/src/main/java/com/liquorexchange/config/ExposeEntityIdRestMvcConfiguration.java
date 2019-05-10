@@ -1,4 +1,4 @@
-package com.liquorexchange;
+package com.liquorexchange.config;
 
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
@@ -10,6 +10,6 @@ import com.liquorexchange.db.model.*;
 public class ExposeEntityIdRestMvcConfiguration implements RepositoryRestConfigurer {
 
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-        config.exposeIdsFor(Country.class, Auction.class, User.class, Category.class);
+        config.exposeIdsFor(Country.class, Auction.class, UserInfo.class, Category.class);
     }
 }

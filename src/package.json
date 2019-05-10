@@ -10,6 +10,7 @@
 	"homepage": "https://github.com/zdebou/liquor-exchange",
 	"dependencies": {
 		"bootstrap": "^4.3.1",
+		"easy-peasy": "^2.1.6",
 		"formik": "^1.5.2",
 		"jquery": "^3.3.1",
 		"lodash": "^4.17.11",
@@ -19,7 +20,8 @@
 		"react-router": "^5.0.0",
 		"react-router-dom": "^5.0.0",
 		"rest": "^1.3.2",
-		"yup": "^0.27.0"
+		"yup": "^0.27.0",
+		"geckodriver": "^1.16.2"
 	},
 	"scripts": {
 		"watch": "webpack --watch -d",
@@ -31,6 +33,7 @@
 		"@babel/preset-env": "^7.1.0",
 		"@babel/preset-react": "^7.0.0",
 		"@babel/preset-typescript": "^7.3.3",
+		"babel-plugin-transform-class-properties": "^6.5.2",
 		"@types/lodash": "^4.14.123",
 		"@types/react": "^16.8.10",
 		"@types/react-dom": "^16.8.3",

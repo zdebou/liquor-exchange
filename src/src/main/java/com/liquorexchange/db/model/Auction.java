@@ -9,7 +9,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -38,9 +37,9 @@ public class Auction {
 
 	private Date end;
 
-	private User seller;
+	private UserInfo seller;
 
-	private User winner;
+	private UserInfo winner;
 
 	private Integer initialValue;
 

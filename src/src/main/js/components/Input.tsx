@@ -6,6 +6,7 @@ import {withForm} from './Form';
 
 interface IProps {
 	value?: string | null;
+	name?: string | null;
 	onChange: (value: string) => void;
 	isInvalid?: boolean;
 	htmlId?: string;
@@ -15,6 +16,7 @@ interface IProps {
 
 export const InputRaw: FC<IProps> = ({
 	value,
+	name,
 	onChange,
 	isInvalid = false,
 	htmlId,
@@ -32,6 +34,7 @@ export const InputRaw: FC<IProps> = ({
 			id={id}
 			type={type}
 			value={value || ''}
+			name={name}
 			placeholder={placeholder}
 			onChange={handleChange as any}
 			isInvalid={isInvalid}

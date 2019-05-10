@@ -1,43 +1,54 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
+import {Redirect} from 'react-router';
 import * as yup from 'yup';
 
+import {logIn} from '../../client/actions';
+import {useStore} from '../../client/store';
 import Container from '../../components/Container';
 import Box from '../../components/Box';
 import Form from '../../components/Form';
+import FormGroup from '../../components/FormGroup';
 import Input from '../../components/Input';
 import ButtonGroup from '../../components/ButtonGroup';
 import Button from '../../components/Button';
 
 const USER_SCHEMA = yup.object({
-	name: yup
-		.string()
-		.strict(true)
-		.trim("Login can't start or end with spaces.")
-		.required('This is a required field.'),
+	email: yup.string().required('This is a required field.'),
 	password: yup.string().required('This is a required field.'),
 });
 
 interface IUser {
-	name: string;
+	email: string;
 	password: string;
 }
 
 const Login: FC = () => {
-	const handleSubmit = (user: IUser) => {
-		// tslint:disable-next-line: no-console
-		console.log('LOG IN', user);
+	const [error, setError] = useState<string>();
+	const loggedUser = useStore(state => state.auth.user);
+
+	const onFail = (errorObject: Error) => {
+		setError(errorObject.message);
 	};
+
+	const handleSubmit = (user: IUser) => {
+		logIn(user).catch(onFail);
+	};
+
+	if (loggedUser) {
+		return <Redirect to="/" />;
+	}
 
 	return (
 		<Container>
 			<Box title="Sign In">
 				<Form
-					initialValues={{name: '', password: ''}}
+					initialValues={{email: '', password: ''}}
 					schema={USER_SCHEMA}
 					onSubmit={handleSubmit}
 				>
-					<Input id="name" label="Name" />
-					<Input id="password" label="Password" type="password" />
+					{error && <FormGroup error={error} />}
+					<Input name="email" id="email" label="Email" />
+					<Input name="password" id="password" label="Password" type="password" />
 					<ButtonGroup>
 						<Button type="submit" label="Submit" primary />
 					</ButtonGroup>

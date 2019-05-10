@@ -22,7 +22,6 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 	};
 
 	const onLoadSuccess = (response: {[key: string]: any}) => {
-	    console.log(response);
 		setRows(response.entity._embedded.auctions);
 	};
 
@@ -34,17 +33,14 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 		countryCode: string | undefined = country,
 		sortingValue: ISortParams | undefined = sorting,
 	) => {
-	    if (countryCode) {
-	        loadDocuments(Collection.AuctionsByCountry, {code: countryCode, sort: sortingValue}).then(
-                onLoadSuccess,
-                onFail,
-            );
-        } else {
-            loadDocuments(Collection.Auctions, {sort: sortingValue}).then(
-                onLoadSuccess,
-                onFail,
-            );
-        }
+		if (countryCode) {
+			loadDocuments(Collection.AuctionsByCountry, {
+				code: countryCode,
+				sort: sortingValue,
+			}).then(onLoadSuccess, onFail);
+		} else {
+			loadDocuments(Collection.Auctions, {sort: sortingValue}).then(onLoadSuccess, onFail);
+		}
 	};
 
 	const handleAddAuction = () => {
@@ -99,10 +95,7 @@ const AuctionList: FC<RouteChildrenProps> = ({history}) => {
 						</td>
 						<td>{row.country.name}</td>
 						<td>
-							<Button
-								label="Delete"
-								onClick={() => handleDeleteAuction(row.id)}
-							/>
+							<Button label="Delete" onClick={() => handleDeleteAuction(row.id)} />
 						</td>
 					</tr>
 				)}

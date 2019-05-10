@@ -71,6 +71,14 @@ Aplikace se při změně automaticky zbuildí a restartuje. Je to vlastnost modu
 
 Pro automatický refresh stránky je potřeba do prohlížeče přidat plugin **LiveReload** (Firefox nebo Chrome). Pro práci na frontendu je třeba spustit `npm run watch`.
 
+# Testování
+
+Testy v Cucumber se spustí takto:
+
+```
+mvnw test
+```
+
 # Verzování a práce s GITem
 
 Budeme určitě používat _developer branches_ a kdo chce, tak může dělat _feature brnaches_. Vývoj a přidávání vlastního kódu je potřeba dělat ve vlastní větvi a následně udělat pull request! Nikdo prosím nedělejte commit do **master**, ale pouze do vlastní větve.
