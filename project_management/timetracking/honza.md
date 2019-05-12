@@ -1,4 +1,9 @@
 | Datum | Popis                            | Čas |
 | ----- | -------------------------------- | --- |
+| 10.5. | aukce                            | 2h  |
+| 9.5.  | security                         | 1h  |
+| 7.5.  | dokumentace                      | 2h  |
+| 3.5.  | security                         | 7h  |
+| 26.4. | security                         | 6h  |
 | 9.4.  | docker                           | 5h  |
 | 8.4.  | docker                           | 3h  |
