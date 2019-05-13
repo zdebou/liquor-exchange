@@ -1,24 +1,12 @@
 import React, {FC, useEffect, useState} from 'react';
-import {RouteChildrenProps, Redirect} from 'react-router';
+import {RouteChildrenProps} from 'react-router';
 import {Link} from 'react-router-dom';
-import * as yup from 'yup';
 
-import AuctionState from '../../model/enums/AuctionState';
-import ProductState from '../../model/enums/ProductState';
-import {Collection, loadDocument, insertDocument, updateDocument} from '../../client/actions';
+import {Collection, loadDocument} from '../../client/actions';
 import Container from '../../components/Container';
 import Heading from '../../components/Heading';
-import Form from '../../components/Form';
-import Input from '../../components/Input';
-import SelectEnum from '../../components/SelectEnum';
-import SelectDocument from '../../components/SelectDocument';
-import ButtonGroup from '../../components/ButtonGroup';
-import Button from '../../components/Button';
-import {Modal, ModalType, IModalMessage} from '../../components/Modal';
-
-const AUCTION_SCHEMA = yup.object({
-	name: yup.string().required('Name cannot be empty'),
-});
+import {IModalMessage, Modal, ModalType} from '../../components/Modal';
+import Image from 'react-bootstrap/Image';
 
 const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) => {
 	const id = !match || match.params.id === 'new' ? null : match.params.id;
@@ -29,12 +17,10 @@ const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) =
 		setModalMessage({type: ModalType.Error, title: response.error, text: response.message});
 	};
 
-	const onSaveSuccess = () => {
-		return <Redirect to="/auctions" />;
-	};
-
 	const onLoadSuccess = (response: {[key: string]: any}) => {
 		setAuction(response.entity);
+		// tslint:disable-next-line:no-console
+		console.log(response.entity);
 	};
 
 	const init = () => {
@@ -42,14 +28,6 @@ const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) =
 			setAuction({});
 		} else {
 			loadDocument(Collection.Auctions, id).then(onLoadSuccess, onFail);
-		}
-	};
-
-	const handleSubmit = async (data: object) => {
-		if (id === null) {
-			await insertDocument(Collection.Auctions, data).then(onSaveSuccess, onFail);
-		} else {
-			await updateDocument(Collection.Auctions, data, id).then(onSaveSuccess, onFail);
 		}
 	};
 
@@ -61,34 +39,24 @@ const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) =
 
 	return (
 		<Container>
-			<Heading>Auction</Heading>
-			<Form schema={AUCTION_SCHEMA} onSubmit={handleSubmit} initialValues={auction}>
-				<Input id="name" label="Name" />
-				<SelectEnum id="auctionState" label="Auction State" enumObject={AuctionState} />
-				<SelectEnum id="productState" label="Product State" enumObject={ProductState} />
-				<SelectDocument
-					id="category"
-					label="Category"
-					collection={Collection.Categories}
-					idFieldName="id"
-					labelFieldName="name"
-					assignObject
-				/>
-				<SelectDocument
-					id="country"
-					label="Country"
-					collection={Collection.Countries}
-					idFieldName="code"
-					labelFieldName="name"
-					assignObject
-				/>
-				<ButtonGroup>
-					<Button label="Save" type="submit" primary />
-				</ButtonGroup>
-			</Form>
+			<Heading>{auction.name}</Heading>
+			<p>Category: {auction.category.name}</p>
+			<p>
+				Seller: {auction.seller.firstName} {auction.seller.lastName}
+			</p>
+			<p>Product state: {auction.productState}</p>
+			<p>Quantity: {auction.quantity}pcs</p>
+			<p>Auction state: {auction.auctionState}pcs</p>
+			{auction.winner && (
+				<p>
+					Winner: {auction.winner.firstName} {auction.winner.lastNamex}
+				</p>
+			)}
+			<Image src="img/rum-bottle.jpg" float-right width={250} />
 			<p className="mt-3">
 				<Link to="/">Back</Link>
 			</p>
+
 			{modalMessage && <Modal message={modalMessage} />}
 		</Container>
 	);

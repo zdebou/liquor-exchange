@@ -1,5 +1,5 @@
 import asyncRestClient from './asyncRestClient';
-import store, {useStore} from './store';
+import store from './store';
 
 const restBasePath = '/api';
 
