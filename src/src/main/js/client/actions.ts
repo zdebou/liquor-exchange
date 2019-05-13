@@ -1,5 +1,6 @@
 import asyncRestClient from './asyncRestClient';
 import store, {useStore} from './store';
+import {setCookie, deleteCookie} from '../utils/cookies';
 
 const restBasePath = '/api';
 
@@ -54,9 +55,9 @@ const encodeParams = (params: IRequestParams) =>
 		.toString();
 
 const authorizationHeader = () => {
-	const loggedUser = store.getState().auth.user;
-	if (loggedUser) {
-		return 'Bearer ' + loggedUser.accessToken;
+	const auth = store.getState().auth;
+	if (auth.loggedUser) {
+		return 'Bearer ' + auth.loggedUser.accessToken;
 	} else {
 		return 'Anonymous';
 	}
@@ -68,6 +69,7 @@ const httpHeaders = (contentType?: string) => {
 		Authorization: authorizationHeader(),
 	};
 };
+
 /**
  * Loads all documents from a collection
  * @param collection Name/identifier of a collection.
@@ -144,7 +146,33 @@ export const logIn = ({email, password}: {email: string; password: string}) => {
 	}).then(
 		success => {
 			const accessToken: string = success.entity.accessToken;
+			setCookie('user-token', accessToken, 7);
 			store.dispatch.auth.setUser({email, accessToken});
+			return Promise.resolve();
+		},
+		failure => {
+			return Promise.reject(Error(failure.message));
+		},
+	);
+};
+
+/**
+ * Fetch user details based on authentication token.
+ * @param token String
+ */
+export const fetchUser = (token: string) => {
+	return asyncRestClient({
+		method: 'GET',
+		path: `${restBasePath}/auth/fetch`,
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: 'Bearer ' + token,
+		},
+	}).then(
+		success => {
+			console.log(success.entity);
+			const email: string = success.entity.email;
+			store.dispatch.auth.setUser({email, token});
 			return Promise.resolve();
 		},
 		failure => {
@@ -157,6 +185,7 @@ export const logIn = ({email, password}: {email: string; password: string}) => {
  * Logs out user.
  */
 export const logOut = () => {
+	deleteCookie('user-token');
 	store.dispatch.auth.setUser(null);
 	return Promise.resolve();
 };

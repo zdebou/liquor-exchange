@@ -5,11 +5,13 @@ import {StoreProvider} from 'easy-peasy';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import {fetchUser} from './client/actions';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 
+import {getCookie} from './utils/cookies';
 import store, {useStore} from './client/store';
 import Navbar from './components/Navbar';
 import Home from './pages/home/Home';
@@ -23,7 +25,16 @@ import ProfileEditor from './pages/user/ProfileEditor';
 import PasswordChange from './pages/user/PasswordChange';
 
 const Header: FC = () => {
-	const loggedUser = useStore(state => state.auth.user);
+	const auth = useStore(state => state.auth);
+	let loggedUser = auth.user;
+
+	if (!loggedUser) {
+		const token = getCookie('user-token');
+		if (token) {
+			fetchUser(token);
+			loggedUser = auth.user;
+		}
+	}
 
 	return (
 		<Navbar
