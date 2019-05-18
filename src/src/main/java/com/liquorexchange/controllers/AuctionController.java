@@ -36,7 +36,7 @@ public class AuctionController {
     }
 
     @PreAuthorize("hasRole('USER')")
-    @PostMapping("/bid/{id}")
+    @PutMapping("/bid/{id}")
     public ResponseEntity<?> bid(Principal principal, @PathVariable String id, @Valid @RequestBody BidRequest bidRequest) {
         Auction auction = getAuction(id);
         User user = getUser(principal.getName());

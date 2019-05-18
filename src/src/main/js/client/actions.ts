@@ -11,6 +11,7 @@ export enum Collection {
 	SignIn = '/auth/signin',
 	SignUp = '/auth/signup',
 	ChangePassword = '/auth/changepass',
+	Bid = '/auction/bid',
 }
 
 export enum SortOrder {
@@ -231,3 +232,9 @@ interface IPasswordChangeData {
  */
 export const changePassword = (data: IPasswordChangeData) =>
 	insertDocument(Collection.ChangePassword, data);
+
+export interface IBidData {
+	amount: number;
+}
+
+export const bidAuction = (data: IBidData, id: string) => updateDocument(Collection.Bid, data, id);

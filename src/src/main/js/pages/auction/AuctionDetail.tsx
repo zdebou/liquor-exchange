@@ -2,11 +2,17 @@ import React, {FC, useEffect, useState} from 'react';
 import {RouteChildrenProps} from 'react-router';
 import {Link} from 'react-router-dom';
 
-import {Collection, loadDocument} from '../../client/actions';
+import {bidAuction, Collection, IBidData, loadDocument} from '../../client/actions';
 import Container from '../../components/Container';
 import Heading from '../../components/Heading';
 import {IModalMessage, Modal, ModalType} from '../../components/Modal';
 import Image from 'react-bootstrap/Image';
+import * as yup from 'yup';
+import FormGroup from '../../components/FormGroup';
+import Input from '../../components/Input';
+import ButtonGroup from '../../components/ButtonGroup';
+import Button from '../../components/Button';
+import Form from '../../components/Form';
 
 interface ICategory {
 	name: string;
@@ -18,6 +24,7 @@ interface IUserInfo {
 }
 
 interface IAuction {
+	id: string;
 	name: string;
 	seller: IUserInfo;
 	category: ICategory;
@@ -34,19 +41,30 @@ interface IAuction {
 	lastValue: number;
 }
 
+const BID_SCHEMA = yup.object({
+	amount: yup.number().required('This is a required field.'),
+});
+
 const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) => {
 	const id = !match || match.params.id === 'new' ? null : match.params.id;
 	const [auction, setAuction] = useState<IAuction | null>(null);
 	const [modalMessage, setModalMessage] = useState<IModalMessage | null>(null);
+	const [error, setError] = useState<string>();
+
+	const onBidFail = (errorObject: Error) => {
+		setError(errorObject.message);
+	};
 
 	const onFail = (response: {[key: string]: any}) => {
 		setModalMessage({type: ModalType.Error, title: response.error, text: response.message});
 	};
 
 	const onLoadSuccess = (response: {[key: string]: any}) => {
-		// tslint:disable-next-line:no-console
-		console.log(response.entity);
 		setAuction(response.entity);
+	};
+
+	const handleSubmit = (bidData: IBidData) => {
+		bidAuction(bidData, auction.id).then(init, onBidFail);
 	};
 
 	const init = () => {
@@ -88,6 +106,17 @@ const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) =
 				</div>
 				<div className="col-6 text-right">
 					<Image src="img/rum-bottle.jpg" width={250} />
+					<Form
+						initialValues={{amount: auction.lastValue + auction.minimumBid}}
+						schema={BID_SCHEMA}
+						onSubmit={handleSubmit}
+					>
+						{error && <FormGroup error={error} />}
+						<Input name="amount" id="amount" label="New bid" />
+						<ButtonGroup>
+							<Button type="submit" label="Bid" primary />
+						</ButtonGroup>
+					</Form>
 				</div>
 			</div>
 			<p className="lead">
