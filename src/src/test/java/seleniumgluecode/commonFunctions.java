@@ -14,15 +14,18 @@ import cucumber.api.java.en.When;
 import java.util.List;
 import org.junit.After;
 import static org.junit.Assert.assertTrue;
+import org.junit.Ignore;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import runner.SpringBootBaseIntegration;
 
 /**
  *
  * @author divad_000
  */
-public class commonFunctions {
+@Ignore
+public class commonFunctions extends SpringBootBaseIntegration {
 
     private WebDriver driver;
 

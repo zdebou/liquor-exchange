@@ -9,15 +9,18 @@ import common.TestUtils;
 import cucumber.api.java.en.Given;
 import java.util.List;
 import static org.junit.Assert.assertTrue;
+import org.junit.Ignore;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import runner.SpringBootBaseIntegration;
 
 /**
  *
  * @author divad_000
  */
-public class login {
+@Ignore
+public class login extends SpringBootBaseIntegration {
 
     @Given("^user \"([^\"]*)\" is logged in with password \"([^\"]*)\"$")
     public void user_is_logged_in_with_password(String user, String password) throws Throwable {

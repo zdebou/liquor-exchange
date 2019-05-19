@@ -20,12 +20,13 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = "src/test/java/features", 
+        features = "src/test/java/features",
         glue = {"seleniumgluecode"},
-        plugin = { "com.cucumber.listener.ExtentCucumberFormatter:target/cucumber-reports/report.html"}, 
+        plugin = {"com.cucumber.listener.ExtentCucumberFormatter:target/cucumber-reports/report.html"},
         monochrome = true
 )
 public class TestRunner {
+
     @AfterClass
     public static void afterTests() {
         TestUtils.closeDriver();

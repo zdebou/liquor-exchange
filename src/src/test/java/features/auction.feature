@@ -6,7 +6,7 @@
 Feature: Bid
 
    Scenario: Make bid
-      Given user "user@email.cz" is logged in with password "password"
+      Given user "user@email.com" is logged in with password "password"
       When click on "Bid now!"
       And fill "Name" with "Krabičák"
       And change "Active" on "Completed"
@@ -17,7 +17,7 @@ Feature: Bid
   
 
    Scenario: show my auction
-      Given user "user@email.cz" is logged in with password "password"
+      Given user "user@email.com" is logged in with password "password"
       When click on "See my actions"
       And click on "Active auctions"
       Then text "Auctions" is visible

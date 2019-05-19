@@ -7,7 +7,7 @@ Feature: Change
 
    # zmenit info
      Scenario: Change info
-      Given user "user@email.cz" is logged in with password "password"
+      Given user "user@email.com" is logged in with password "password"
       When click on "user@email.com"
       And text "About you" is visible
       And change Type from "Individual" on "Company"
