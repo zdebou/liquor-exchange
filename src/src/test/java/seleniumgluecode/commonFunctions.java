@@ -18,7 +18,7 @@ import org.junit.Ignore;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import runner.SpringBootBaseIntegration;
+import common.SpringBootBaseIntegration;
 
 /**
  *
@@ -37,6 +37,8 @@ public class commonFunctions extends SpringBootBaseIntegration {
     @Before
     public void before(Scenario scenario) {
         this.driver = TestUtils.getNewDriver();
+        //reset DB
+        this.databaseLoader.run(new String[]{});
     }
 
     @After
