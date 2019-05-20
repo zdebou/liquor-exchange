@@ -1,7 +1,8 @@
 #----------------------------------
 # Example of Cucumber .feature file
 #----------------------------------
-    
+
+@login 
 Feature: User Login
    
 #uzivatel se z domovske stranky dostane na stranku, kde se muze prihlasit

@@ -36,6 +36,7 @@ public class TestUtils {
         Map<String, String> tmpPlaces = new HashMap<>();
         tmpPlaces.put("top bar", "//nav[contains(concat(' ',normalize-space(@class),' '),' navbar')]");
         tmpPlaces.put("login box", "//h2[text()='Sign In']/parent::div[@class='card-body']");
+        tmpPlaces.put("registration box", "//h2[text()='Sign Up']/parent::div[@class='card-body']");
         places = Collections.unmodifiableMap(tmpPlaces);
     }
 

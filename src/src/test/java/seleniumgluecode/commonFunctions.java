@@ -59,6 +59,13 @@ public class commonFunctions extends SpringBootBaseIntegration {
         button.click();
     }
 
+    @Then("^click on \"([^\"]*)\" in \"([^\"]*)\"$")
+    public void click_on_in(String buttonText, String placeText) throws Throwable {
+        WebElement place = this.driver.findElement(By.xpath(TestUtils.getPlace(placeText)));
+        WebElement button = place.findElement(By.xpath(".//a[text()='" + buttonText + "'] | .//button[text()='" + buttonText + "']"));
+        button.click();
+    }
+
     @When("^fill \"([^\"]*)\" with \"([^\"]*)\"$")
     public void fill_with(String textfield, String text) throws Throwable {
         WebElement input = this.driver.findElement(By.xpath("//label[text()='" + textfield + "']/following-sibling::input"));
@@ -74,28 +81,28 @@ public class commonFunctions extends SpringBootBaseIntegration {
     @Then("^text \"([^\"]*)\" is visible in \"([^\"]*)\"$")
     public void text_is_visible_in(String text, String placeText) throws Throwable {
         WebElement place = this.driver.findElement(By.xpath(TestUtils.getPlace(placeText)));
-        WebElement elem = place.findElement(By.xpath("//*[text()='" + text + "']"));
+        WebElement elem = place.findElement(By.xpath(".//*[text()='" + text + "']"));
         assertTrue(elem.isDisplayed());
     }
 
     @Then("^button \"([^\"]*)\" is not visible in \"([^\"]*)\"$")
     public void button_is_not_visible_in(String button, String placeText) throws Throwable {
         WebElement place = this.driver.findElement(By.xpath(TestUtils.getPlace(placeText)));
-        List<WebElement> elems = place.findElements(By.xpath("//a[text()='" + button + "'] | //button[text()='" + button + "']"));
+        List<WebElement> elems = place.findElements(By.xpath(".//a[text()='" + button + "'] | .//button[text()='" + button + "']"));
         assertTrue(elems.isEmpty() || (elems.size() == 1 && elems.get(0).isDisplayed() == false));
     }
 
     @Then("^button \"([^\"]*)\" is visible in \"([^\"]*)\"$")
     public void button_is_visible_in(String button, String placeText) throws Throwable {
         WebElement place = this.driver.findElement(By.xpath(TestUtils.getPlace(placeText)));
-        WebElement elem = place.findElement(By.xpath("//a[text()='" + button + "'] | //button[text()='" + button + "']"));
+        WebElement elem = place.findElement(By.xpath(".//a[text()='" + button + "'] | .//button[text()='" + button + "']"));
         assertTrue(elem.isDisplayed());
     }
 
     @Then("^text \"([^\"]*)\" is not visible in \"([^\"]*)\"$")
     public void text_is_not_visible_in(String text, String placeText) throws Throwable {
         WebElement place = this.driver.findElement(By.xpath(TestUtils.getPlace(placeText)));
-        List<WebElement> elems = place.findElements(By.xpath("//*[text()='" + text + "']"));
+        List<WebElement> elems = place.findElements(By.xpath(".//*[text()='" + text + "']"));
         assertTrue(elems.isEmpty() || (elems.size() == 1 && elems.get(0).isDisplayed() == false));
     }
 }

@@ -2,7 +2,7 @@
 # Example of Cucumber .feature file
 #----------------------------------
     
-@RunWith 
+@auction
 Feature: Bid
 
    Scenario: Make bid
