@@ -2,19 +2,34 @@
 # Example of Cucumber .feature file
 #----------------------------------
     
-@RunWith 
-Feature: Change
+@userinfo 
+Feature: User info
 
-   # zmenit info
+# ukaz info o uzivateli
+     Scenario: Show info
+      Given user "user@email.com" is logged in with password "password"
+      When click on "user@email.com" in "top bar"
+      Then user is on "current user info page"
+      And text "About you" is visible in "page" 
+
+# zmena infa o uzivateli
      Scenario: Change info
       Given user "user@email.com" is logged in with password "password"
-      When click on "user@email.com"
-      And text "About you" is visible
-      And change Type from "Individual" on "Company"
-      And rewrite "Lorem" on "Prokop"
-      And rewrite "Ipsum" on "Buben"
-      And rewrite "1.4.2019" on "6.6.666"
-      And rewrite "Lorem ipsum dolor sit amet" on "Zadek u Opavy"
-      And rewrite "0123456789ABC" on "1234567890DEF"
+      When click on "user@email.com" in "top bar"
+      And text "About you" is visible in "page" 
+      And change "Type" to "Company"
+      And fill "First Name" with "Prokop"
+      And fill "Last Name" with "Buben"
+      And fill "Birthdate" with "1.1.1990"
+      And fill "Address" with "Zadek u Opavy"
+      And fill "Identity Card Number" with "1234567890DEF"
       And click on "Save Changes"
-      Then changes are apllied.
+      And refresh current page
+      And click on "user@email.com" in "top bar"
+      Then user is on "current user info page"
+      And "Company" is selected in "Type"
+      And "First Name" is set to "Prokop"
+      And "Last Name" is set to "Buben"
+      And "Birthdate" is set to "1.1.1990"
+      And "Address" is set to "Zadek u Opavy"
+      And "Identity Card Number" is set to "1234567890DEF"

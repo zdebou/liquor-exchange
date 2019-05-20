@@ -19,6 +19,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import common.SpringBootBaseIntegration;
+import static org.junit.Assert.assertEquals;
+import org.openqa.selenium.support.ui.Select;
 
 /**
  *
@@ -104,5 +106,29 @@ public class commonFunctions extends SpringBootBaseIntegration {
         WebElement place = this.driver.findElement(By.xpath(TestUtils.getPlace(placeText)));
         List<WebElement> elems = place.findElements(By.xpath(".//*[text()='" + text + "']"));
         assertTrue(elems.isEmpty() || (elems.size() == 1 && elems.get(0).isDisplayed() == false));
+    }
+
+    @When("^change \"([^\"]*)\" to \"([^\"]*)\"$")
+    public void change_to(String field, String value) throws Throwable {
+        Select dropdown = new Select(this.driver.findElement(By.xpath("//label[text()='" + field + "']/following-sibling::select")));
+        dropdown.selectByVisibleText(value);
+    }
+
+    @When("^refresh current page$")
+    public void refresh_current_page() throws Throwable {
+        this.driver.navigate().refresh();
+    }
+
+    @Then("^\"([^\"]*)\" is set to \"([^\"]*)\"$")
+    public void is_set_to(String field, String value) throws Throwable {
+        WebElement input = this.driver.findElement(By.xpath("//label[text()='" + field + "']/following-sibling::input"));
+        assertEquals(value, input.getText());
+    }
+
+    @Then("^\"([^\"]*)\" is selected in \"([^\"]*)\"$")
+    public void is_selected_in(String value, String field) throws Throwable {
+        Select dropdown = new Select(this.driver.findElement(By.xpath("//label[text()='" + field + "']/following-sibling::select")));
+        WebElement selected = dropdown.getFirstSelectedOption();
+        assertEquals(value, selected.getText());
     }
 }

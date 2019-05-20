@@ -20,7 +20,7 @@ Feature: User Login
       Then text "user@email.com" is visible in "top bar"
       And button "Sign In" is not visible in "top bar" 
    
-      #uzivatel zada spatne udaje
+#uzivatel zada spatne udaje
     Scenario: Denied Login
       Given user is on "login page"
       When fill "Email" with "user@email.com"
