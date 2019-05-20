@@ -20,7 +20,7 @@ Feature: Register
       And fill "Last Name" with "User"
       And click on "Sign Up" in "registration box"
       Then user should be on "login page"
-      And user "test@user.com" is able to login with password "somePassword"
+      And user "test@user.cz" is able to login with password "somePassword"
 
 #vyplni neuplne udaje a registrace neprobehne
    Scenario: incomplete registration

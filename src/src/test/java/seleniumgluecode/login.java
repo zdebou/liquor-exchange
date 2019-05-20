@@ -40,8 +40,8 @@ public class login extends SpringBootBaseIntegration {
 
         //check if logged in
         WebElement place = driver.findElement(By.xpath(TestUtils.getPlace("top bar")));
-        WebElement elem = place.findElement(By.xpath("//*[text()='" + user + "']"));
-        List<WebElement> elems = place.findElements(By.xpath("//a[text()='Sign In'] | //button[text()='Sign In']"));
+        WebElement elem = place.findElement(By.xpath(".//*[text()='" + user + "']"));
+        List<WebElement> elems = place.findElements(By.xpath(".//a[text()='Sign In'] | .//button[text()='Sign In']"));
 
         assertTrue(elem.isDisplayed());
         assertTrue(elems.isEmpty() || (elems.size() == 1 && elems.get(0).isDisplayed() == false));
