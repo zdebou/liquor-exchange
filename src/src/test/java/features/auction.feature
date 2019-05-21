@@ -2,11 +2,10 @@
 # Example of Cucumber .feature file
 #----------------------------------
     
-@auction
 Feature: Bid
 
 #ukaz aktivni aukce
-   @functionality
+   @auction @functionality
    Scenario: show active auctions
       Given user is on "homepage"
       When click on "Active auctions" in "footer"
@@ -19,7 +18,7 @@ Feature: Bid
          |  Asbach Uralt Brandy       |  United States  |
 
 #vytvor novou aukci
-   @functionality
+   @auction @functionality
    Scenario: Make bid
       Given user "user@email.com" is logged in with password "password"
       And user is on "new auction"
@@ -33,7 +32,7 @@ Feature: Bid
          | Krabicak | Czech Republic |
 
 #ukaze moje aukce
-   @functionality
+   @auction @functionality
    Scenario: show my auctions
       Given user "user@email.com" is logged in with password "password"
       When click on "See my auctions" in "page"
@@ -42,7 +41,7 @@ Feature: Bid
          | Krabicak | Czech Republic |
 
 #smaze aukci
-   @functionality
+   @auction @functionality
    Scenario: delete my auction
       Given user "user@email.com" is logged in with password "password"
       When click on "Active auctions" in "footer"
@@ -50,3 +49,46 @@ Feature: Bid
       Then active auctions table doesn't contain
         #| liquor_name| country        |
          | Pinot noir | Czech Republic |
+
+#vytvori novou aukci s prazdnym jmenem
+   @auction @integrity
+   Scenario: Make bid
+      Given user "user@email.com" is logged in with password "password"
+      And user is on "new auction"
+      When fill "Name" with ""
+      And change "Auction State" to "Completed"
+      And change "Product State" to "Good"
+      And change "Category" to "Wine"
+      And change "Country" to "Czech Republic"
+      And click on "Save"
+      Then active auctions table doesn't contain
+         |  | Czech Republic |
+
+#vytvori novou aukci s XSS misto jmena
+   @auction @integrity
+   Scenario: Make bid
+      Given user "user@email.com" is logged in with password "password"
+      And user is on "new auction"
+      When fill "Name" with "<script>alert('XSS!')</script>"
+      And change "Auction State" to "Active"
+      And change "Product State" to "VeryGood"
+      And change "Category" to "Wine"
+      And change "Country" to "Czech Republic"
+      And click on "Save"
+      And click on "Active auctions"
+      Then alert box is not visible
+
+#vytvori novou aukci s NoSQL injection misto jmena
+   @auction @integrity
+   Scenario: Make bid
+      Given user "user@email.com" is logged in with password "password"
+      And user is on "new auction"
+      When fill "Name" with "db.auction.remove({name: 'Chardonnay, old archive'})"
+      And change "Auction State" to "Active"
+      And change "Product State" to "Good"
+      And change "Category" to "Wine"
+      And change "Country" to "Czech Republic"
+      And click on "Save"
+      And click on "Active auctions"
+      Then active auctions table contains
+         | Chardonnay, old archive | Czech Republic |

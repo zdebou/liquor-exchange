@@ -39,6 +39,8 @@ public class auction extends SpringBootBaseIntegration {
 
         if ("active".equals(page)) {
             driver.get(TestUtils.getURI("#/auctions"));
+        } else if ("my".equals(page)) {
+            driver.get(TestUtils.getURI("#/my/auctions"));
         }
 
         WebElement table = driver.findElement(By.xpath("//h1[text()='Auctions']/following-sibling::table"));
@@ -59,8 +61,7 @@ public class auction extends SpringBootBaseIntegration {
 
         if ("active".equals(page)) {
             driver.get(TestUtils.getURI("#/auctions"));
-        }
-        if ("my".equals(page)) {
+        } else if ("my".equals(page)) {
             driver.get(TestUtils.getURI("#/my/auctions"));
         }
 

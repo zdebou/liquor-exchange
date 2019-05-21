@@ -2,18 +2,17 @@
 # Example of Cucumber .feature file
 #----------------------------------
     
-@register
 Feature: Register
 
 #je mozne otevrit registracni formular
-   @functionality
+   @register @functionality
    Scenario: show registration form
       Given user is on "homepage"
       When click on "Sign Up"
       Then user should be on "registration form"
 
 #vyplni udaje a zaregistruje se
-   @functionality
+   @register @functionality
    Scenario: registeration successfull
       Given user is on "registration form"
       When fill "Email" with "test@user.cz"
@@ -25,7 +24,7 @@ Feature: Register
       And user "test@user.cz" is able to login with password "somePassword"
 
 #vyplni údaje uzivatele ktery jiz existuje
-   @functionality
+   @register @functionality
    Scenario: duplicate registration
       Given user is on "registration form"
       When fill "Email" with "user@email.com"
@@ -37,7 +36,7 @@ Feature: Register
       And text "Username is already taken!" is visible in "registration box"
    
 #vyplni neuplne udaje a registrace neprobehne
-   @integrity
+   @register @integrity
    Scenario: incomplete registration
       Given user is on "registration form"
       When fill "Email" with "test@user.cz"
@@ -48,7 +47,7 @@ Feature: Register
       And text "This is a required field." is visible in "registration box"
 
 #vyplni email ve spatnem formatu a registrace neprobehne
-   @integrity
+   @register @integrity
    Scenario: wrong email format registration
       Given user is on "registration form"
       When fill "Email" with "test123user.cz"
@@ -60,7 +59,7 @@ Feature: Register
       And text "Please provide a valid email address." is visible in "registration box"
 
 #vyplni jmeno jako script tag
-   @integrity
+   @register @integrity
    Scenario: XSS name registration
       Given user is on "registration form"
       When fill "Email" with "test2@user.cz"
@@ -75,7 +74,7 @@ Feature: Register
       Then alert box is not visible
 
 #vyplni jmeno jako mongoDB injection
-   @integrity
+   @register @integrity
    Scenario: NoSQL injection registration
       Given user is on "registration form"
       When fill "Email" with "test2@user.cz"

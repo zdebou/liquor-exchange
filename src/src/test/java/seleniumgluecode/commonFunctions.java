@@ -84,6 +84,7 @@ public class commonFunctions extends SpringBootBaseIntegration {
     @When("^fill \"([^\"]*)\" with \"([^\"]*)\"$")
     public void fill_with(String textfield, String text) throws Throwable {
         WebElement input = this.driver.findElement(By.xpath("//label[text()='" + textfield + "']/following-sibling::input"));
+        input.clear();
         input.sendKeys(text);
     }
 
