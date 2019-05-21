@@ -31,12 +31,15 @@ public class TestUtils {
         tmpPages.put("login page", "#/login/");
         tmpPages.put("registration form", "#/signup/");
         tmpPages.put("current user info page", "#/me/");
+        tmpPages.put("new auction", "#/auction/new");
+        tmpPages.put("my auctions page", "#/my/auctions/");
         pages = Collections.unmodifiableMap(tmpPages);
 
         //create places list
         Map<String, String> tmpPlaces = new HashMap<>();
         tmpPlaces.put("page", "//div[@class='container']");
         tmpPlaces.put("top bar", "//nav[contains(concat(' ',normalize-space(@class),' '),' navbar')]");
+        tmpPlaces.put("footer", "//div[@class='mt-5 container']");
         tmpPlaces.put("login box", "//h2[text()='Sign In']/parent::div[@class='card-body']");
         tmpPlaces.put("registration box", "//h2[text()='Sign Up']/parent::div[@class='card-body']");
         places = Collections.unmodifiableMap(tmpPlaces);

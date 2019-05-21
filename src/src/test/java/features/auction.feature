@@ -5,28 +5,44 @@
 @auction
 Feature: Bid
 
+#ukaz aktivni aukce
+   Scenario: show active auctions
+      Given user is on "homepage"
+      When click on "Active auctions" in "footer"
+      Then text "Auctions" is visible in "page"
+      And active auctions table contains
+        #| liquor_name                | country         |
+         |  Chardonnay, old archive   |  Czech Republic |
+         |  Sauvignon blanc from 1983 |  Czech Republic |
+         |  E & J. Calvados Bushnell  |  United States  |
+         |  Asbach Uralt Brandy       |  United States  |
+
+#vytvor novou aukci
    Scenario: Make bid
       Given user "user@email.com" is logged in with password "password"
-      When click on "Bid now!"
-      And fill "Name" with "Krabičák"
-      And change "Active" on "Completed"
-      And change "VeryGood" on "Good"
-      And change "Bourbon" on "Vine"
-      And change "United States" on "Czech Republic"
-      Then click on "Save"
-  
+      And user is on "new auction"
+      When fill "Name" with "Krabicak"
+      And change "Auction State" to "Completed"
+      And change "Product State" to "Good"
+      And change "Category" to "Wine"
+      And change "Country" to "Czech Republic"
+      And click on "Save"
+      Then active auctions table contains
+         | Krabicak | Czech Republic |
 
-   Scenario: show my auction
+#ukaze moje aukce
+   Scenario: show my auctions
       Given user "user@email.com" is logged in with password "password"
-      When click on "See my actions"
-      And click on "Active auctions"
-      Then text "Auctions" is visible
-      And text "Country" is visible
+      When click on "See my auctions" in "page"
+      Then user should be on "my auctions page"
+      And my auctions table contains
+         | Krabicak | Czech Republic |
 
+#smaze aukci
    Scenario: delete my auction
-      Given user "user@email.cz" is logged in with password "password"
-      When click on "See my actions"
-      And click on "Active auctions" 
-      And click on "Delete"
-      Then page doesn't contain "Krabičák"
-      
+      Given user "user@email.com" is logged in with password "password"
+      When click on "Active auctions" in "footer"
+      And click on "Delete" in auction "Pinot noir" "Czech Republic"
+      Then active auctions table doesn't contain
+        #| liquor_name| country        |
+         | Pinot noir | Czech Republic |
