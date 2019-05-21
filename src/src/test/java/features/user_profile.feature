@@ -6,14 +6,16 @@
 Feature: User info
 
 # ukaz info o uzivateli
-     Scenario: Show info
+     @functionality
+   Scenario: Show info
       Given user "user@email.com" is logged in with password "password"
       When click on "user@email.com" in "top bar"
       Then user is on "current user info page"
       And text "About you" is visible in "page" 
 
 # zmena infa o uzivateli
-     Scenario: Change info
+     @functionality
+   Scenario: Change info
       Given user "user@email.com" is logged in with password "password"
       When click on "user@email.com" in "top bar"
       And text "About you" is visible in "page" 

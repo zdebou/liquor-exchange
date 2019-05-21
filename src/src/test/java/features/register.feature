@@ -6,12 +6,14 @@
 Feature: Register
 
 #je mozne otevrit registracni formular
+   @functionality
    Scenario: show registration form
       Given user is on "homepage"
       When click on "Sign Up"
       Then user should be on "registration form"
 
 #vyplni udaje a zaregistruje se
+   @functionality
    Scenario: registeration successfull
       Given user is on "registration form"
       Then fill "Email" with "test@user.cz"
@@ -23,6 +25,7 @@ Feature: Register
       And user "test@user.cz" is able to login with password "somePassword"
 
 #vyplni neuplne udaje a registrace neprobehne
+   @functionality
    Scenario: incomplete registration
       Given user is on "registration form"
       Then fill "Email" with "test@user.cz"
@@ -33,6 +36,7 @@ Feature: Register
       And text "This is a required field." is visible in "registration box"
 
 #vyplni údaje uzivatele ktery jiz existuje
+   @functionality
    Scenario: duplicate registration
       Given user is on "registration form"
       Then fill "Email" with "user@email.com"

@@ -6,6 +6,7 @@
 Feature: Bid
 
 #ukaz aktivni aukce
+   @functionality
    Scenario: show active auctions
       Given user is on "homepage"
       When click on "Active auctions" in "footer"
@@ -18,6 +19,7 @@ Feature: Bid
          |  Asbach Uralt Brandy       |  United States  |
 
 #vytvor novou aukci
+   @functionality
    Scenario: Make bid
       Given user "user@email.com" is logged in with password "password"
       And user is on "new auction"
@@ -31,6 +33,7 @@ Feature: Bid
          | Krabicak | Czech Republic |
 
 #ukaze moje aukce
+   @functionality
    Scenario: show my auctions
       Given user "user@email.com" is logged in with password "password"
       When click on "See my auctions" in "page"
@@ -39,6 +42,7 @@ Feature: Bid
          | Krabicak | Czech Republic |
 
 #smaze aukci
+   @functionality
    Scenario: delete my auction
       Given user "user@email.com" is logged in with password "password"
       When click on "Active auctions" in "footer"
