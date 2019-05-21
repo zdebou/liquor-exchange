@@ -20,6 +20,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import common.SpringBootBaseIntegration;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.support.ui.Select;
 
 /**
@@ -59,6 +62,11 @@ public class commonFunctions extends SpringBootBaseIntegration {
     public void click_on(String buttonText) throws Throwable {
         WebElement button = this.driver.findElement(By.xpath("//a[text()='" + buttonText + "'] | //button[text()='" + buttonText + "']"));
         button.click();
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException ex) {
+
+        }
     }
 
     @Then("^click on \"([^\"]*)\" in \"([^\"]*)\"$")
@@ -66,6 +74,11 @@ public class commonFunctions extends SpringBootBaseIntegration {
         WebElement place = this.driver.findElement(By.xpath(TestUtils.getPlace(placeText)));
         WebElement button = place.findElement(By.xpath(".//a[text()='" + buttonText + "'] | .//button[text()='" + buttonText + "']"));
         button.click();
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException ex) {
+
+        }
     }
 
     @When("^fill \"([^\"]*)\" with \"([^\"]*)\"$")
@@ -130,5 +143,17 @@ public class commonFunctions extends SpringBootBaseIntegration {
         Select dropdown = new Select(this.driver.findElement(By.xpath("//label[text()='" + field + "']/following-sibling::select")));
         WebElement selected = dropdown.getFirstSelectedOption();
         assertEquals(value, selected.getText());
+    }
+
+    @Then("^alert box is not visible$")
+    public void alert_box_is_not_visible() throws Throwable {
+        Alert a = null;
+        try {
+            a = driver.switchTo().alert();
+        } catch (NoAlertPresentException ex) {
+            //this is ok
+        }
+        assertNull(a);
+
     }
 }
