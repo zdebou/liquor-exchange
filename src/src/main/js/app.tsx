@@ -41,7 +41,10 @@ const Header: FC = () => {
 			brand="Liquor Exchange"
 			menu={
 				loggedUser
-					? [{label: loggedUser.email, href: '/me'}, {label: 'Sign Out', href: '/logout'}]
+					? [
+							{label: loggedUser.displayName, href: '/me'},
+							{label: 'Sign Out', href: '/logout'},
+					  ]
 					: [{label: 'Sign In', href: '/login'}, {label: 'Sign Up', href: '/signup'}]
 			}
 		/>

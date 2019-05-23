@@ -67,7 +67,7 @@ public class AuthController {
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+        return ResponseEntity.ok(new AuthenticationResponse(jwt, authentication.getName()));
     }
 
     @PostMapping("/signup")
@@ -156,12 +156,14 @@ public class AuthController {
 
     @GetMapping("/fetch")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public User fetchUser(Principal principal) {
+    public ResponseEntity<?> fetchUser(Principal principal) {
         String email = principal.getName();
         Optional<User> user = userRepository.findByEmail(email);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String jwt = tokenProvider.generateToken(authentication);
 
         if (user.isPresent()) {
-            return user.get();
+            return ResponseEntity.ok(new AuthenticationResponse(jwt, principal.getName()));
         } else {
             return null;
         }

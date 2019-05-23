@@ -29,6 +29,10 @@ public class UserSecurity {
     @NotBlank
     private String passwordHash;
 
+    /**
+     * Hashes the password and sets password hash.
+     * @param password Actual raw password.
+     */
     public void setPassword(String password) {
         this.setPasswordHash(SecurityConfig.passwordEncoderSingleton().encode(password));
     }

@@ -1,7 +1,7 @@
 import {createStore, action, Action, createTypedHooks} from 'easy-peasy';
 
 interface IUser {
-	email: string;
+	displayName: string;
 	accessToken: string;
 }
 

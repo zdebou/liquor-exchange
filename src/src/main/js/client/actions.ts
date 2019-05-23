@@ -12,6 +12,7 @@ export enum Collection {
 	SignIn = '/auth/signin',
 	SignUp = '/auth/signup',
 	ChangePassword = '/auth/changepass',
+	Bid = '/auction/bid',
 }
 
 export enum SortOrder {
@@ -56,8 +57,8 @@ const encodeParams = (params: IRequestParams) =>
 
 const authorizationHeader = () => {
 	const auth = store.getState().auth;
-	if (auth.loggedUser) {
-		return 'Bearer ' + auth.loggedUser.accessToken;
+	if (auth.user) {
+		return 'Bearer ' + auth.user.accessToken;
 	} else {
 		return 'Anonymous';
 	}
@@ -147,7 +148,7 @@ export const logIn = ({email, password}: {email: string; password: string}) => {
 		success => {
 			const accessToken: string = success.entity.accessToken;
 			setCookie('user-token', accessToken, 7);
-			store.dispatch.auth.setUser({email, accessToken});
+			store.dispatch.auth.setUser(success.entity);
 			return Promise.resolve();
 		},
 		failure => {
@@ -170,9 +171,9 @@ export const fetchUser = (token: string) => {
 		},
 	}).then(
 		success => {
-			console.log(success.entity);
-			const email: string = success.entity.email;
-			store.dispatch.auth.setUser({email, token});
+			const accessToken: string = success.entity.accessToken;
+			setCookie('user-token', accessToken, 7);
+			store.dispatch.auth.setUser(success.entity);
 			return Promise.resolve();
 		},
 		failure => {
@@ -260,3 +261,9 @@ interface IPasswordChangeData {
  */
 export const changePassword = (data: IPasswordChangeData) =>
 	insertDocument(Collection.ChangePassword, data);
+
+export interface IBidData {
+	amount: number;
+}
+
+export const bidAuction = (data: IBidData, id: string) => updateDocument(Collection.Bid, data, id);

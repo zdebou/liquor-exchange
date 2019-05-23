@@ -1,55 +1,77 @@
 import React, {FC, useEffect, useState} from 'react';
-import {RouteChildrenProps, Redirect} from 'react-router';
+import {RouteChildrenProps} from 'react-router';
 import {Link} from 'react-router-dom';
-import * as yup from 'yup';
 
-import AuctionState from '../../model/enums/AuctionState';
-import ProductState from '../../model/enums/ProductState';
-import {Collection, loadDocument, insertDocument, updateDocument} from '../../client/actions';
+import {bidAuction, Collection, IBidData, loadDocument} from '../../client/actions';
 import Container from '../../components/Container';
 import Heading from '../../components/Heading';
-import Form from '../../components/Form';
+import {IModalMessage, Modal, ModalType} from '../../components/Modal';
+import Image from 'react-bootstrap/Image';
+import * as yup from 'yup';
+import FormGroup from '../../components/FormGroup';
 import Input from '../../components/Input';
-import SelectEnum from '../../components/SelectEnum';
-import SelectDocument from '../../components/SelectDocument';
 import ButtonGroup from '../../components/ButtonGroup';
 import Button from '../../components/Button';
-import {Modal, ModalType, IModalMessage} from '../../components/Modal';
+import Form from '../../components/Form';
 
-const AUCTION_SCHEMA = yup.object({
-	name: yup.string().required('Name cannot be empty'),
+interface ICategory {
+	name: string;
+}
+
+interface IUserInfo {
+	firstName: string;
+	lastName: string;
+}
+
+interface IAuction {
+	id: string;
+	name: string;
+	seller: IUserInfo;
+	category: ICategory;
+	productState: string;
+	quantity: number;
+	auctionState: string;
+	winner: IUserInfo;
+	volume: number;
+	description: string;
+	start: string;
+	end: string;
+	initialValue: number;
+	minimumBid: number;
+	lastValue: number;
+}
+
+const BID_SCHEMA = yup.object({
+	amount: yup.number().required('This is a required field.'),
 });
 
 const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) => {
 	const id = !match || match.params.id === 'new' ? null : match.params.id;
-	const [auction, setAuction] = useState<object | null>(null);
+	const [auction, setAuction] = useState<IAuction | null>(null);
 	const [modalMessage, setModalMessage] = useState<IModalMessage | null>(null);
+	const [error, setError] = useState<string>();
+
+	const onBidFail = (errorObject: Error) => {
+		setError(errorObject.message);
+	};
 
 	const onFail = (response: {[key: string]: any}) => {
 		setModalMessage({type: ModalType.Error, title: response.error, text: response.message});
-	};
-
-	const onSaveSuccess = () => {
-		return <Redirect to="/auctions" />;
 	};
 
 	const onLoadSuccess = (response: {[key: string]: any}) => {
 		setAuction(response.entity);
 	};
 
-	const init = () => {
-		if (id === null) {
-			setAuction({});
-		} else {
-			loadDocument(Collection.Auctions, id).then(onLoadSuccess, onFail);
-		}
+	const handleSubmit = (bidData: IBidData) => {
+		bidAuction(bidData, auction.id).then(init, onBidFail);
 	};
 
-	const handleSubmit = async (data: object) => {
+	const init = () => {
 		if (id === null) {
-			await insertDocument(Collection.Auctions, data).then(onSaveSuccess, onFail);
+			setAuction(null);
 		} else {
-			await updateDocument(Collection.Auctions, data, id).then(onSaveSuccess, onFail);
+			loadDocument(Collection.Auctions, id).then(onLoadSuccess, onFail);
 		}
 	};
 
@@ -61,34 +83,55 @@ const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) =
 
 	return (
 		<Container>
-			<Heading>Auction</Heading>
-			<Form schema={AUCTION_SCHEMA} onSubmit={handleSubmit} initialValues={auction}>
-				<Input id="name" label="Name" />
-				<SelectEnum id="auctionState" label="Auction State" enumObject={AuctionState} />
-				<SelectEnum id="productState" label="Product State" enumObject={ProductState} />
-				<SelectDocument
-					id="category"
-					label="Category"
-					collection={Collection.Categories}
-					idFieldName="id"
-					labelFieldName="name"
-					assignObject
-				/>
-				<SelectDocument
-					id="country"
-					label="Country"
-					collection={Collection.Countries}
-					idFieldName="code"
-					labelFieldName="name"
-					assignObject
-				/>
-				<ButtonGroup>
-					<Button label="Save" type="submit" primary />
-				</ButtonGroup>
-			</Form>
+			<Heading>{auction.name}</Heading>
+			<div className="row">
+				<div className="col-6">
+					<p>Category: {auction.category.name}</p>
+					<p>
+						Seller: {auction.seller.firstName} {auction.seller.lastName}
+					</p>
+					<p>Product state: {auction.productState}</p>
+					<p className="font-italic">Product description:</p>
+					<p>{auction.description}</p>
+					<p>Quantity: {auction.quantity}pcs</p>
+					<p>Volume: {auction.volume}l</p>
+					<p>Minimum value: {auction.initialValue} CZK</p>
+					<p>Minimum bid value: {auction.minimumBid} CZK</p>
+					<p>Start datetime: {new Date(auction.start).toLocaleDateString()}</p>
+					{auction.winner && auction.auctionState !== 'ACTIVE' && (
+						<p>
+							Winner: {auction.winner.firstName} {auction.winner.lastName}
+						</p>
+					)}
+				</div>
+				<div className="col-6 text-right">
+					<Image src="img/rum-bottle.jpg" width={250} />
+					<Form
+						initialValues={{amount: auction.lastValue + auction.minimumBid}}
+						schema={BID_SCHEMA}
+						onSubmit={handleSubmit}
+					>
+						{error && <FormGroup error={error} />}
+						<Input name="amount" id="amount" label="New bid" />
+						<ButtonGroup>
+							<Button type="submit" label="Bid" primary />
+						</ButtonGroup>
+					</Form>
+				</div>
+			</div>
+			<p className="lead">
+				Highest bid: <span className="badge badge-primary">{auction.lastValue} CZK</span>
+			</p>
+			<p className="lead">
+				End datetime:{' '}
+				<span className="badge badge-primary">
+					{new Date(auction.end).toLocaleDateString()}
+				</span>
+			</p>
 			<p className="mt-3">
 				<Link to="/">Back</Link>
 			</p>
+
 			{modalMessage && <Modal message={modalMessage} />}
 		</Container>
 	);
