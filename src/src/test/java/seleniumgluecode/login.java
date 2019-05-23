@@ -9,15 +9,18 @@ import common.TestUtils;
 import cucumber.api.java.en.Given;
 import java.util.List;
 import static org.junit.Assert.assertTrue;
+import org.junit.Ignore;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import common.SpringBootBaseIntegration;
 
 /**
  *
  * @author divad_000
  */
-public class login {
+@Ignore
+public class login extends SpringBootBaseIntegration {
 
     @Given("^user \"([^\"]*)\" is logged in with password \"([^\"]*)\"$")
     public void user_is_logged_in_with_password(String user, String password) throws Throwable {
@@ -37,8 +40,8 @@ public class login {
 
         //check if logged in
         WebElement place = driver.findElement(By.xpath(TestUtils.getPlace("top bar")));
-        WebElement elem = place.findElement(By.xpath("//*[text()='" + user + "']"));
-        List<WebElement> elems = place.findElements(By.xpath("//a[text()='Sign In'] | //button[text()='Sign In']"));
+        WebElement elem = place.findElement(By.xpath(".//*[text()='" + user + "']"));
+        List<WebElement> elems = place.findElements(By.xpath(".//a[text()='Sign In'] | .//button[text()='Sign In']"));
 
         assertTrue(elem.isDisplayed());
         assertTrue(elems.isEmpty() || (elems.size() == 1 && elems.get(0).isDisplayed() == false));
