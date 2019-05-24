@@ -15,9 +15,15 @@ Přehled odpracovaných hodin je průběžný.
 
 ## Důvody
 A. Vytvoření nekolika variant zadání
+
 B. Práce o víkendu a předčasné splnění požadavků v krátkém časovém intervalu.
+
 C. Mimořádný výkon nad úroveň ostatních
+
 D. Nesplněné deadliny
+
 E. Aktivní přístup
+
 F. Použití nových technologií (neprogramátorských)
+
 G. Penalizace za velmi málo odpracovaných hodin
