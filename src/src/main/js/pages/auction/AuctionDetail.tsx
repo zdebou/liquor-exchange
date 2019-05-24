@@ -7,6 +7,7 @@ import Container from '../../components/Container';
 import Heading from '../../components/Heading';
 import {IModalMessage, Modal, ModalType} from '../../components/Modal';
 import Image from 'react-bootstrap/Image';
+import Card from 'react-bootstrap/Card';
 import * as yup from 'yup';
 import FormGroup from '../../components/FormGroup';
 import Input from '../../components/Input';
@@ -49,10 +50,9 @@ const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) =
 	const id = !match || match.params.id === 'new' ? null : match.params.id;
 	const [auction, setAuction] = useState<IAuction | null>(null);
 	const [modalMessage, setModalMessage] = useState<IModalMessage | null>(null);
-	const [error, setError] = useState<string>();
 
-	const onBidFail = (errorObject: Error) => {
-		setError(errorObject.message);
+	const onBidFail = (response: {[key: string]: any}) => {
+		setModalMessage({type: ModalType.Error, title: response.error, text: response.message});
 	};
 
 	const onFail = (response: {[key: string]: any}) => {
@@ -81,6 +81,8 @@ const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) =
 		return <Container>Loading...</Container>;
 	}
 
+	const bidAmount = {amount: auction.lastValue + auction.minimumBid};
+
 	return (
 		<Container>
 			<Heading>{auction.name}</Heading>
@@ -106,31 +108,30 @@ const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) =
 				</div>
 				<div className="col-6 text-right">
 					<Image src="img/rum-bottle.jpg" width={250} />
-					<Form
-						initialValues={{amount: auction.lastValue + auction.minimumBid}}
-						schema={BID_SCHEMA}
-						onSubmit={handleSubmit}
-					>
-						{error && <FormGroup error={error} />}
-						<Input name="amount" id="amount" label="New bid" />
-						<ButtonGroup>
-							<Button type="submit" label="Bid" primary />
-						</ButtonGroup>
-					</Form>
 				</div>
 			</div>
-			<p className="lead">
-				Highest bid: <span className="badge badge-primary">{auction.lastValue} CZK</span>
-			</p>
-			<p className="lead">
-				End datetime:{' '}
-				<span className="badge badge-primary">
-					{new Date(auction.end).toLocaleDateString()}
-				</span>
-			</p>
-			<p className="mt-3">
-				<Link to="/">Back</Link>
-			</p>
+			<Card>
+				<Card.Header as="h5" className="bg-dark text-white">
+					Bid to auction
+				</Card.Header>
+				<Card.Body>
+					<p className="lead">
+						Highest bid:{' '}
+						<span className="badge badge-primary">{auction.lastValue} CZK</span>
+					</p>
+					<p className="lead">
+						This auction ends:{' '}
+						<span className="badge badge-primary">
+							{new Date(auction.end).toLocaleDateString()}
+						</span>
+					</p>
+					<Card.Title>Bid Amount:</Card.Title>
+					<Form initialValues={bidAmount} schema={BID_SCHEMA} onSubmit={handleSubmit}>
+						<Input name="amount" id="amount" />
+						<Button type="submit" label="Bid" primary className="d-block w-100" />
+					</Form>
+				</Card.Body>
+			</Card>
 
 			{modalMessage && <Modal message={modalMessage} />}
 		</Container>
