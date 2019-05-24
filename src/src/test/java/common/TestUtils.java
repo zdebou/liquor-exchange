@@ -5,6 +5,7 @@
  */
 package common;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -79,6 +80,11 @@ public class TestUtils {
         String driverPath = System.getenv(DRIVER_VARIABLE_NAME);
         if (driverPath == null) {
             driverPath = "node_modules/geckodriver/geckodriver.exe";
+            File geckgofile = new File(driverPath);
+            //we might be on linux
+            if (!geckgofile.exists()) {
+                driverPath = "node_modules/geckodriver/geckodriver";
+            }
         }
         System.setProperty("webdriver.gecko.driver", driverPath);
         currentDriver = new FirefoxDriver();
