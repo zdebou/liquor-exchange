@@ -44,8 +44,12 @@ public class AuctionController {
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/api/auction/{id}")
                 .buildAndExpand(auction.getId()).toUri();
-        if (bidRequest.getAmount() < auction.getLastValue() + auction.getMinimumBid() && !auction.getAuctionState().equals("ACTIVE")) {
-            return ResponseEntity.created(location).body(new ApiResponse(false, "Bid wasn't successful"));
+        if (bidRequest.getAmount() < auction.getLastValue() + auction.getMinimumBid()) {
+            return ResponseEntity.created(location).body(new ApiResponse(false, "You didn't meet minimum bid amount criteria!"));
+        }
+
+        if (!auction.getAuctionState().equals("ACTIVE")) {
+            return ResponseEntity.created(location).body(new ApiResponse(false, "This auction is closed."));
         }
 
         auction.setLastValue(bidRequest.getAmount());

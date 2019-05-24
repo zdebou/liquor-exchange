@@ -55,6 +55,14 @@ const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) =
 		setModalMessage({type: ModalType.Error, title: response.error, text: response.message});
 	};
 
+	const onBidSuccess = (response: {[key: string]: any}) => {
+		if (response.entity.success) {
+			init();
+		} else {
+			setModalMessage({type: ModalType.Error, title: "Sorry, bid failed!", text: response.entity.message});
+		}
+	};
+
 	const onFail = (response: {[key: string]: any}) => {
 		setModalMessage({type: ModalType.Error, title: response.error, text: response.message});
 	};
@@ -64,7 +72,7 @@ const AuctionDetail: FC<RouteChildrenProps<{id: string}>> = ({match, history}) =
 	};
 
 	const handleSubmit = (bidData: IBidData) => {
-		bidAuction(bidData, auction.id).then(init, onBidFail);
+		bidAuction(bidData, auction.id).then(onBidSuccess, onBidFail);
 	};
 
 	const init = () => {
